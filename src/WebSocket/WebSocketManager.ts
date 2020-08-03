@@ -19,6 +19,7 @@ class WebSocketManager {
     this._ininMessage();
   };
   onMessage(ev: MessageEvent) {
+    console.log("接收到消息",ev.data);
     var data: Message;
     var err_info: any;
     try {

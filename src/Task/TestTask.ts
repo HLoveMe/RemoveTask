@@ -9,10 +9,7 @@ export class TestTask extends ListenTask {
   status: TaskStatus = TaskStatus.Prepare;
   name: String = "TestTask";
   date: Date = new Date();
-  downloadConfig = async () => {
-    return true;
-  }
-  listen(info: Message) {
+  async listen(info: Message) {
 
   }
 }

@@ -21,12 +21,15 @@ class App {
     return true;
   }
   reload(err: Error = new Error("1s,重启")) {
+    debugger
     InfoUpdateManager.update(err);
     setTimeout(() => { process.exit() }, 1000);
   }
   reconnect() {
+    debugger
     WebManager.clear();
     WebManager.start();
+    this.listenerTasks();
   }
   listenerTasks() {
     WebManager.addEventListeners(
@@ -38,7 +41,6 @@ class App {
     const result = await this.sourceInit();
     result && WebManager.start();
     this.listenerTasks();
-    return;
   }
 }
 
@@ -51,4 +53,5 @@ class App {
     index += 1;
     await RunApp(index + 1);
   }
+
 })()

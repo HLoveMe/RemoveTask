@@ -1,8 +1,9 @@
 import { Task, TaskStatus, TaskBase, ListenTask, App } from "./TaskBase";
-import Config from "../Config";
-import PathConfig from "../Util/PathRUL";
+import Config, { ConfigType, updateConfig } from "../Config";
+import PathConfig, { updatePathConfig } from "../Util/PathRUL";
 import { goRequestJson } from "../Util/SourceRequest";
 import { Message } from "../WebSocket/SocketMessage";
+import { ValidationConfig } from "../Util/ValidationMessage";
 
 export class ConfigCheckTask extends ListenTask {
   app: App;
@@ -10,19 +11,14 @@ export class ConfigCheckTask extends ListenTask {
   name: String = "ConfigCheckTask";
   date: Date = new Date();
   checkConfig = async () => {
-    const result = await goRequestJson(PathConfig.source_url.configcheck);
-    if (result == null) return false;
-    const current = parseInt(Config.version);
-    const remote = parseInt(result.version);
-    if (remote > current) {
-      return true;
+    const result:ConfigType = await goRequestJson(PathConfig.source_url.configcheck);
+    if(result && ValidationConfig(result)){
+      updatePathConfig(result);
+      updateConfig(result);
+      this.app.reconnect();
     }
-    return false;
   }
-  downloadConfig = async () => {
-    return true;
-  }
-  listen(info: Message) {
-
+  async listen(info: Message) {
+    await this.checkConfig();
   }
 }

@@ -55,7 +55,7 @@ export class ListenTask extends TaskBase {
     super();
     this.app =app;
   }
-  listen(info: Message) { }
+  async listen(info: Message) { }
   send(data: Object) {
     var res = "";
     try {
