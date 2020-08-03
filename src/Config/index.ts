@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require("path");
 export declare interface ConfigType {
   version: string;
   ip: string;
@@ -12,20 +14,8 @@ export declare interface ConfigType {
     task: string;
   }
 }
-const Config = {
-  version: "202008021325",
-  ip: "127.0.0.1",
-  websoket_id: 8080,
-  files: {
-    error: "error.log",
-  },
-  source: {
-    config:"project/config",
-    check: "project/check",
-    project: "source/project.zip", //获取这个工程源文件
-    task: "source/tasks",//获取所有任务列表
-  }
-}
+
+const Config = require("./source.json");
 
 export function updateConfig(config: ConfigType) {
   Config.version = config.version;
