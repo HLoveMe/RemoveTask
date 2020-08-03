@@ -1,5 +1,6 @@
 import { InfoUpdateManager } from "../ErrorManager";
 import { WebManager } from "../WebSocket/WebSocketManager";
+import { Message } from "../WebSocket/SocketMessage";
 export interface App {
   reload: Function
   reconnect: Function
@@ -50,7 +51,7 @@ export class ListenTask extends TaskBase {
   name: String;
   date: Date;
   async do(): Promise<TaskStatus> { return TaskStatus.Success; }
-  listen(info: string) { }
+  listen(info: Message) { }
   send(data: Object) {
     var res = "";
     try {

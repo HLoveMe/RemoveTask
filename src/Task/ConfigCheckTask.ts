@@ -2,6 +2,7 @@ import { Task, TaskStatus, TaskBase, ListenTask, App } from "./TaskBase";
 import Config from "../Config";
 import PathConfig from "../Util/PathRUL";
 import { goRequestJson } from "../Util/SourceRequest";
+import { Message } from "../WebSocket/SocketMessage";
 
 export class ConfigCheckTask extends ListenTask {
   app: App;
@@ -25,7 +26,7 @@ export class ConfigCheckTask extends ListenTask {
   downloadConfig = async () => {
     return true;
   }
-  listen(info: string) {
+  listen(info: Message) {
 
   }
 }

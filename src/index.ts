@@ -14,20 +14,20 @@ class App {
   }
   async sourceInit() {
     const version_status = await new VersionChenkTask().do();
-    if(version_status == TaskStatus.Success){
+    if (version_status == TaskStatus.Success) {
       this.reload();
     }
     return true;
   }
   reload(err: Error = new Error("1s,重启")) {
     InfoUpdateManager.update(err);
-    setTimeout(() => { throw err }, 1000);
+    setTimeout(() => { process.exit() }, 1000);
   }
   reconnect() {
     WebManager.clear();
     WebManager.start();
   }
-  listenerTasks(){
+  listenerTasks() {
     WebManager.addEventListeners(
       new ConfigCheckTask(this),
     )
@@ -36,7 +36,17 @@ class App {
     const result = await this.sourceInit();
     result && WebManager.start();
     this.listenerTasks();
+    return;
   }
 }
 
-(new App()).run();
+(async function RunApp(index = 0) {
+  if (index == 5) return;
+  const app = new App();
+  try {
+    await app.run()
+  } catch (error) {
+    index += 1;
+    await RunApp(index + 1);
+  }
+})()
