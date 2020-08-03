@@ -1,0 +1,27 @@
+{
+    "name": "control",
+    "version": "1.0.4",
+    "description": "",
+    "main": "./dist/index.js",
+    "scripts": {
+        "tsc": "tsc",
+        "run": "node ./dist/index.js",
+        "server": "node ./SocketServer/index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.10.4",
+        "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+        "@babel/preset-typescript": "^7.10.4",
+        "typescript": "^3.5.3"
+    },
+    "dependencies": {
+        "@types/node": "^14.0.9",
+        "axios": "^0.19.2",
+        "node-fetch": "^2.6.0",
+        "ws": "^7.3.1"
+    },
+    "peerDependencies": {}
+}

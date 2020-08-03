@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "allowJs": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "watch": true,
+    "types": ["node"],
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  },
+  "include": ["typings/**/*.d.ts", "src/**/*.ts", "src/**/*.tsx", "*.tsx"],
+  "exclude": ["node_modules"]
+}
