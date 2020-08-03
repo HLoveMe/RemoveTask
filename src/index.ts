@@ -5,6 +5,7 @@ import fetch from 'node-fetch';
 import { TaskStatus } from "./Task/TaskBase";
 import { InfoUpdateManager } from "./ErrorManager";
 import { ConfigCheckTask } from "./Task/ConfigCheckTask";
+import { TestTask } from "./Task/TestTask";
 globalThis.fetch = fetch;
 
 class App {
@@ -30,6 +31,7 @@ class App {
   listenerTasks() {
     WebManager.addEventListeners(
       new ConfigCheckTask(this),
+      new TestTask(this),
     )
   }
   async run() {

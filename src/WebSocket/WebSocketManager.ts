@@ -58,7 +58,8 @@ class WebSocketManager {
     this.webSocket.onerror = this.onError.bind(this);
   }
   _ininMessage() {
-    this.webSocket.send(MessageFac(Array.from(this.subscriber.keys()), MessageType.INFO_KEY))
+    this.webSocket.send(MessageFac(Array.from(this.subscriber.keys()), MessageType.INFO_KEY));
+    // this.send(MessageFac(Array.from(this.subscriber.keys()), MessageType.INFO_KEY));
   }
   send(data: string) {
     console.log("data", data);

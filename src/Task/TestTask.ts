@@ -4,21 +4,11 @@ import PathConfig from "../Util/PathRUL";
 import { goRequestJson } from "../Util/SourceRequest";
 import { Message } from "../WebSocket/SocketMessage";
 
-export class ConfigCheckTask extends ListenTask {
+export class TestTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;
-  name: String = "ConfigCheckTask";
+  name: String = "TestTask";
   date: Date = new Date();
-  checkConfig = async () => {
-    const result = await goRequestJson(PathConfig.source_url.configcheck);
-    if (result == null) return false;
-    const current = parseInt(Config.version);
-    const remote = parseInt(result.version);
-    if (remote > current) {
-      return true;
-    }
-    return false;
-  }
   downloadConfig = async () => {
     return true;
   }

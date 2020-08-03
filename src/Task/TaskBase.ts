@@ -51,6 +51,10 @@ export class ListenTask extends TaskBase {
   name: String;
   date: Date;
   async do(): Promise<TaskStatus> { return TaskStatus.Success; }
+  constructor(app: App) {
+    super();
+    this.app =app;
+  }
   listen(info: Message) { }
   send(data: Object) {
     var res = "";
