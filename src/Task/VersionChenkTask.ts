@@ -25,14 +25,18 @@ export class VersionChenkTask extends TaskBase {
     return false;
   }
   downloadProject = async () => {
-    return true;
+    return false;
   }
   async do(): Promise<TaskStatus> {
     try {
       const hasUpdate = await this.checkVersion();
       const hasDownload = await (hasUpdate && await this.downloadProject());
       hasUpdate && !hasDownload && this.updateInfo(new Error("工程下载失败"));
-      this.status = TaskStatus.Success;
+      if (hasUpdate && hasDownload) {
+        this.status = TaskStatus.Reload;
+      } else {
+        this.status = TaskStatus.Fail;
+      }
     } catch (error) {
       this.updateInfo(error, "CheckVersion/checkVersion");
       this.status = TaskStatus.Fail;

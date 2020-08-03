@@ -1,10 +1,17 @@
 import { InfoUpdateManager } from "../ErrorManager";
+import { WebManager } from "../WebSocket/WebSocketManager";
+export interface App {
+  reload: Function
+  reconnect: Function
+}
 
 export enum TaskStatus {
   Prepare = 0,//"准备中",
   Doing = 1,//"进行中",
   Success = 2,//"完成",
   Fail = 3,//"失败"
+  Reload = 4,//强制重启
+  ReSocket = 5,//重启Socket
 }
 
 export interface Task {
@@ -16,7 +23,7 @@ export interface Task {
 
 export interface TaskQueue {
   list: Array<Task>;
-  do(): Promise<TaskStatus>;
+  do(): Promise<TaskStatus[]>;
 }
 
 export class TaskBase implements Task {
@@ -31,7 +38,27 @@ export class TaskBase implements Task {
       name: this.name,
       status: this.status,
       date: this.date,
-      info: (info || {})
+      info: typeof info == 'object' ? info : { info: info }
     })
+  }
+}
+
+
+export class ListenTask extends TaskBase {
+  app: App;
+  status: TaskStatus;
+  name: String;
+  date: Date;
+  async do(): Promise<TaskStatus> { return TaskStatus.Success; }
+  listen(info: string) { }
+  send(data: Object) {
+    var res = "";
+    try {
+      res = JSON.stringify(data);
+    } catch (error) {
+      this.updateInfo(error, "ListenTask/send");
+      return
+    }
+    WebManager.send(res)
   }
 }

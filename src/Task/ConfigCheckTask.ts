@@ -1,14 +1,19 @@
-import { Task, TaskStatus, TaskBase } from "./TaskBase";
+import { Task, TaskStatus, TaskBase, ListenTask, App } from "./TaskBase";
 import Config from "../Config";
 import PathConfig from "../Util/PathRUL";
 import { goRequestJson } from "../Util/SourceRequest";
 
-export class ConfigCheckTask extends TaskBase {
+export class ConfigCheckTask extends ListenTask {
+  app: App;
   status: TaskStatus = TaskStatus.Prepare;
   name: String = "ConfigCheckTask";
   date: Date = new Date();
-  checkVersion = async () => {
-    const result = await goRequestJson(PathConfig.source_url.versioncheck);
+  constructor(app: App) {
+    super();
+    this.app = app;
+  }
+  checkConfig = async () => {
+    const result = await goRequestJson(PathConfig.source_url.configcheck);
     if (result == null) return false;
     const current = parseInt(Config.version);
     const remote = parseInt(result.version);
@@ -17,19 +22,10 @@ export class ConfigCheckTask extends TaskBase {
     }
     return false;
   }
-  downloadProject = async () => {
+  downloadConfig = async () => {
     return true;
   }
-  async do(): Promise<TaskStatus> {
-    try {
-      const hasUpdate = await this.checkVersion();
-      const hasDownload = await (hasUpdate && await this.downloadProject());
-      hasUpdate && !hasDownload && this.updateInfo(new Error("工程下载失败"));
-      this.status = TaskStatus.Success;
-    } catch (error) {
-      this.updateInfo(error, "CheckVersion/checkVersion");
-      this.status = TaskStatus.Fail;
-    }
-    return this.status;
+  listen(info: string) {
+
   }
 }

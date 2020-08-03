@@ -12,14 +12,17 @@ export class InitTaskQueue implements TaskQueue {
   updateInfo(error: Error, info: any = null) {
     InfoUpdateManager.update(error, info)
   }
-  async do(): Promise<TaskStatus> {
+  async do(): Promise<TaskStatus[]> {
+    var status: TaskStatus[] = []
     try {
       for (const task of this.list) {
-        await task.do();
+        const statu = await task.do();
+        status.push(statu);
       }
     } catch (error) {
-      this.updateInfo(error)
+      this.updateInfo(error);
+      status = [TaskStatus.Reload];
     }
-    return TaskStatus.Success;
+    return status;
   }
 }

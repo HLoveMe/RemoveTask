@@ -7,6 +7,7 @@ export declare interface ConfigType {
   },
   source: {
     check: string;
+    config: string;
     project: string;
     task: string;
   }
@@ -19,6 +20,7 @@ const Config = {
     error: "error.log",
   },
   source: {
+    config:"project/config",
     check: "project/check",
     project: "source/project.zip", //获取这个工程源文件
     task: "source/tasks",//获取所有任务列表
@@ -29,7 +31,7 @@ export function updateConfig(config: ConfigType) {
   Config.version = config.version;
   Config.ip = config.ip;
   Config.websoket_id = config.websoket_id;
-  Config.files = config.files,
-    Config.source = config.source;
+  Config.files = config.files;
+  Config.source = config.source;
 }
 export default Config;
