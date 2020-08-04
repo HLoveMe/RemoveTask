@@ -3,6 +3,7 @@ export enum MessageType {
   ERROR = -99,
   Normal = 0,
   PING = 1,
+  UUID = 4,
   INFO_KEY = 2,
   MESSAGE_TYPE = 3,
   CMD_MSG = 200, //CDM消息
@@ -15,6 +16,7 @@ export declare interface Message {
   id: number;
   name: string;
   data: any;
+  uuid?:String;
 }
 export declare interface CMDData {
   type: MessageType
