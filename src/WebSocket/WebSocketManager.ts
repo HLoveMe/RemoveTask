@@ -1,18 +1,16 @@
 var ws = require("ws");
-const uuidV4 = require('uuid/v4');
 import Config from "../Config";
 import { ListenTask } from "../Task/TaskBase";
 import { ValidationMessage } from "../Util/ValidationMessage";
 import { Message, MessageType } from "./SocketMessage";
 import { MessageFac, ErrorMsgFac } from "../Util/SocketMessageFac";
+import { PingMessage, UuidMessage } from "../Util/MessageConstants";
 
 class WebSocketManager {
   url: string;
   webSocket: WebSocket;
   subscriber: Map<String, ListenTask>;
   pingId: NodeJS.Timeout;
-  static Ping = { id: MessageType.PING, key: MessageType.PING, data: "ping" } as any;
-  static Uuid = { id: MessageType.UUID, key: MessageType.UUID, data: { uuid: uuidV4() } } as any;
   constructor() {
     this.subscriber = new Map();
   }
@@ -61,7 +59,7 @@ class WebSocketManager {
     this.webSocket.onerror = this.onError.bind(this);
   }
   _uuidMessage() {
-    this.send(WebSocketManager.Uuid);
+    this.send(UuidMessage);
   }
   _taskMessage() {
     this.send({
@@ -75,7 +73,7 @@ class WebSocketManager {
   }
   _Ping() {
     this.pingId && clearInterval(this.pingId);
-    this.pingId = setInterval(() => this.send(WebSocketManager.Ping), 10000)
+    this.pingId = setInterval(() => this.send(PingMessage), 10000)
   }
   send(msg: Message) {
     var result = MessageFac(msg);
