@@ -39,7 +39,7 @@ function getFileInfo(route: PathString): FileInfo | null {
 }
 
 function scanFiles(entry: PathString): String[] {
-    if (!fs.exists(entry)) return [];
+    if (!fs.existsSync(entry)) return [];
     const res: String[] = [];
     const dirInfo = fs.readdirSync(entry);
     dirInfo.forEach(item => {

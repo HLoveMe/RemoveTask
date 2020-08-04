@@ -1,13 +1,9 @@
 {
   "date": 11112221212,
   "id": 11111,
-  "name": "CMDCommandTask",
-  "data": {
-    "type":201,
-    "path": "",
-    "id": 123456,
-    "timeout": 1000,
-    "cmd": "ls",
-    "args": ["-a"]
-  }
+  "name": "RemoteListenTask",
+  "data": [{
+    "name":"AAAA",
+    "context":""
+  }]
 }
