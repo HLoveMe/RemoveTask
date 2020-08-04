@@ -4,22 +4,20 @@ import { ValidationMessage } from "../Util/ValidationMessage";
 import { Message, MessageType } from "./SocketMessage";
 import { MessageFac } from "../Util/SocketMessageFac";
 var ws = require("ws");
-
 class WebSocketManager {
   url: string;
   webSocket: WebSocket;
   subscriber: Map<String, ListenTask>;
+  pingId: NodeJS.Timeout;
   constructor() {
     this.subscriber = new Map();
   }
   onOpen = () => {
-    setInterval(() => {
-      this.webSocket.send("ping ")
-    }, 5000);
     this._ininMessage();
+    this._Ping();
   };
   onMessage(ev: MessageEvent) {
-    console.log("接收到消息",ev.data);
+    console.log("接收到消息", ev.data);
     var data: Message;
     var err_info: any;
     try {
@@ -59,11 +57,19 @@ class WebSocketManager {
     this.webSocket.onerror = this.onError.bind(this);
   }
   _ininMessage() {
-    this.send(MessageFac(Array.from(this.subscriber.keys()), MessageType.INFO_KEY));
+    this.send(MessageFac({
+      task_names: Array.from(this.subscriber.keys()),
+      message_types: Object.keys(MessageType)
+    }, MessageType.INFO_KEY));
+  }
+  _Ping() {
+    this.pingId && clearInterval(this.pingId);
+    this.pingId = setInterval(() => {
+      this.send(MessageFac({ ping: 99 }, MessageType.PING));
+    }, 10000)
   }
   send(data: string) {
-    console.log("data", data);
-    // this.webSocket && data && this.webSocket.send(data);
+    this.webSocket && data && this.webSocket.send(data);
   }
   addEventListeners(...tasks: ListenTask[]) {
     tasks.forEach($1 => this.subscriber.set($1.name, $1))

@@ -7,9 +7,11 @@ const wss = new WebSocket.Server({
 });
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
-    // console.log('received: %s', message);
-    const data = fs.readFileSync(path.join(__dirname,"message.json"),"utf-8");
-    ws.send(data);
+    console.log('received: %s', message);
+
   });
-  ws.send('something');
+  setInterval(() => {
+    const data = fs.readFileSync(path.join(__dirname, "message.json"), "utf-8");
+    ws.send(data);
+  }, 5000);
 });
