@@ -15,6 +15,7 @@ class WebSocketManager {
     this.subscriber = new Map();
   }
   onOpen = () => {
+    this._uuidMessage();
     this._taskMessage();
     this._Ping();
   };

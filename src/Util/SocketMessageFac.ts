@@ -5,8 +5,7 @@ export const MessageFac = (msg: Message): string => {
   try {
     const result = {
       ...msg,
-      date: (new Date().getTime()),
-      computer: {}
+      date: (new Date().getTime())
     }
     return JSON.stringify(result)
   } catch (error) {
@@ -16,9 +15,9 @@ export const MessageFac = (msg: Message): string => {
 
 export const ErrorMsgFac = (msg: Message, info: any = "") => {
   return JSON.stringify({
-    id: msg.id || 0,
-    key: msg.key || MessageType.Normal,
+    id: msg.id || MessageType.ERROR,
+    key: msg.key || MessageType.ERROR,
     name: msg.name || "",
-    error:info
+    error: info
   })
 }
