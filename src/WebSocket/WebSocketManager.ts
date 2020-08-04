@@ -2,13 +2,14 @@ import Config from "../Config";
 import { ListenTask } from "../Task/TaskBase";
 import { ValidationMessage } from "../Util/ValidationMessage";
 import { Message, MessageType } from "./SocketMessage";
-import { MessageFac } from "../Util/SocketMessageFac";
+import { MessageFac, ErrorMsgFac } from "../Util/SocketMessageFac";
 var ws = require("ws");
 class WebSocketManager {
   url: string;
   webSocket: WebSocket;
   subscriber: Map<String, ListenTask>;
   pingId: NodeJS.Timeout;
+  static Ping = { id: MessageType.PING, key: MessageType.PING, data: "ping" } as any
   constructor() {
     this.subscriber = new Map();
   }
@@ -24,16 +25,16 @@ class WebSocketManager {
       data = JSON.parse(ev.data);
     } catch (err) {
       err_info = { data: ev.data, error: "WebSocketManager/onMessage/data解析错误" };
-      return this.send(MessageFac(err_info));
+      return this._send(ErrorMsgFac({ id: MessageType.ERROR, key: MessageType.ERROR } as any, err_info))
     }
     if (err_info == null && ValidationMessage(data) == false) {
       err_info = { data: ev.data, error: "WebSocketManager/onMessage/格式不对" };
-      return this.send(MessageFac(err_info));
+      return this._send(ErrorMsgFac({ id: MessageType.ERROR, key: MessageType.ERROR } as any, err_info))
     };
     let task: ListenTask = this.subscriber.get(data.name);
     if (err_info == null && task == null) {
       err_info = { data: ev.data, error: "WebSocketManager/onMessage/name不正确" };
-      return this.send(MessageFac(err_info));
+      return this._send(ErrorMsgFac({ id: MessageType.ERROR, key: MessageType.ERROR } as any, err_info))
     }
     task.listen(data);
   };
@@ -57,16 +58,27 @@ class WebSocketManager {
     this.webSocket.onerror = this.onError.bind(this);
   }
   _ininMessage() {
-    this.send(MessageFac({
-      task_names: Array.from(this.subscriber.keys()),
-      message_types: Object.keys(MessageType)
-    }, MessageType.INFO_KEY));
+    this.send({
+      id: MessageType.INFO_KEY,
+      key: MessageType.INFO_KEY,
+      data: {
+        task_names: Array.from(this.subscriber.keys()),
+        message_types: Object.keys(MessageType)
+      }
+    } as any)
   }
   _Ping() {
     this.pingId && clearInterval(this.pingId);
-    this.pingId = setInterval(() => { this.send(MessageFac({ ping: 99 }, MessageType.PING)) }, 10000)
+    this.pingId = setInterval(() => this.send(WebSocketManager.Ping), 10000)
   }
-  send(data: string) {
+  send(msg: Message) {
+    var result = MessageFac(msg);
+    if (result == null || result == "") {
+      result = ErrorMsgFac(msg, "WebSocketManager/send/JSON")
+    }
+    result && this._send(result);
+  }
+  _send(data: string) {
     this.webSocket && data && this.webSocket.send(data);
   }
   addEventListeners(...tasks: ListenTask[]) {

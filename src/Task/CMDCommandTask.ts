@@ -1,9 +1,10 @@
-import { Task, TaskStatus, ListenTask, App } from "./TaskBase";
+import { TaskStatus, ListenTask, App } from "./TaskBase";
 var os = require("os");
 const Process = require("child_process");
 import PathConfig from "../Util/PathRUL";
 import { CMDMessage, MessageType } from "../WebSocket/SocketMessage";
 import { EventEmitter } from "events";
+import { MessageFac } from "../Util/SocketMessageFac";
 declare type ExecCallBack = (msg: ExecMessage, result: ExexResult) => void;
 
 interface ExexResult {
@@ -28,7 +29,7 @@ class ExecMessage {
   }
   exec() {
     Promise.race([
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         const cmd = this.msg.data.cmd;
         const args = this.msg.data.args || [];
         const option: any = this.msg.data.path ? { cwd: this.msg.data.path } : {};
@@ -70,6 +71,13 @@ class ExecMessage {
       this.callBack && this.callBack(this, this.result)
     });
   }
+  getCurrentPath() {
+    if (this.childProcess) {
+      const output = Process.spawnSync("pwd").output;
+      return output[1].toString();
+    }
+    return null;
+  }
   clear() {
     if (this.childProcess) {
       this.childProcess.removeAllListeners();
@@ -85,17 +93,18 @@ class ExecManager extends EventEmitter {
   current: String;
   cmdQueue: Array<ExecMessage> = new Array();
   execMsg: ExecMessage;
-  max: number = 1;
   constructor() {
     super();
     this.root = os.homedir();
     this.current = PathConfig.root;
   }
-  _execResult(e_msg: ExecMessage, result: ExexResult | null) {
-    e_msg.clear();
+  _execResult(exec_msg: ExecMessage, result: ExexResult | null) {
+    const curent_path = exec_msg.getCurrentPath();
+    if (curent_path) this.current = curent_path;
+    exec_msg.clear();
     this.execMsg = null;
-    this.cmdQueue = this.cmdQueue.filter($1 => $1 != e_msg);
-    this.emit("data",e_msg.msg,result);
+    this.cmdQueue = this.cmdQueue.filter($1 => $1 != exec_msg);
+    this.emit("message", exec_msg.msg, result);
     this.exec();
   }
   insert(cmd_msg: CMDMessage) {
@@ -107,6 +116,8 @@ class ExecManager extends EventEmitter {
       this.execMsg.clear();
       this.execMsg.callBack = null;
       this.execMsg = null;
+    }else{
+      this.emit("message", cmd_msg, "CMD类型错误");
     }
   }
   exec() {
@@ -127,12 +138,12 @@ export class CMDCommandTask extends ListenTask {
   constructor(app: App) {
     super(app);
     this.manage = new ExecManager();
-    this.manage.on("data",this.handle.bind(this))
+    this.manage.on("message", this.handle.bind(this))
   }
   async listen(info: CMDMessage) {
     this.manage.insert(info);
   }
-  handle(msg:CMDMessage,res:ExexResult){
-    
+  handle(msg: CMDMessage, res: ExexResult) {
+    this.send(res, msg, MessageType.CMD_MSG);
   }
 } 

@@ -3,7 +3,7 @@
   "id": 11111,
   "name": "CMDCommandTask",
   "data": {
-    "type":200,
+    "type":201,
     "path": "",
     "id": 123456,
     "timeout": 1000,

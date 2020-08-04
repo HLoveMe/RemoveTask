@@ -1,6 +1,6 @@
 import { InfoUpdateManager } from "../ErrorManager";
 import { WebManager } from "../WebSocket/WebSocketManager";
-import { Message } from "../WebSocket/SocketMessage";
+import { Message, MessageType } from "../WebSocket/SocketMessage";
 import { MessageFac } from "../Util/SocketMessageFac";
 export interface App {
   reload: Function
@@ -57,12 +57,11 @@ export class ListenTask extends TaskBase {
     this.app = app;
   }
   async listen(info: Message) { }
-  send(data: Object) {
-    var res = MessageFac(data);
-    if (res.length == 0) {
-      this.updateInfo(new Error("Json 解析失败 ListenTask/send"));
-      return
-    }
-    WebManager.send(res)
+  send(data: Object, msg: Message, key: MessageType = MessageType.Normal) {
+    WebManager.send({
+      ...msg,
+      data,
+      key
+    });
   }
 }
