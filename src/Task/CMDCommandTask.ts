@@ -8,6 +8,8 @@ import { MessageFac } from "../Util/SocketMessageFac";
 declare type ExecCallBack = (msg: ExecMessage, result: ExexResult) => void;
 
 interface ExexResult {
+  id: String;
+  last_path: String;
   close_code: number;
   message: any;
   exec_error: String;
@@ -24,7 +26,7 @@ class ExecMessage {
   childProcess: any;
   constructor(msg: CMDMessage, call: ExecCallBack) {
     this.msg = msg;
-    this.result = {} as ExexResult;
+    this.result = { id: msg.data.id } as ExexResult;
     this.callBack = call;
   }
   exec() {
@@ -101,7 +103,10 @@ class ExecManager extends EventEmitter {
   }
   _execResult(exec_msg: ExecMessage, result: ExexResult | null) {
     const curent_path = exec_msg.getCurrentPath();
-    if (curent_path) this.current = curent_path;
+    if (curent_path){
+      this.current = curent_path
+      result.last_path = curent_path;
+    };
     exec_msg.clear();
     this.execMsg = null;
     this.cmdQueue = this.cmdQueue.filter($1 => $1 != exec_msg);
@@ -117,7 +122,7 @@ class ExecManager extends EventEmitter {
       this.execMsg.clear();
       this.execMsg.callBack = null;
       this.execMsg = null;
-    }else{
+    } else {
       this.emit("message", cmd_msg, "CMD类型错误");
     }
   }
