@@ -1,6 +1,7 @@
 import { InfoUpdateManager } from "../ErrorManager";
 import { WebManager } from "../WebSocket/WebSocketManager";
 import { Message } from "../WebSocket/SocketMessage";
+import { MessageFac } from "../Util/SocketMessageFac";
 export interface App {
   reload: Function
   reconnect: Function
@@ -53,15 +54,13 @@ export class ListenTask extends TaskBase {
   async do(): Promise<TaskStatus> { return TaskStatus.Success; }
   constructor(app: App) {
     super();
-    this.app =app;
+    this.app = app;
   }
   async listen(info: Message) { }
   send(data: Object) {
-    var res = "";
-    try {
-      res = JSON.stringify(data);
-    } catch (error) {
-      this.updateInfo(error, "ListenTask/send");
+    var res = MessageFac(data);
+    if (res.length == 0) {
+      this.updateInfo(new Error("Json 解析失败 ListenTask/send"));
       return
     }
     WebManager.send(res)

@@ -64,9 +64,7 @@ class WebSocketManager {
   }
   _Ping() {
     this.pingId && clearInterval(this.pingId);
-    this.pingId = setInterval(() => {
-      this.send(MessageFac({ ping: 99 }, MessageType.PING));
-    }, 10000)
+    this.pingId = setInterval(() => { this.send(MessageFac({ ping: 99 }, MessageType.PING)) }, 10000)
   }
   send(data: string) {
     this.webSocket && data && this.webSocket.send(data);

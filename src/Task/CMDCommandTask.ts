@@ -91,11 +91,11 @@ class ExecManager extends EventEmitter {
     this.root = os.homedir();
     this.current = PathConfig.root;
   }
-  _execResult(msg: ExecMessage, result: ExexResult | null) {
-    msg.clear();
+  _execResult(e_msg: ExecMessage, result: ExexResult | null) {
+    e_msg.clear();
     this.execMsg = null;
-    this.cmdQueue = this.cmdQueue.filter($1 => $1 != msg);
-    console.log("1111", msg, result)
+    this.cmdQueue = this.cmdQueue.filter($1 => $1 != e_msg);
+    this.emit("data",e_msg.msg,result);
     this.exec();
   }
   insert(cmd_msg: CMDMessage) {
@@ -127,8 +127,12 @@ export class CMDCommandTask extends ListenTask {
   constructor(app: App) {
     super(app);
     this.manage = new ExecManager();
+    this.manage.on("data",this.handle.bind(this))
   }
   async listen(info: CMDMessage) {
     this.manage.insert(info);
+  }
+  handle(msg:CMDMessage,res:ExexResult){
+    
   }
 } 

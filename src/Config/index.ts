@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require("path");
 export declare interface ConfigType {
   version: string;
   ip: string;
