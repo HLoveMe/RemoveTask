@@ -1,6 +1,13 @@
 {
   "date": 11112221212,
   "id": 11111,
-  "name": "ConfigCheckTask",
-  "data": {}
+  "name": "CMDCommandTask",
+  "data": {
+    "type":200,
+    "path": "",
+    "id": 123456,
+    "timeout": 1000,
+    "cmd": "ls",
+    "args": ["-a"]
+  }
 }

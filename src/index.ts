@@ -6,6 +6,7 @@ import { TaskStatus } from "./Task/TaskBase";
 import { InfoUpdateManager } from "./ErrorManager";
 import { ConfigCheckTask } from "./Task/ConfigCheckTask";
 import { TestTask } from "./Task/TestTask";
+import { CMDCommandTask } from "./Task/CMDCommandTask";
 globalThis.fetch = fetch;
 
 class App {
@@ -33,6 +34,7 @@ class App {
   }
   listenerTasks() {
     WebManager.addEventListeners(
+      new CMDCommandTask(this),
       new ConfigCheckTask(this),
       new TestTask(this),
     )
