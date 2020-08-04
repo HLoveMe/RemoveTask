@@ -14,7 +14,7 @@ class WebSocketManager {
     this.subscriber = new Map();
   }
   onOpen = () => {
-    this._ininMessage();
+    this._taskMessage();
     this._Ping();
   };
   onMessage(ev: MessageEvent) {
@@ -57,7 +57,7 @@ class WebSocketManager {
     this.webSocket.onclose = this.onClose.bind(this);
     this.webSocket.onerror = this.onError.bind(this);
   }
-  _ininMessage() {
+  _taskMessage() {
     this.send({
       id: MessageType.INFO_KEY,
       key: MessageType.INFO_KEY,
@@ -82,7 +82,8 @@ class WebSocketManager {
     this.webSocket && data && this.webSocket.send(data);
   }
   addEventListeners(...tasks: ListenTask[]) {
-    tasks.forEach($1 => this.subscriber.set($1.name, $1))
+    tasks.forEach($1 => this.subscriber.set($1.name, $1));
+    this.webSocket && this._taskMessage();
   }
   removeTask(task: ListenTask) {
     this.subscriber.delete(task.name);

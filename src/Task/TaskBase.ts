@@ -3,8 +3,9 @@ import { WebManager } from "../WebSocket/WebSocketManager";
 import { Message, MessageType } from "../WebSocket/SocketMessage";
 import { MessageFac } from "../Util/SocketMessageFac";
 export interface App {
-  reload: Function
-  reconnect: Function
+  reload: Function;
+  reconnect: Function;
+  addListenTask:(tasks:ListenTask[])=>void;
 }
 
 export enum TaskStatus {

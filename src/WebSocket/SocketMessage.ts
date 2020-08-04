@@ -29,3 +29,11 @@ export declare interface CMDData {
 export declare interface CMDMessage extends Message {
   data: CMDData;
 }
+
+export declare interface RemoteDate {
+  context: String;
+  name: String;
+}
+export declare interface RemoteMessage extends Message {
+  data: RemoteDate[];
+}

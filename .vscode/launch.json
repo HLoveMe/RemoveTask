@@ -7,6 +7,15 @@
   {
     "type": "node",
     "request": "launch",
+    "name": "test require",
+    "program": "${workspaceFolder}/Test/requieDir.js",
+    "skipFiles": [
+      "<node_internals>/**"
+    ]
+  },
+  {
+    "type": "node",
+    "request": "launch",
     "name": "Server",
     "program": "${workspaceFolder}/SocketServer/index.js",
     "skipFiles": [

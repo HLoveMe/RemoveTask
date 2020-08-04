@@ -1,12 +1,12 @@
 import { WebManager } from "./WebSocket/WebSocketManager";
-import { InitTaskQueue } from "./Task/InitTaskQueue";
 import { VersionChenkTask } from "./Task/VersionChenkTask";
 import fetch from 'node-fetch';
-import { TaskStatus } from "./Task/TaskBase";
+import { TaskStatus, ListenTask } from "./Task/TaskBase";
 import { InfoUpdateManager } from "./ErrorManager";
 import { ConfigCheckTask } from "./Task/ConfigCheckTask";
-import { TestTask } from "./Task/TestTask";
 import { CMDCommandTask } from "./Task/CMDCommandTask";
+import { RemoteTasks } from "./Task/Remote/index";
+import { RemoteListenTask } from "./Task/RemoteListenTask";
 globalThis.fetch = fetch;
 
 class App {
@@ -24,25 +24,31 @@ class App {
   reload(err: Error = new Error("1s,重启")) {
     debugger
     InfoUpdateManager.update(err);
+    //pm2 启动
     setTimeout(() => { process.exit() }, 1000);
   }
   reconnect() {
-    debugger
     WebManager.clear();
     WebManager.start();
-    this.listenerTasks();
+    this.initListenerTasks();
   }
-  listenerTasks() {
-    WebManager.addEventListeners(
+  initListenerTasks() {
+    this.addListenTask([
       new CMDCommandTask(this),
       new ConfigCheckTask(this),
-      new TestTask(this),
+      new RemoteListenTask(this),
+      ...RemoteTasks
+    ])
+  }
+  addListenTask(tasks: ListenTask[]) {
+    WebManager.addEventListeners(
+      ...tasks
     )
   }
   async run() {
+    this.initListenerTasks();
     const result = await this.sourceInit();
     result && WebManager.start();
-    this.listenerTasks();
   }
 }
 
@@ -55,5 +61,4 @@ class App {
     index += 1;
     await RunApp(index + 1);
   }
-
 })()
