@@ -1,6 +1,6 @@
 
 import PathConfig from "../../Util/PathRUL";
-import { ListenTask } from "../TaskBase";
+import { ListenTask } from "../Base/TaskBase";
 import { scanFiles } from "../../Util/FileUtil";
 import { InfoUpdateManager } from "../../ErrorManager";
 const path = require("path");

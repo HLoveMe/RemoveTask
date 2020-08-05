@@ -1,6 +1,6 @@
 var ws = require("ws");
 import Config from "../Config";
-import { ListenTask } from "../Task/TaskBase";
+import { ListenTask } from "../Task/Base/TaskBase";
 import { ValidationMessage } from "../Util/ValidationMessage";
 import { Message, MessageType } from "./SocketMessage";
 import { MessageFac, ErrorMsgFac } from "../Util/SocketMessageFac";

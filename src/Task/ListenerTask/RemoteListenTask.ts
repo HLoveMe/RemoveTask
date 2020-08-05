@@ -1,7 +1,7 @@
-import { TaskStatus, ListenTask, App } from "./TaskBase";
-import { RemoteMessage } from "../WebSocket/SocketMessage";
-import PathConfig from "../Util/PathRUL";
-import { parseRemoveTask } from "./Remote";
+import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
+import { RemoteMessage } from "../../WebSocket/SocketMessage";
+import PathConfig from "../../Util/PathRUL";
+import { parseRemoveTask } from "../Remote";
 const path = require("path");
 const fs = require("fs");
 /**

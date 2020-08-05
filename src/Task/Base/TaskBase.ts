@@ -1,7 +1,7 @@
-import { InfoUpdateManager } from "../ErrorManager";
-import { WebManager } from "../WebSocket/WebSocketManager";
-import { Message, MessageType } from "../WebSocket/SocketMessage";
-import { MessageFac } from "../Util/SocketMessageFac";
+import { InfoUpdateManager } from "../../ErrorManager";
+import { WebManager } from "../../WebSocket/WebSocketManager";
+import { Message, MessageType } from "../../WebSocket/SocketMessage";
+import { MessageFac } from "../../Util/SocketMessageFac";
 export interface App {
   reload: Function;
   reconnect: Function;

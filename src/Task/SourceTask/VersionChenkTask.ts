@@ -1,7 +1,7 @@
-import { Task, TaskStatus, TaskBase } from "./TaskBase";
-import Config from "../Config";
-import PathConfig from "../Util/PathRUL";
-import { goRequestJson } from "../Util/SourceRequest";
+import { Task, TaskStatus, TaskBase } from "../Base/TaskBase";
+import Config from "../../Config";
+import PathConfig from "../../Util/PathRUL";
+import { goRequestJson } from "../../Util/SourceRequest";
 
 export declare type CheckVersionFunction = () => Promise<boolean>
 

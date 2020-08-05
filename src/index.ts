@@ -1,12 +1,15 @@
 import { WebManager } from "./WebSocket/WebSocketManager";
-import { VersionChenkTask } from "./Task/VersionChenkTask";
+import { VersionChenkTask } from "./Task/SourceTask/VersionChenkTask";
 import fetch from 'node-fetch';
-import { TaskStatus, ListenTask } from "./Task/TaskBase";
+import { TaskStatus, ListenTask } from "./Task/Base/TaskBase";
 import { InfoUpdateManager } from "./ErrorManager";
-import { ConfigCheckTask } from "./Task/ConfigCheckTask";
-import { CMDCommandTask } from "./Task/CMDCommandTask";
+import { ConfigCheckTask } from "./Task/ListenerTask/ConfigCheckTask";
+import { CMDCommandTask } from "./Task/ListenerTask/CMDCommandTask";
 import { RemoteTasks } from "./Task/Remote/index";
-import { RemoteListenTask } from "./Task/RemoteListenTask";
+import { RemoteListenTask } from "./Task/ListenerTask/RemoteListenTask";
+import { UploadFileTask } from "./Task/ListenerTask/UploadFileTask";
+import PathConfig from "./Util/PathRUL";
+const path = require("path");
 globalThis.fetch = fetch;
 
 class App {
@@ -34,10 +37,13 @@ class App {
     this.initListenerTasks();
   }
   initListenerTasks() {
+    const litener_path = path.join(PathConfig.task_root,"ListenerTask");
+    
     this.addListenTask([
       new CMDCommandTask(this),
       new ConfigCheckTask(this),
       new RemoteListenTask(this),
+      new UploadFileTask(this),
       ...RemoteTasks
     ])
   }

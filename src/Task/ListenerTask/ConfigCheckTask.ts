@@ -1,10 +1,10 @@
-import { Task, TaskStatus, TaskBase, ListenTask, App } from "./TaskBase";
-import Config, { ConfigType, updateConfig } from "../Config";
-import PathConfig, { updatePathConfig } from "../Util/PathRUL";
-import { goRequestJson } from "../Util/SourceRequest";
-import { Message } from "../WebSocket/SocketMessage";
-import { ValidationConfig } from "../Util/ValidationMessage";
-import { saveFile } from "../Util/SaveFile";
+import { Task, TaskStatus, TaskBase, ListenTask, App } from "../Base/TaskBase";
+import Config, { ConfigType, updateConfig } from "../../Config";
+import PathConfig, { updatePathConfig } from "../../Util/PathRUL";
+import { goRequestJson } from "../../Util/SourceRequest";
+import { Message } from "../../WebSocket/SocketMessage";
+import { ValidationConfig } from "../../Util/ValidationMessage";
+import { saveFile } from "../../Util/SaveFile";
 
 export class ConfigCheckTask extends ListenTask {
   app: App;

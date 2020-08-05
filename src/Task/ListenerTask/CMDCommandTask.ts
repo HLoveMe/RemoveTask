@@ -1,10 +1,10 @@
-import { TaskStatus, ListenTask, App } from "./TaskBase";
+import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
 var os = require("os");
 const Process = require("child_process");
-import PathConfig from "../Util/PathRUL";
-import { CMDMessage, MessageType } from "../WebSocket/SocketMessage";
+import PathConfig from "../../Util/PathRUL";
+import { CMDMessage, MessageType } from "../../WebSocket/SocketMessage";
 import { EventEmitter } from "events";
-import { MessageFac } from "../Util/SocketMessageFac";
+import { MessageFac } from "../../Util/SocketMessageFac";
 declare type ExecCallBack = (msg: ExecMessage, result: ExexResult) => void;
 
 interface ExexResult {

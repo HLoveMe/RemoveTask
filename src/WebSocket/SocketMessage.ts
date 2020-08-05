@@ -57,3 +57,10 @@ export declare interface PingData {
 export declare interface PingInfoMessage extends Message {
   data: PingData
 }
+
+export declare interface UploadData {
+  path: String;
+}
+export declare interface FileUplodMessage extends Message {
+  data: UploadData
+}

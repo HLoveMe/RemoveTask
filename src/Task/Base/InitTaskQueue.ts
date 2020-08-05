@@ -1,5 +1,5 @@
 import { TaskQueue, Task, TaskStatus } from "./TaskBase";
-import { InfoUpdateManager } from "../ErrorManager";
+import { InfoUpdateManager } from "../../ErrorManager";
 
 export class InitTaskQueue implements TaskQueue {
   list: Task[] = new Array<Task>();
