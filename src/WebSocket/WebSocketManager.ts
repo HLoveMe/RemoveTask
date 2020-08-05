@@ -7,6 +7,7 @@ import { MessageFac, ErrorMsgFac } from "../Util/SocketMessageFac";
 import { PingMessage, UuidMessage } from "../Util/MessageConstants";
 
 class WebSocketManager {
+  app: any;
   url: string;
   webSocket: WebSocket;
   subscriber: Map<String, ListenTask>;
@@ -87,7 +88,10 @@ class WebSocketManager {
     this.webSocket && data && this.webSocket.send(data);
   }
   addEventListeners(...tasks: ListenTask[]) {
-    tasks.forEach($1 => this.subscriber.set($1.name, $1));
+    tasks.forEach($1 => {
+      $1.app = $1.app || this.app;
+      this.subscriber.set($1.name, $1)
+    });
     this.webSocket && this._taskMessage();
   }
   removeTask(task: ListenTask) {

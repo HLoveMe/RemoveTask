@@ -13,6 +13,7 @@ class App {
   constructor() {
     globalThis.reload = this.reload.bind(this);
     globalThis.reconnect = this.reconnect.bind(this);
+    WebManager.app = this;
   }
   async sourceInit() {
     const version_status = await new VersionChenkTask().do();

@@ -1,6 +1,7 @@
 import { TaskStatus, ListenTask, App } from "./TaskBase";
 import { RemoteMessage } from "../WebSocket/SocketMessage";
 import PathConfig from "../Util/PathRUL";
+import { parseRemoveTask } from "./Remote";
 const path = require("path");
 const fs = require("fs");
 /**
@@ -18,9 +19,7 @@ export class RemoteListenTask extends ListenTask {
     this.remote_dir_root = path.join(PathConfig.task_root, "Remote");
   }
   loadRemoteClass(routes: string[]) {
-    const remoteTasks = routes.map($1 => require($1 as string).default).map(SomeClass=>{
-      return new SomeClass(this.app)
-    });
+    const remoteTasks = parseRemoveTask(routes);
     this.app.addListenTask(remoteTasks);
   }
   async listen(info: RemoteMessage) {
