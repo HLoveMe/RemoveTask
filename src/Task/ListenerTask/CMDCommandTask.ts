@@ -135,7 +135,7 @@ class ExecManager extends EventEmitter {
   }
 }
 
-export class CMDCommandTask extends ListenTask {
+export default class CMDCommandTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;
   name: String = "CMDCommandTask";

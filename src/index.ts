@@ -3,12 +3,10 @@ import { VersionChenkTask } from "./Task/SourceTask/VersionChenkTask";
 import fetch from 'node-fetch';
 import { TaskStatus, ListenTask } from "./Task/Base/TaskBase";
 import { InfoUpdateManager } from "./ErrorManager";
-import { ConfigCheckTask } from "./Task/ListenerTask/ConfigCheckTask";
-import { CMDCommandTask } from "./Task/ListenerTask/CMDCommandTask";
 import { RemoteTasks } from "./Task/Remote/index";
-import { RemoteListenTask } from "./Task/ListenerTask/RemoteListenTask";
-import { UploadFileTask } from "./Task/ListenerTask/UploadFileTask";
 import PathConfig from "./Util/PathRUL";
+import { scanFiles } from "./Util/FileUtil";
+import { parseTask, loadtaskClassForDir } from "./Task/Util/loadClass";
 const path = require("path");
 globalThis.fetch = fetch;
 
@@ -37,13 +35,14 @@ class App {
     this.initListenerTasks();
   }
   initListenerTasks() {
-    const litener_path = path.join(PathConfig.task_root,"ListenerTask");
-    
+    const litener_path = path.join(PathConfig.task_root, "ListenerTask");
+    const tasks =  loadtaskClassForDir(litener_path);
     this.addListenTask([
-      new CMDCommandTask(this),
-      new ConfigCheckTask(this),
-      new RemoteListenTask(this),
-      new UploadFileTask(this),
+      // new CMDCommandTask(this),
+      // new ConfigCheckTask(this),
+      // new RemoteListenTask(this),
+      // new UploadFileTask(this),
+      ...tasks,
       ...RemoteTasks
     ])
   }

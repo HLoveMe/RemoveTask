@@ -6,7 +6,7 @@ import { Message } from "../../WebSocket/SocketMessage";
 import { ValidationConfig } from "../../Util/ValidationMessage";
 import { saveFile } from "../../Util/SaveFile";
 
-export class ConfigCheckTask extends ListenTask {
+export default class ConfigCheckTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;
   name: String = "ConfigCheckTask";

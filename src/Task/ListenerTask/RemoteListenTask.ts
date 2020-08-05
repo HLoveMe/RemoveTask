@@ -1,14 +1,14 @@
 import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
 import { RemoteMessage } from "../../WebSocket/SocketMessage";
 import PathConfig from "../../Util/PathRUL";
-import { parseRemoveTask } from "../Remote";
+import { parseTask } from "../Util/loadClass";
 const path = require("path");
 const fs = require("fs");
 /**
  * 1:远程任务必须 使用 export.default
  * 2:远程任务文件保存位置位于TasK/Remote 下
  */
-export class RemoteListenTask extends ListenTask {
+export default class RemoteListenTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;
   name: String = "RemoteListenTask";
@@ -19,7 +19,7 @@ export class RemoteListenTask extends ListenTask {
     this.remote_dir_root = path.join(PathConfig.task_root, "Remote");
   }
   loadRemoteClass(routes: string[]) {
-    const remoteTasks = parseRemoveTask(routes);
+    const remoteTasks = parseTask(routes);
     this.app.addListenTask(remoteTasks);
   }
   async listen(info: RemoteMessage) {
