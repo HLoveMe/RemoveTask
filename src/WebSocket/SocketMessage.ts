@@ -26,7 +26,7 @@ export declare interface UuidData {
 export declare interface UuidMessage extends Message {
   data: UuidData
 }
-export declare type LinkMessage = UuidMessage;
+export declare type LinkMessage = UuidMessage/*  */;
 
 export declare interface CMDData {
   type: MessageType
@@ -41,9 +41,9 @@ export declare interface CMDData {
 export declare interface CMDMessage extends Message {
   data: CMDData;
 }
-
+declare type Base64String = String;
 export declare interface RemoteDate {
-  context: String;
+  context: Base64String;
   name: String;
 }
 export declare interface RemoteMessage extends Message {

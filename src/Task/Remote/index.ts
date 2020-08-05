@@ -12,7 +12,7 @@ try {
     const name:String = path.basename($1);
     if(name == "index.js")return false;
     if(name.startsWith("."))return false;
-    if(name.endsWith("map"))return false;
+    if(name.endsWith(".map"))return false;
     return true
   });
   debugger

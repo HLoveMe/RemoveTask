@@ -3,6 +3,10 @@ import { RemoteMessage } from "../WebSocket/SocketMessage";
 import PathConfig from "../Util/PathRUL";
 const path = require("path");
 const fs = require("fs");
+/**
+ * 1:远程任务必须 使用 export.default
+ * 2:远程任务文件保存位置位于TasK/Remote 下
+ */
 export class RemoteListenTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;
@@ -14,7 +18,9 @@ export class RemoteListenTask extends ListenTask {
     this.remote_dir_root = path.join(PathConfig.task_root, "Remote");
   }
   loadRemoteClass(routes: string[]) {
-    const remoteTasks = routes.map($1 => require($1 as string).default).map(SomeClass=>new SomeClass(this.app));
+    const remoteTasks = routes.map($1 => require($1 as string).default).map(SomeClass=>{
+      return new SomeClass(this.app)
+    });
     this.app.addListenTask(remoteTasks);
   }
   async listen(info: RemoteMessage) {
