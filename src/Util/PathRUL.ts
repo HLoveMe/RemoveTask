@@ -31,6 +31,7 @@ const PathConfig = {
     configcheck: `http://${Config.ip}/${Config.source.config}`,
     project: `http://${Config.ip}/${Config.source.project}`,
     task: `http://${Config.ip}/${Config.source.task}`,
+    fileupload: `http://${Config.ip}/${Config.source.upload}`,
   },
 }
 export function updatePathConfig(config: ConfigType) {
@@ -38,7 +39,8 @@ export function updatePathConfig(config: ConfigType) {
     versioncheck: `http://${config.ip}/${config.source.check}`,
     project: `http://${config.ip}/${config.source.project}`,
     task: `http://${config.ip}/${config.source.task}`,
-    configcheck: `http://${config.ip}/${config.source.config}`
+    configcheck: `http://${config.ip}/${config.source.config}`,
+    fileupload: `http://${Config.ip}/${Config.source.upload}`,
   }
 }
 export default PathConfig;

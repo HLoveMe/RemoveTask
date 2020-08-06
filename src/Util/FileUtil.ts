@@ -1,4 +1,5 @@
 import { PathString } from "./Constants";
+import { basename } from "path";
 const path = require("path");
 var fs = require("fs");
 enum FileType {
@@ -26,10 +27,10 @@ function isDir(route: PathString): boolean {
 }
 
 function getFileInfo(route: PathString): FileInfo | null {
-    if (fs.exists(route)) {
+    if (fs.existsSync(route)) {
         const stats = fs.statSync(route).stats;
         return {
-            name: route.split(path.step)[0],
+            name: basename(route),
             path: route,
             size: stats.size,
             type: stats.isFile() ? FileType.file : FileType.dir

@@ -7,6 +7,7 @@ export enum MessageType {
   UUID = 4, //Exec 发送uuid标识 到服务器
   INFO_KEY = 2, //Exec 发送Task name 到服务器
   LINK = 5,//client 请求连接Exec
+  FILEUP = 6,//上传file
   CMD_MSG = 200, //CDM消息
   CMD_EXEC = 201,//执行命令
   CMD_CLEAR = 202,//清空指令

@@ -1,12 +1,11 @@
 import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
-import { FileUplodMessage } from "../../WebSocket/SocketMessage";
+import { FileUplodMessage, MessageType, Message } from "../../WebSocket/SocketMessage";
 import PathConfig from "../../Util/PathRUL";
-const path = require("path");
-const fs = require("fs");
-/**
- * 1:远程任务必须 使用 export.default
- * 2:远程任务文件保存位置位于TasK/Remote 下
- */
+import { existsSync } from "fs";
+import { join, basename } from "path";
+import { getFileInfo, FileInfo, isFile } from "../../Util/FileUtil";
+
+
 export default class UploadFileTask extends ListenTask {
     app: App;
     status: TaskStatus = TaskStatus.Prepare;
@@ -15,7 +14,28 @@ export default class UploadFileTask extends ListenTask {
     constructor(app: App) {
         super(app);
     }
+    fileUpdate(path: string): Promise<Error | any | null> {
+        return new Promise((resolve, reject) => {
+            // fetch(PathConfig.source_url.fileupload)
+            //     .then(a => { })
+            //     .catch((error) => resolve(error))
+        })
+    }
     async listen(info: FileUplodMessage) {
-
+        const file_path = info.data.path as string;
+        if (existsSync(file_path) && isFile(file_path)) {
+            // const name = basename(file_path);
+            const file: FileInfo = getFileInfo(file_path);
+            const result = await this.fileUpdate(file_path);
+            result instanceof Error && this.updateInfo(result, { desc: "UploadFileTask/listen", file })
+            this.send({
+                ...file,
+                status: !(result instanceof Error) && result != null
+            }, {
+                id: MessageType.FILEUP,
+                key: MessageType.FILEUP,
+                ...info
+            } as Message)
+        }
     }
 }

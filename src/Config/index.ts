@@ -10,6 +10,7 @@ export declare interface ConfigType {
     config: string;
     project: string;
     task: string;
+    upload:string;
   }
 }
 
