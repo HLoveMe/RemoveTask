@@ -9,7 +9,6 @@
       "config": "project/config",
       "check": "project/check",
       "project": "source/project.zip",
-      "task": "source/tasks",
       "upload":"source/upload"
   }
 }

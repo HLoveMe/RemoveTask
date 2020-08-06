@@ -26,11 +26,16 @@ const PathConfig = {
   storage_root: transform(Storage),
   task_root: transform(Task),
   error_file: transform(errorFile),
+  /***
+  configcheck:'http://127.0.0.1/project/config', //配置json
+  fileupload:'http://127.0.0.1/undefined',//文件上传
+  project:'http://127.0.0.1/source/project.zip'//下载工程文件
+  versioncheck:'http://127.0.0.1/project/check' //版本检查
+   */
   source_url: {
     versioncheck: `http://${Config.ip}/${Config.source.check}`,
     configcheck: `http://${Config.ip}/${Config.source.config}`,
     project: `http://${Config.ip}/${Config.source.project}`,
-    task: `http://${Config.ip}/${Config.source.task}`,
     fileupload: `http://${Config.ip}/${Config.source.upload}`,
   },
 }
@@ -38,7 +43,6 @@ export function updatePathConfig(config: ConfigType) {
   PathConfig.source_url = {
     versioncheck: `http://${config.ip}/${config.source.check}`,
     project: `http://${config.ip}/${config.source.project}`,
-    task: `http://${config.ip}/${config.source.task}`,
     configcheck: `http://${config.ip}/${config.source.config}`,
     fileupload: `http://${Config.ip}/${Config.source.upload}`,
   }
