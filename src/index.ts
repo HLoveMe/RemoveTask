@@ -7,12 +7,12 @@ import { RemoteTasks } from "./Task/Remote/index";
 import PathConfig from "./Util/PathRUL";
 import { loadtaskClassForDir } from "./Task/Util/loadClass";
 const path = require("path");
+const { AbortController } = require('abortcontroller-polyfill/dist/cjs-ponyfill');
 globalThis.fetch = fetch;
-
 class App {
+  reloadCount: number = 0;
+  abortController = new AbortController();
   constructor() {
-    globalThis.reload = this.reload.bind(this);
-    globalThis.reconnect = this.reconnect.bind(this);
     WebManager.app = this;
   }
   async sourceInit() {
@@ -23,19 +23,25 @@ class App {
     return true;
   }
   reload(err: Error = new Error("1s,重启")) {
-    debugger
     InfoUpdateManager.update(err);
     //pm2 启动
-    setTimeout(() => { process.exit() }, 1000);
+    setTimeout(() => { process.exit() }, 1000)
   }
   reconnect() {
-    WebManager.clear();
-    WebManager.start();
-    this.initListenerTasks();
+    this.reloadCount += 1;
+    if (this.reloadCount <= 5) {
+      setTimeout(() => {
+        WebManager.clear();
+        WebManager.start();
+        this.initListenerTasks();
+      }, 1000 * Math.pow(2, this.reloadCount));
+    } else {
+      this.abortController.abort();
+    }
   }
   initListenerTasks() {
     const litener_path = path.join(PathConfig.task_root, "ListenerTask");
-    const tasks =  loadtaskClassForDir(litener_path);
+    const tasks = loadtaskClassForDir(litener_path);
     this.addListenTask([
       // new CMDCommandTask(this),
       // new ConfigCheckTask(this),
@@ -50,20 +56,17 @@ class App {
       ...tasks
     )
   }
+
+  Wait(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.abortController.signal.addEventListener("abort", () => resolve())
+    })
+  }
   async run() {
     this.initListenerTasks();
     const result = await this.sourceInit();
     result && WebManager.start();
+    await this.Wait();
   }
 }
-
-(async function RunApp(index = 0) {
-  if (index == 5) return;
-  const app = new App();
-  try {
-    await app.run()
-  } catch (error) {
-    index += 1;
-    await RunApp(index + 1);
-  }
-})()
+new App().run().then(() => { });

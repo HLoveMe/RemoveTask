@@ -41,7 +41,7 @@ class WebSocketManager {
     }
     task.listen(data);
   };
-  onClose() { };
+  onClose(ev: CloseEvent) { this.app.reconnect(); };
   onError(ev: Event) { };
   clear() {
     if (this.webSocket) {
@@ -85,7 +85,7 @@ class WebSocketManager {
     result && this._send(result);
   }
   _send(data: string) {
-    this.webSocket && data && this.webSocket.send(data);
+    this.webSocket && this.webSocket.readyState == 1 && data && this.webSocket.send(data);
   }
   addEventListeners(...tasks: ListenTask[]) {
     tasks.forEach($1 => {
