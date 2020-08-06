@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require('fs');
 const wss = new WebSocket.Server({
   host: "127.0.0.1",
-  port: 8080
+  port: 9090
 });
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
@@ -15,7 +15,5 @@ wss.on('connection', function connection(ws) {
     ws.send(data);
   }, 5000);
 });
-
-path.delimiter
 
 

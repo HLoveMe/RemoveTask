@@ -9,11 +9,11 @@ class _TWebServeManage {
   clientSocket: WebSocket[] = [];
   tastKey: Set<String> = new Set();
   connectMap: Map<String, ConnectBox> = new Map();
-  constructor() {
-  }
+  constructor() {}
   start() {
-    this.serverSocket = new ws.Server({ port: Config.ip });
-    this.serverSocket.on("connection", this.onConnection.bind(this));
+    console.log("object1",{ port: Config.websoket_id, host: Config.ip },this.onConnection)
+    this.serverSocket = new ws.Server({ port: Config.websoket_id, host: Config.ip });
+    this.serverSocket.on("connection", (ws)=>this.onConnection(ws));
   }
   onConnection(socket: WebSocket) {
     socket.onmessage = this.onMessage.bind(this, socket);
@@ -24,6 +24,7 @@ class _TWebServeManage {
       var msg: Message = JSON.parse(ev.data);
       if (msg.key == MessageType.UUID) {
         const uuid = (msg as UuidMessage).data.uuid;
+        console.log("11111111111111",uuid)
       } else if (msg.key == MessageType.LINK) {
 
       }

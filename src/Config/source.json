@@ -1,7 +1,7 @@
 {
   "version": "202008021325",
   "ip": "127.0.0.1",
-  "websoket_id": 8080,
+  "websoket_id": 9090,
   "files": {
       "error": "error.log"
   },

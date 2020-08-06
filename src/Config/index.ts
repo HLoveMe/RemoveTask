@@ -14,7 +14,7 @@ export declare interface ConfigType {
   }
 }
 
-const Config = require("./source.json");
+const Config:ConfigType = require("./source.json");
 
 export function updateConfig(config: ConfigType) {
   Config.version = config.version;
