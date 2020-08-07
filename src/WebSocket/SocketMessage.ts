@@ -31,7 +31,7 @@ export declare interface TaskInfoKeyMessage extends Message {
   data: TaskInfoData
 }
 export declare interface UuidData extends BaseData {
-  uuid: String;
+  uuids?:String[]
 }
 export declare interface UuidMessage extends Message {
   data: UuidData

@@ -43,6 +43,7 @@ export class ConnectBox extends EventEmitter {
   onOpen(socket: WebSocket, ev: MessageEvent) { };
   onMessage(socket: WebSocket, ev: MessageEvent) {
     try {
+      console.log("1111",ev.data);
       const msg = JSON.parse(ev.data);
       if (ValidationMessage(msg)) {
         this.isExecClient(socket) ?

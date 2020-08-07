@@ -15,15 +15,15 @@ export const MessageFac = (msg: Message): string => {
   }
 }
 
-export const ErrorMsgFac = (msg: ErrorInfoMessage, info: any = "") => {
+export const ErrorMsgFac = (msg: ErrorInfoMessage, info: any = "", uuid: string = null) => {
   return JSON.stringify({
     id: msg.id || MessageType.ERROR,
     key: msg.key || MessageType.ERROR,
     name: msg.name || "",
-    date:new Date().getTime(),
-    data:{
+    date: new Date().getTime(),
+    data: {
       error: info,
-      uuid:mac_id
+      uuid: uuid ?? mac_id
     }
   })
 }
