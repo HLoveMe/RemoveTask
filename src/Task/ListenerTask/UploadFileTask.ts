@@ -31,11 +31,7 @@ export default class UploadFileTask extends ListenTask {
             this.send({
                 ...file,
                 status: !(result instanceof Error) && result != null
-            }, {
-                id: MessageType.FILEUP,
-                key: MessageType.FILEUP,
-                ...info
-            } as Message)
+            }, info)
         }
     }
 }

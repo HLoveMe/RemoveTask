@@ -44,8 +44,8 @@ export class ConnectBox extends EventEmitter {
   onMessage(socket: WebSocket, ev: MessageEvent) {
     var msg: Message;
     try {
-      console.log("1111", ev.data);
       msg = JSON.parse(ev.data);
+      console.log("1111", msg.id,msg.name,this.uuid);
       if (ValidationMessage(msg)) {
         this.isExecClient(socket) ?
           this._execSocketOnMessage(socket, msg)
@@ -78,6 +78,8 @@ export class ConnectBox extends EventEmitter {
         const p_msg = { ...PingMessage, data: { ...PingMessage.data, compute: this.compute, uuid: this.uuid } };
         this.send(socket, MessageFac(p_msg));
         break
+      case MessageType.TASK:
+        this.send(this.execClient,MessageFac(msg,true));
     }
   }
   sendTag: NodeJS.Timer;

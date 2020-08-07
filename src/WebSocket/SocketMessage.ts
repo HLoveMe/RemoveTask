@@ -8,7 +8,9 @@ export enum MessageType {
   REQUEST_UUID = 7,// client-server 请求uuid信息
   INFO_KEY = 2, //Exec -server 发送Task name 到服务器 | 服务费 server-client
   LINK = 5,//client - server 请求连接Exec
-  FILEUP = 6,// client->exec  exec上报info
+  TASK = 1000,//task message client  <-> server <-> exec
+}
+export enum CMDMessageType{
   CMD_MSG = 200, //clinet->exec CDM消息
   CMD_EXEC = 201,//clinet->exec执行命令
   CMD_CLEAR = 202,//clinet->exec清空指令
@@ -40,7 +42,7 @@ export declare interface UuidMessage extends Message {
 export declare type LinkMessage = UuidMessage/*  */;
 
 export declare interface CMDData extends BaseData {
-  type: MessageType
+  type: CMDMessageType
   path: String;
   id: String;
   timeout: number

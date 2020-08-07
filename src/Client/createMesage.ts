@@ -1,4 +1,4 @@
-import { MessageType, Message, CMDData } from "../WebSocket/SocketMessage";
+import { MessageType, CMDMessageType, Message, CMDData } from "../WebSocket/SocketMessage";
 import { RequestUuidMessage } from "../Util/MessageConstants";
 const uuidv4 = require('uuid/v4');
 enum TaskMessage {
@@ -21,10 +21,9 @@ function CreateTaskMessage(data: any, type: TaskMessage): Message {
   }
 }
 
-
 export {
   TaskMessage,
-  CreateTaskMessage
+  CreateTaskMessage,
 }
 
 /***
@@ -49,6 +48,8 @@ ws.onclose = function (evt) {
 //ping
 //ws.send(JSON.stringify({ id: 1, key: 1,date:111, data: { ping: "ping"}})) 
 
-
+cmd
+JSON.stringify({id: 8888,key: 1000,date:0,name: "CMDCommandTask",data: {path: "",type: 201,id: 888,timeout: 2000,cmd: "ls",args: ["-a", "-l"]}})
 
  */
+

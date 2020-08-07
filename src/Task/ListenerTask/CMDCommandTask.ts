@@ -2,7 +2,7 @@ import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
 var os = require("os");
 const Process = require("child_process");
 import PathConfig from "../../Util/PathRUL";
-import { CMDMessage, MessageType } from "../../WebSocket/SocketMessage";
+import { CMDMessage, MessageType, CMDMessageType } from "../../WebSocket/SocketMessage";
 import { EventEmitter } from "events";
 import { MessageFac } from "../../Util/SocketMessageFac";
 declare type ExecCallBack = (msg: ExecMessage, result: ExexResult) => void;
@@ -114,10 +114,10 @@ class ExecManager extends EventEmitter {
     this.exec();
   }
   insert(cmd_msg: CMDMessage) {
-    if (cmd_msg.data.type == MessageType.CMD_EXEC) {
+    if (cmd_msg.data.type == CMDMessageType.CMD_EXEC) {
       this.cmdQueue.push(new ExecMessage(cmd_msg, this._execResult.bind(this)));
       this.exec();
-    } else if (cmd_msg.data.type == MessageType.CMD_CLEAR) {
+    } else if (cmd_msg.data.type == CMDMessageType.CMD_CLEAR) {
       this.cmdQueue.length = 0;
       this.execMsg.clear();
       this.execMsg.callBack = null;
@@ -150,6 +150,6 @@ export default class CMDCommandTask extends ListenTask {
     this.manage.insert(info);
   }
   handle(msg: CMDMessage, res: ExexResult) {
-    this.send(res, msg, MessageType.CMD_MSG);
+    this.send(res, msg);
   }
 } 

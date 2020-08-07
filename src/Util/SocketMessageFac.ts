@@ -3,11 +3,11 @@ import { mac_id } from "./MessageConstants"
 
 
 
-export const MessageFac = (msg: Message): string => {
+export const MessageFac = (msg: Message, noUpdate: boolean = false): string => {
   try {
     const result = {
       ...msg,
-      date: (new Date().getTime())
+      date: noUpdate ? msg.date : (new Date().getTime())
     }
     return JSON.stringify(result)
   } catch (error) {
