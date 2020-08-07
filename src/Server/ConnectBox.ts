@@ -6,6 +6,10 @@ import { join } from "path";
 import { MessageFac, ErrorMsgFac } from "../Util/SocketMessageFac";
 import { ValidationMessage } from "../Util/ValidationMessage";
 
+declare class IDWebSocket extends WebSocket {
+  tag_id: number;
+}
+var SocketID = 1000;
 export class ConnectBox extends EventEmitter {
   uuid: String;
   //支持的任务Names
@@ -14,7 +18,7 @@ export class ConnectBox extends EventEmitter {
   msg_typs: String[];
   compute: any;
   execClient: WebSocket;
-  sourceClients: WebSocket[] = [];
+  sourceClients: IDWebSocket[] = [];
   constructor(uuid: String, exec: WebSocket) {
     super();
     this.uuid = uuid;
@@ -28,7 +32,10 @@ export class ConnectBox extends EventEmitter {
 
   addSourceClient(source: WebSocket) {
     this._addListener(source);
-    this.sourceClients.push(source);
+    const id_socket = source as IDWebSocket;
+    SocketID += 1;
+    id_socket.tag_id = SocketID;
+    this.sourceClients.push(id_socket);
     this.sendClientInfos(true, [source]);
   }
   _addListener(socket: WebSocket) {
@@ -45,7 +52,7 @@ export class ConnectBox extends EventEmitter {
     var msg: Message;
     try {
       msg = JSON.parse(ev.data);
-      console.log("1111", msg.id,msg.name,this.uuid);
+      console.log("1111", msg.id, msg.name, this.uuid);
       if (ValidationMessage(msg)) {
         this.isExecClient(socket) ?
           this._execSocketOnMessage(socket, msg)
@@ -68,6 +75,12 @@ export class ConnectBox extends EventEmitter {
         this.task_names = _msg.data.task_names;
         this.msg_typs = _msg.data.message_types;
         break;
+      case MessageType.TASK:
+        //exec-server-client
+        const socket_id = msg.socket_id;
+        const tar_socket = this.sourceClients.find($1 => ($1 as IDWebSocket).tag_id == socket_id);
+        tar_socket && this.send(tar_socket, MessageFac(msg));
+        break
     }
 
     this.sendClientInfos();
@@ -79,7 +92,8 @@ export class ConnectBox extends EventEmitter {
         this.send(socket, MessageFac(p_msg));
         break
       case MessageType.TASK:
-        this.send(this.execClient,MessageFac(msg,true));
+        msg.socket_id = (socket as IDWebSocket).tag_id;
+        this.send(this.execClient, MessageFac(msg, true));
     }
   }
   sendTag: NodeJS.Timer;

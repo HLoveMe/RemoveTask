@@ -16,12 +16,12 @@ export enum CMDMessageType{
   CMD_CLEAR = 202,//clinet->exec清空指令
 }
 export declare interface Message {
+  id: number;
   key: MessageType,
   date: number;
-  id: number;
   data: any;
   name?: string;
-  // uuid?:String;
+  socket_id?:number;
 }
 export declare interface BaseData {
   uuid: String;
