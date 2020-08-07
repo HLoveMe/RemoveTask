@@ -73,3 +73,14 @@ export declare interface UploadData extends BaseData {
 export declare interface FileUplodMessage extends Message {
   data: UploadData
 }
+
+export declare interface ErrorInfo{
+  reason:String;
+  data:String;
+}
+export declare interface ErrorInfoData extends BaseData{
+  error:ErrorInfo
+}
+export declare interface ErrorInfoMessage extends Message{
+  data:ErrorInfoData
+}

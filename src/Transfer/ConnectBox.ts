@@ -3,7 +3,8 @@ import { EventEmitter } from "events";
 import { Message, MessageType, TaskInfoKeyMessage, PingInfoMessage } from "../WebSocket/SocketMessage";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { MessageFac } from "../Util/SocketMessageFac";
+import { MessageFac, ErrorMsgFac } from "../Util/SocketMessageFac";
+import { ValidationMessage } from "../Util/ValidationMessage";
 
 export class ConnectBox extends EventEmitter {
   uuid: String;
@@ -43,12 +44,15 @@ export class ConnectBox extends EventEmitter {
   onMessage(socket: WebSocket, ev: MessageEvent) {
     try {
       const msg = JSON.parse(ev.data);
-      console.log(11, msg)
-      this.isExecClient(socket) ?
-        this._execSocketOnMessage(socket, msg)
-        : this._clientSocketOnMessage(socket, msg);
+      if (ValidationMessage(msg)) {
+        this.isExecClient(socket) ?
+          this._execSocketOnMessage(socket, msg)
+          : this._clientSocketOnMessage(socket, msg);
+      } else {
+        throw new Error("ConnectBox/onMessage/格式不对")
+      }
     } catch (error) {
-
+      this.send(socket, ErrorMsgFac({} as any, { reason: error.message, data: ev.data }));
     }
   };
   _execSocketOnMessage(socket: WebSocket, msg: Message) {

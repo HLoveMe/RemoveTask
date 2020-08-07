@@ -1,4 +1,4 @@
-import { Message, MessageType } from "../WebSocket/SocketMessage"
+import { Message, MessageType, ErrorInfoMessage } from "../WebSocket/SocketMessage"
 import { mac_id } from "./MessageConstants"
 
 
@@ -15,7 +15,7 @@ export const MessageFac = (msg: Message): string => {
   }
 }
 
-export const ErrorMsgFac = (msg: Message, info: any = "") => {
+export const ErrorMsgFac = (msg: ErrorInfoMessage, info: any = "") => {
   return JSON.stringify({
     id: msg.id || MessageType.ERROR,
     key: msg.key || MessageType.ERROR,
