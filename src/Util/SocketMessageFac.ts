@@ -1,4 +1,6 @@
 import { Message, MessageType } from "../WebSocket/SocketMessage"
+import { mac_id } from "./MessageConstants"
+
 
 
 export const MessageFac = (msg: Message): string => {
@@ -18,6 +20,9 @@ export const ErrorMsgFac = (msg: Message, info: any = "") => {
     id: msg.id || MessageType.ERROR,
     key: msg.key || MessageType.ERROR,
     name: msg.name || "",
-    error: info
+    data:{
+      error: info,
+      uuid:mac_id
+    }
   })
 }

@@ -2,9 +2,9 @@ var ws = require("ws");
 import Config from "../Config";
 import { ListenTask } from "../Task/Base/TaskBase";
 import { ValidationMessage } from "../Util/ValidationMessage";
-import { Message, MessageType } from "./SocketMessage";
+import { Message, MessageType, TaskInfoKeyMessage } from "./SocketMessage";
 import { MessageFac, ErrorMsgFac } from "../Util/SocketMessageFac";
-import { PingMessage, UuidMessage } from "../Util/MessageConstants";
+import { PingMessage, UuidMessage, TaskNameMessage } from "../Util/MessageConstants";
 
 class WebSocketManager {
   app: any;
@@ -65,13 +65,12 @@ class WebSocketManager {
   }
   _taskMessage() {
     this.send({
-      id: MessageType.INFO_KEY,
-      key: MessageType.INFO_KEY,
+      ...TaskNameMessage,
       data: {
-        task_names: Array.from(this.subscriber.keys()),
-        message_types: Object.keys(MessageType)
+        ...TaskNameMessage,
+        task_names: Array.from(this.subscriber.keys())
       }
-    } as any)
+    })
   }
   _Ping() {
     this.pingId && clearInterval(this.pingId);
