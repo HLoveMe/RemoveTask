@@ -69,6 +69,7 @@ class _TWebServeManager {
     console.log(21212);
     socket.onmessage = null;
     this.tastKey.add(uuid);
+    this.clientSocket.delete(socket);
     const box = new ConnectBox(uuid, socket);
     this.connectMap.set(uuid, box);
     box.addListener("close", () => this.execRemove(box))

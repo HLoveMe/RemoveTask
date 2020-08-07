@@ -105,11 +105,8 @@ export class ConnectBox extends EventEmitter {
     }
   };
   onError(socket: WebSocket, ev: Event) {
-    // this.onClose(socket, ev);
-    console.log("22222 error");
   };
   send(socket: WebSocket, data: any) {
-    console.log("close",data)
     data && socket.readyState == 1 && socket.send(data)
   }
 }
