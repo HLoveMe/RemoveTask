@@ -1,8 +1,9 @@
-import { CloseMessage } from "../Util/MessageConstants";
+import { CloseMessage, TaskNameMessage, UuidMessage } from "../Util/MessageConstants";
 import { EventEmitter } from "events";
 import { Message, MessageType, TaskInfoKeyMessage, PingInfoMessage } from "../WebSocket/SocketMessage";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { MessageFac } from "../Util/SocketMessageFac";
 
 export class ConnectBox extends EventEmitter {
   uuid: String;
@@ -18,7 +19,6 @@ export class ConnectBox extends EventEmitter {
     this.uuid = uuid;
     this.execClient = exec;
     this._addListener(exec);
-
     setInterval(() => {
       const data = readFileSync(join(__dirname, "message.json"), "utf-8");
       this.send(this.execClient, data);
@@ -28,6 +28,7 @@ export class ConnectBox extends EventEmitter {
   addSourceClient(source: WebSocket) {
     this._addListener(source);
     this.sourceClients.push(source);
+    this.sendClientInfos(true, [source]);
   }
   _addListener(socket: WebSocket) {
     socket.onopen = this.onOpen.bind(this, socket);
@@ -62,10 +63,29 @@ export class ConnectBox extends EventEmitter {
         this.msg_typs = _msg.data.message_types;
         break;
     }
-
+    this.sendClientInfos();
   }
   _clientSocketOnMessage(socket: WebSocket, msg: Message) {
 
+  }
+  sendTag: NodeJS.Timer;
+  sendClientInfos(now: boolean = false, target: WebSocket[] = null) {
+    const timeout = now ? 0 : 30000;
+    this.sendTag && clearTimeout(this.sendTag);
+    this.sendTag = setTimeout(() => {
+      (target || this.sourceClients).forEach((socket) => {
+        this.send(socket, MessageFac({
+          ...UuidMessage,
+          data: { uuid: this.uuid }
+        }));
+        this.task_names && this.send(socket, MessageFac(
+          {
+            ...TaskNameMessage,
+            data: { uuid: this.uuid, task_names: this.task_names, message_types: this.msg_typs }
+          }
+        ));
+      })
+    }, timeout)
   }
   onClose(socket: WebSocket, ev: Event) {
     if (this.isExecClient(socket)) {

@@ -4,8 +4,8 @@ export enum MessageType {
   ExecCLOSE = -98, // server-client  表明 Exec关闭了
   Normal = 0,
   PING = 1, //Exec -server 连续发送心跳信息 到服务器
-  UUID = 4, //Exec -server 发送uuid标识 到服务器
-  INFO_KEY = 2, //Exec -server 发送Task name 到服务器
+  UUID = 4, //Exec -server 发送uuid标识 到服务器 | 服务费 server-client
+  INFO_KEY = 2, //Exec -server 发送Task name 到服务器 | 服务费 server-client
   LINK = 5,//client - server 请求连接Exec
   FILEUP = 6,// client->exec  exec上报info
   CMD_MSG = 200, //clinet->exec CDM消息

@@ -20,6 +20,7 @@ export const ErrorMsgFac = (msg: Message, info: any = "") => {
     id: msg.id || MessageType.ERROR,
     key: msg.key || MessageType.ERROR,
     name: msg.name || "",
+    date:new Date().getTime(),
     data:{
       error: info,
       uuid:mac_id
