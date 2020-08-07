@@ -7,7 +7,7 @@
         "tsc": "tsc",
         "client": "node ./dist/index.js",
         "server1": "node ./SocketServer/index.js",
-        "server": "node ./dist/Transfer/index.js"
+        "server": "node ./dist/Server/index.js"
     },
     "keywords": [],
     "author": "",

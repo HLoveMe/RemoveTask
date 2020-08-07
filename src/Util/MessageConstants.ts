@@ -4,7 +4,7 @@ const getmac = require("getmac").default
 export const mac_id = getmac();
 
 //服务器 发送客服机表明Exec 连接中断
-export const CloseMessage = (info: String): Message => { return { id: MessageType.ExecCLOSE, date: new Date().getTime(), key: MessageType.ExecCLOSE, data: { desc: "ExecClientClose", info, uuid: mac_id } } }
+export const CloseMessage = (info: String): Message => { return { id: MessageType.ExecCLOSE, date: new Date().getTime(), key: MessageType.ExecCLOSE, data: { desc: "ExecClientClose", info, uuid: null } } }
 
 export const PingMessage = { id: MessageType.PING, key: MessageType.PING, data: { ping: "ping", compute: getComInfo(), uuid: mac_id } } as any as PingInfoMessage;
 

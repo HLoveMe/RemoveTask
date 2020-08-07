@@ -20,10 +20,10 @@ export class ConnectBox extends EventEmitter {
     this.uuid = uuid;
     this.execClient = exec;
     this._addListener(exec);
-    setInterval(() => {
-      const data = readFileSync(join(__dirname, "message.json"), "utf-8");
-      this.send(this.execClient, data);
-    }, 5000)
+    // setInterval(() => {
+    //   const data = readFileSync(join(__dirname, "message.json"), "utf-8");
+    //   this.send(this.execClient, data);
+    // }, 5000)
   }
 
   addSourceClient(source: WebSocket) {
@@ -93,6 +93,7 @@ export class ConnectBox extends EventEmitter {
     }, timeout)
   }
   onClose(socket: WebSocket, ev: Event) {
+    console.log("close",this.sourceClients.length)
     if (this.isExecClient(socket)) {
       this.sourceClients.forEach($1 => this.send($1, CloseMessage(ev.toString())));
       this.sourceClients.forEach($1 => $1.close());
@@ -105,8 +106,10 @@ export class ConnectBox extends EventEmitter {
   };
   onError(socket: WebSocket, ev: Event) {
     // this.onClose(socket, ev);
+    console.log("22222 error");
   };
   send(socket: WebSocket, data: any) {
+    console.log("close",data)
     data && socket.readyState == 1 && socket.send(data)
   }
 }

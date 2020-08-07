@@ -16,7 +16,7 @@ import * as MessageConstants from "../Util/MessageConstants";
  */
 class _TWebServeManager {
   serverSocket: any;
-  clientSocket: Map<String, WebSocket> = new Map();
+  clientSocket: Set<WebSocket> = new Set();
   tastKey: Set<String> = new Set();
   connectMap: Map<String, ConnectBox> = new Map();
   constructor() { }
@@ -26,12 +26,13 @@ class _TWebServeManager {
     this.serverSocket.on("connection", (ws) => this.onConnection(ws));
   }
   onConnection(socket: WebSocket) {
+    this.clientSocket = new Set(Array.from(this.clientSocket.values()).filter($1 => $1.readyState == 1));
     socket.onmessage = this.onMessage.bind(this, socket);
-    this.clientSocket.set(socket.url, socket);
+    this.clientSocket.add(socket);
     this.sendUuidMsg(socket);
   }
   onMessage(socket: WebSocket, ev: MessageEvent) {
-    console.log("1111222",ev.data);
+    console.log("1111222", ev.data);
     try {
       var msg: Message = JSON.parse(ev.data);
       if (ValidationMessage(msg)) {
@@ -43,7 +44,7 @@ class _TWebServeManager {
           const has = this.tastKey.has(uuid)
           if (has) {
             this.connectMap.get(uuid).addSourceClient(socket);
-            this.clientSocket.delete(socket.url);
+            this.clientSocket.delete(socket);
           }
         }
       } else {
@@ -72,9 +73,13 @@ class _TWebServeManager {
     this.connectMap.set(uuid, box);
     box.addListener("close", () => this.execRemove(box))
   }
+  closeSocket(socket: WebSocket) {
+    socket.close();
+    socket = null;
+  }
   execRemove(box: ConnectBox) {
     this.tastKey.delete(box.uuid);
-    box.sourceClients.forEach($1 => this.clientSocket.delete($1.url));
+    box.sourceClients.forEach($1 => this.clientSocket.delete($1));
     this.connectMap.delete(box.uuid);
   }
 }
