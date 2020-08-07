@@ -3,6 +3,7 @@ import { ConnectBox } from "./ConnectBox";
 import { Message, MessageType, UuidMessage, PingInfoMessage } from "../WebSocket/SocketMessage";
 import Config from "../Config";
 import { ValidationMessage } from "../Util/ValidationMessage";
+import { MessageFac, ErrorMsgFac } from "../Util/SocketMessageFac";
 
 // const IP: number = 8080;
 class _TWebServeManager {
@@ -36,9 +37,11 @@ class _TWebServeManager {
             this.clientSocket.delete(socket.url);
           }
         }
+      }else{
+        throw new Error("无效消息");
       }
     } catch (error) {
-      
+      socket.send(ErrorMsgFac({} as any,{reason:error.message,data:ev.data}));
     }
   }
 
