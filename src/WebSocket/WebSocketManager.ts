@@ -67,7 +67,7 @@ class WebSocketManager {
     this.send({
       ...TaskNameMessage,
       data: {
-        ...TaskNameMessage,
+        ...TaskNameMessage.data,
         task_names: Array.from(this.subscriber.keys())
       }
     })

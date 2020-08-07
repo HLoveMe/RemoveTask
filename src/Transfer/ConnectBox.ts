@@ -62,7 +62,7 @@ export class ConnectBox extends EventEmitter {
         this.msg_typs = _msg.data.message_types;
         break;
     }
-    
+
   }
   _clientSocketOnMessage(socket: WebSocket, msg: Message) {
 
@@ -82,6 +82,6 @@ export class ConnectBox extends EventEmitter {
     // this.onClose(socket, ev);
   };
   send(socket: WebSocket, data: any) {
-    data && socket.readyState == 1 && socket.send(JSON.stringify(data || {}))
+    data && socket.readyState == 1 && socket.send(data)
   }
 }
