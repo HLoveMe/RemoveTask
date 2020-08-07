@@ -43,7 +43,7 @@ export class ConnectBox extends EventEmitter {
   onOpen(socket: WebSocket, ev: MessageEvent) { };
   onMessage(socket: WebSocket, ev: MessageEvent) {
     try {
-      console.log("1111",ev.data);
+      console.log("1111", ev.data);
       const msg = JSON.parse(ev.data);
       if (ValidationMessage(msg)) {
         this.isExecClient(socket) ?
@@ -75,14 +75,14 @@ export class ConnectBox extends EventEmitter {
   }
   sendTag: NodeJS.Timer;
   sendClientInfos(now: boolean = false, target: WebSocket[] = null) {
+    if (this.sendTag && now == false) return;
     const timeout = now ? 0 : 30000;
-    this.sendTag && clearTimeout(this.sendTag);
     this.sendTag = setTimeout(() => {
       (target || this.sourceClients).forEach((socket) => {
-        this.send(socket, MessageFac({
-          ...UuidMessage,
-          data: { uuid: this.uuid }
-        }));
+        // this.send(socket, MessageFac({
+        //   ...UuidMessage,
+        //   data: { uuid: this.uuid }
+        // }));
         this.task_names && this.send(socket, MessageFac(
           {
             ...TaskNameMessage,
@@ -90,12 +90,13 @@ export class ConnectBox extends EventEmitter {
           }
         ));
       })
+      this.sendTag = null;
     }, timeout)
   }
   onClose(socket: WebSocket, ev: Event) {
-    console.log("close",this.sourceClients.length)
+    console.log("close", this.sourceClients.length)
     if (this.isExecClient(socket)) {
-      this.sourceClients.forEach($1 => this.send($1, CloseMessage(ev.toString())));
+      this.sourceClients.forEach($1 => this.send($1, MessageFac(CloseMessage(ev.toString()))));
       this.sourceClients.forEach($1 => $1.close());
       socket.close();
       this.emit("close");

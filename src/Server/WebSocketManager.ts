@@ -29,7 +29,6 @@ class _TWebServeManager {
     this.clientSocket = new Set(Array.from(this.clientSocket.values()).filter($1 => $1.readyState == 1));
     socket.onmessage = this.onMessage.bind(this, socket);
     this.clientSocket.add(socket);
-    this.sendUuidMsg(socket);
   }
   onMessage(socket: WebSocket, ev: MessageEvent) {
     console.log("1111222", ev.data);
@@ -46,6 +45,8 @@ class _TWebServeManager {
             this.connectMap.get(uuid).addSourceClient(socket);
             this.clientSocket.delete(socket);
           }
+        } else if (msg.key == MessageType.REQUEST_UUID) {
+          this.sendUuidMsg(socket);
         }
       } else {
         throw new Error("无效消息");

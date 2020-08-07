@@ -5,6 +5,7 @@ export enum MessageType {
   Normal = 0,
   PING = 1, //Exec -server 连续发送心跳信息 到服务器
   UUID = 4, //Exec -server 发送uuid标识 到服务器 | 服务费 server-client
+  REQUEST_UUID = 7,// client-server 请求uuid信息
   INFO_KEY = 2, //Exec -server 发送Task name 到服务器 | 服务费 server-client
   LINK = 5,//client - server 请求连接Exec
   FILEUP = 6,// client->exec  exec上报info
@@ -31,7 +32,7 @@ export declare interface TaskInfoKeyMessage extends Message {
   data: TaskInfoData
 }
 export declare interface UuidData extends BaseData {
-  uuids?:String[]
+  uuids?: String[]
 }
 export declare interface UuidMessage extends Message {
   data: UuidData
@@ -74,13 +75,13 @@ export declare interface FileUplodMessage extends Message {
   data: UploadData
 }
 
-export declare interface ErrorInfo{
-  reason:String;
-  data:String;
+export declare interface ErrorInfo {
+  reason: String;
+  data: String;
 }
-export declare interface ErrorInfoData extends BaseData{
-  error:ErrorInfo
+export declare interface ErrorInfoData extends BaseData {
+  error: ErrorInfo
 }
-export declare interface ErrorInfoMessage extends Message{
-  data:ErrorInfoData
+export declare interface ErrorInfoMessage extends Message {
+  data: ErrorInfoData
 }
