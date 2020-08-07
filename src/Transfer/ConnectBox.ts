@@ -6,7 +6,7 @@ export class ConnectBox extends EventEmitter {
   uuid: String;
   execClient: WebSocket;
   sourceClients: WebSocket[] = [];
-  constructor(uuid:String, exec: WebSocket) {
+  constructor(uuid: String, exec: WebSocket) {
     super();
     this.uuid = uuid;
     this.execClient = exec;
@@ -26,16 +26,22 @@ export class ConnectBox extends EventEmitter {
   isExecClient(socket: WebSocket) {
     return socket == this.execClient;
   }
-  onOpen(socket: WebSocket, ev: Event) {
-
-  };
+  onOpen(socket: WebSocket, ev: MessageEvent) { };
   onMessage(socket: WebSocket, ev: MessageEvent) {
     try {
-      if (this.isExecClient(socket)) {
-      }
+      this.isExecClient(socket) ?
+        this._execSocketOnMessage(socket, ev)
+        : this._clientSocketOnMessage(socket, ev);
     } catch (error) {
+
     }
   };
+  _execSocketOnMessage(socket: WebSocket, ev: Event) {
+
+  }
+  _clientSocketOnMessage(socket: WebSocket, ev: Event) {
+
+  }
   onClose(socket: WebSocket, ev: Event) {
     if (this.isExecClient(socket)) {
       this.sourceClients.forEach($1 => this.send($1, CloseMessage(ev.toString())));
