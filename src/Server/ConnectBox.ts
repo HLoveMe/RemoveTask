@@ -1,4 +1,4 @@
-import { CloseMessage, TaskNameMessage, UuidMessage } from "../Util/MessageConstants";
+import { CloseMessage, TaskNameMessage, UuidMessage, PingMessage } from "../Util/MessageConstants";
 import { EventEmitter } from "events";
 import { Message, MessageType, TaskInfoKeyMessage, PingInfoMessage } from "../WebSocket/SocketMessage";
 import { readFileSync } from "fs";
@@ -42,9 +42,10 @@ export class ConnectBox extends EventEmitter {
   }
   onOpen(socket: WebSocket, ev: MessageEvent) { };
   onMessage(socket: WebSocket, ev: MessageEvent) {
+    var msg: Message;
     try {
       console.log("1111", ev.data);
-      const msg = JSON.parse(ev.data);
+      msg = JSON.parse(ev.data);
       if (ValidationMessage(msg)) {
         this.isExecClient(socket) ?
           this._execSocketOnMessage(socket, msg)
@@ -53,7 +54,7 @@ export class ConnectBox extends EventEmitter {
         throw new Error("ConnectBox/onMessage/格式不对")
       }
     } catch (error) {
-      this.send(socket, ErrorMsgFac({} as any, { reason: error.message, data: ev.data }));
+      this.send(socket, ErrorMsgFac({ id: msg.id } as any, { reason: error.message, data: ev.data }));
     }
   };
   _execSocketOnMessage(socket: WebSocket, msg: Message) {
@@ -68,15 +69,21 @@ export class ConnectBox extends EventEmitter {
         this.msg_typs = _msg.data.message_types;
         break;
     }
+
     this.sendClientInfos();
   }
   _clientSocketOnMessage(socket: WebSocket, msg: Message) {
-
+    switch (msg.key) {
+      case MessageType.PING:
+        const p_msg = { ...PingMessage, data: { ...PingMessage.data, compute: this.compute, uuid: this.uuid } };
+        this.send(socket, MessageFac(p_msg));
+        break
+    }
   }
   sendTag: NodeJS.Timer;
   sendClientInfos(now: boolean = false, target: WebSocket[] = null) {
     if (this.sendTag && now == false) return;
-    const timeout = now ? 0 : 30000;
+    const timeout = now ? 0 : 60000;
     this.sendTag = setTimeout(() => {
       (target || this.sourceClients).forEach((socket) => {
         // this.send(socket, MessageFac({
@@ -94,7 +101,6 @@ export class ConnectBox extends EventEmitter {
     }, timeout)
   }
   onClose(socket: WebSocket, ev: Event) {
-    console.log("close", this.sourceClients.length)
     if (this.isExecClient(socket)) {
       this.sourceClients.forEach($1 => this.send($1, MessageFac(CloseMessage(ev.toString()))));
       this.sourceClients.forEach($1 => $1.close());

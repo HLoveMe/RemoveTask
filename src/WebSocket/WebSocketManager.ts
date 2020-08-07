@@ -28,16 +28,16 @@ class WebSocketManager {
       data = JSON.parse(ev.data);
     } catch (err) {
       err_info = { data: ev.data, reason: "WebSocketManager/onMessage/data解析错误" };
-      return this._send(ErrorMsgFac({ id: MessageType.ERROR, key: MessageType.ERROR } as any, err_info))
+      return this._send(ErrorMsgFac({ id: -1, key: MessageType.ERROR } as any, err_info))
     }
     if (err_info == null && ValidationMessage(data) == false) {
       err_info = { data: ev.data, errreasonor: "WebSocketManager/onMessage/格式不对" };
-      return this._send(ErrorMsgFac({ id: MessageType.ERROR, key: MessageType.ERROR } as any, err_info))
+      return this._send(ErrorMsgFac({ id: data.id, key: MessageType.ERROR } as any, err_info))
     };
     let task: ListenTask = this.subscriber.get(data.name);
     if (err_info == null && task == null) {
       err_info = { data: ev.data, reason: "WebSocketManager/onMessage/name不正确" };
-      return this._send(ErrorMsgFac({ id: MessageType.ERROR, key: MessageType.ERROR } as any, err_info))
+      return this._send(ErrorMsgFac({ id: data.id, key: MessageType.ERROR } as any, err_info))
     }
     task.listen(data);
   };
