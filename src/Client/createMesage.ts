@@ -53,5 +53,8 @@ JSON.stringify({id: 8888,key: 1000,date:0,name: "CMDCommandTask",data: {path: ""
 
 //config
 JSON.stringify({id:1000,key:1000,date:10000,name:"ConfigCheckTask",data:{}})
+
+//UploadFileTask
+JSON.stringify({id:1000,key:1000,date:10000,name:"UploadFileTask",data:{path:"/Users/swl/Desktop/2020-08-06 14.29.55.png"}})
  */
 

@@ -5,7 +5,7 @@ import { MessageFac } from "../../Util/SocketMessageFac";
 export interface App {
   reload: Function;
   reconnect: Function;
-  addListenTask:(tasks:ListenTask[])=>void;
+  addListenTask: (tasks: ListenTask[]) => void;
 }
 
 export enum TaskStatus {
@@ -61,7 +61,10 @@ export class ListenTask extends TaskBase {
   send(data: Object, msg: Message, key: MessageType = MessageType.TASK) {
     WebManager.send({
       ...msg,
-      data,
+      data: {
+        ...msg.data,
+        ...data
+      },
       key
     });
   }

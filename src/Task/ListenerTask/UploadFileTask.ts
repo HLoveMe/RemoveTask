@@ -16,7 +16,7 @@ export default class UploadFileTask extends ListenTask {
     }
     fileUpdate(path: string): Promise<Error | any | null> {
         return new Promise((resolve, reject) => {
-            // fetch(PathConfig.source_url.fileupload)
+            fetch(PathConfig.source_url.fileupload)
             //     .then(a => { })
             //     .catch((error) => resolve(error))
         })
@@ -28,10 +28,9 @@ export default class UploadFileTask extends ListenTask {
             const file: FileInfo = getFileInfo(file_path);
             const result = await this.fileUpdate(file_path);
             result instanceof Error && this.updateInfo(result, { desc: "UploadFileTask/listen", file })
-            this.send({
-                ...file,
-                status: !(result instanceof Error) && result != null
-            }, info)
+            this.send(file, info)
+        } else {
+            this.send({ desc: "文件不存在 or 不是文件" }, info)
         }
     }
 }

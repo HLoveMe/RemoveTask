@@ -1,5 +1,6 @@
 
 import Config, { ConfigType } from "../Config";
+import { UploadedFile } from "routing-controllers";
 var path = require("path");
 var os = require("os");
 const isWindow = os.type() == "Windows_NT";
@@ -11,6 +12,7 @@ const new_project = path.join(projet, "new_project")
 // 
 const root = path.join(__dirname, "..");
 const Static = path.join(root, "..", "Static");
+const Upload = path.join(root, "..", "Upload");
 
 const Storage = path.join(root, "Storage");
 
@@ -23,7 +25,8 @@ const errorFile = path.join(Storage, Config.files.error);
 const PathConfig = {
   new_project_path: transform(new_project),
   root: transform(root), // dist 工程路径
-  static_dir: Static,
+  static_dir: transform(Static),
+  upload_dir:transform(Upload),
   config_file: transform(ConfigFile),
   storage_root: transform(Storage),
   task_root: transform(Task),
