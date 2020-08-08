@@ -1,16 +1,20 @@
-import { Controller, Req, Res, Get } from "routing-controllers";
+import { JsonController, Req, Res, Get } from "routing-controllers";
+import { join } from "path";
+import { readFileSync } from "fs";
 
-@Controller("/project")
+@JsonController("/project")
 export class IndexController {
     constructor() { }
     @Get("/")
     @Get("/index")
     index(@Req() request: any, @Res() response: any) {
-        return response.send("Hello response!111");
+        return { desc: "index" }
     }
     @Get("/config")
     config() {
-        return "config11"
+        const source = join(__dirname,"..","Source","Config","config.json");
+        const context = readFileSync(source,'utf-8').toString();
+        return JSON.parse(context);
     }
     @Get("/check")
     check() {

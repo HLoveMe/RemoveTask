@@ -51,5 +51,7 @@ ws.onclose = function (evt) {
 cmd
 JSON.stringify({id: 8888,key: 1000,date:0,name: "CMDCommandTask",data: {path: "",type: 201,id: 888,timeout: 2000,cmd: "ls",args: ["-a", "-l"]}})
 
+//config
+JSON.stringify({id:1000,key:1000,date:10000,name:"ConfigCheckTask",data:{}})
  */
 

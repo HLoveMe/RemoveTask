@@ -2,6 +2,7 @@ export declare interface ConfigType {
   version: string;
   ip: string;
   websoket_id: number;
+  server_ip:number;
   files: {
     error: string;
   },
@@ -15,6 +16,7 @@ export declare interface ConfigType {
 }
 
 const Config:ConfigType = require("./source.json");
+
 
 export function updateConfig(config: ConfigType) {
   Config.version = config.version;

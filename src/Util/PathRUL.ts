@@ -13,7 +13,7 @@ const root = path.join(__dirname, "../");
 
 const Storage = path.join(root, "Storage");
 
-const ConfigFile = path.join(root, "Config", "index.js")
+const ConfigFile = path.join(root, "Config", "source.json")
 
 const Task = path.join(root, "Task");
 
@@ -33,18 +33,18 @@ const PathConfig = {
   versioncheck:'http://127.0.0.1/project/check' //版本检查
    */
   source_url: {
-    versioncheck: `http://${Config.ip}/${Config.source.check}`,
-    configcheck: `http://${Config.ip}/${Config.source.config}`,
-    project: `http://${Config.ip}/${Config.source.project}`,
-    fileupload: `http://${Config.ip}/${Config.source.upload}`,
+    versioncheck: `http://${Config.ip}:${Config.server_ip}/${Config.source.check}`,
+    configcheck: `http://${Config.ip}:${Config.server_ip}/${Config.source.config}`,
+    project: `http://${Config.ip}:${Config.server_ip}/${Config.source.project}`,
+    fileupload: `http://${Config.ip}:${Config.server_ip}/${Config.source.upload}`,
   },
 }
 export function updatePathConfig(config: ConfigType) {
   PathConfig.source_url = {
-    versioncheck: `http://${config.ip}/${config.source.check}`,
-    project: `http://${config.ip}/${config.source.project}`,
-    configcheck: `http://${config.ip}/${config.source.config}`,
-    fileupload: `http://${Config.ip}/${Config.source.upload}`,
+    versioncheck: `http://${config.ip}:${Config.server_ip}/${config.source.check}`,
+    project: `http://${config.ip}:${Config.server_ip}/${config.source.project}`,
+    configcheck: `http://${config.ip}:${Config.server_ip}/${config.source.config}`,
+    fileupload: `http://${Config.ip}:${Config.server_ip}/${Config.source.upload}`,
   }
 }
 export default PathConfig;
