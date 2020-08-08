@@ -28,8 +28,8 @@ const PathConfig = {
   error_file: transform(errorFile),
   /***
   configcheck:'http://127.0.0.1/project/config', //配置json
-  fileupload:'http://127.0.0.1/undefined',//文件上传
-  project:'http://127.0.0.1/source/project.zip'//下载工程文件
+  fileupload:'http://127.0.0.1/project/fileupload',//文件上传
+  project:'http://127.0.0.1/project/source.zip'//下载工程文件
   versioncheck:'http://127.0.0.1/project/check' //版本检查
    */
   source_url: {

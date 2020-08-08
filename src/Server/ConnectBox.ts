@@ -52,7 +52,6 @@ export class ConnectBox extends EventEmitter {
     var msg: Message;
     try {
       msg = JSON.parse(ev.data);
-      console.log("1111", msg.id, msg.name, this.uuid);
       if (ValidationMessage(msg)) {
         this.isExecClient(socket) ?
           this._execSocketOnMessage(socket, msg)

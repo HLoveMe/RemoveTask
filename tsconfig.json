@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata":true,
     "outDir": "./dist",
     "sourceMap": true,
     "noImplicitAny": false,

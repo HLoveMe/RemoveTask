@@ -8,7 +8,7 @@
   "source": {
       "config": "project/config",
       "check": "project/check",
-      "project": "source/project.zip",
-      "upload":"source/upload"
+      "project": "project/source",
+      "upload":"project/upload"
   }
 }

@@ -4,20 +4,16 @@
   // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
   {
     "type": "node",
     "request": "launch",
-    "name": "test require",
-    "program": "${workspaceFolder}/Test/requieDir.js",
-    "skipFiles": [
-      "<node_internals>/**"
-    ]
-  },
-  {
-    "type": "node",
-    "request": "launch",
-    "name": "Server",
-    "program": "${workspaceFolder}/SocketServer/index.js",
+    "name": "nodemon_Server",
+    "runtimeExecutable": "nodemon",
+    "program": "${workspaceFolder}/dist/Server/index.js",
+    "restart": true,
+    "console": "integratedTerminal",
+    "internalConsoleOptions": "neverOpen",
     "skipFiles": [
       "<node_internals>/**"
     ]
@@ -25,7 +21,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Client",
+      "name": "exec_client",
       "program": "${workspaceFolder}/dist/index.js",
       "skipFiles": [
         "<node_internals>/**"

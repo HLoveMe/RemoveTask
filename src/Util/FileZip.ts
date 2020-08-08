@@ -20,5 +20,6 @@ export function unZip(source: PathString, type: FileType = FileType.Project) {
   } else if(type == FileType.Task){
     target = Constant.task_root;
   }
+  
   fs.createReadStream(source).pipe(zlib.createGunzip()).pipe(fs.createWriteStream(target))
 }
