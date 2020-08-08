@@ -37,8 +37,7 @@ class ExecMessage {
         const cmd = this.msg.data.cmd;
         const args = this.msg.data.args || [];
         const option: any = { cwd: (this.msg.data.path || this.last_path || null)?.replace(/[\r\n]/g, "") }
-        const pwd_cmd = (this.isCd() ? " && pwd " : "");
-        const m_cmd = `${cmd} ${args.join(" ") + pwd_cmd}`
+        const m_cmd = `${cmd} ${args.join(" ") + " && pwd "}`
         const child = Process.exec(m_cmd, option)
         this.childProcess = child;
         child.on("close", (code) => {/**结束*/
@@ -77,11 +76,8 @@ class ExecMessage {
       this.callBack && this.callBack(this, this.result)
     });
   }
-  isCd() {
-    return this.msg.data.cmd.trim().toLowerCase() == "cd";
-  }
   getCurrentPath() {
-    if (this.result.exit_code == 0 && this.result.close_code == 0 && this.isCd()) return this.result.stdout.pop();
+    if (this.result.exit_code == 0 && this.result.close_code == 0) return this.result.stdout.pop();
     if (this.msg.data.path) return this.msg.data.path;
     if (this.last_path) return this.last_path;
     return null;
