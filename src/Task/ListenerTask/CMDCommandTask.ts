@@ -20,13 +20,15 @@ interface ExexResult {
 }
 class ExecMessage {
   msg: CMDMessage;
-  staus: number;
+  // staus: number;
+  last_path: string;
   result: ExexResult;
   callBack: Function;
   childProcess: any;
-  constructor(msg: CMDMessage, call: ExecCallBack) {
+  constructor(msg: CMDMessage, last_path: string, call: ExecCallBack) {
     this.msg = msg;
     this.result = { id: msg.data.id } as ExexResult;
+    this.last_path = last_path;
     this.callBack = call;
   }
   exec() {
@@ -34,8 +36,10 @@ class ExecMessage {
       new Promise((resolve) => {
         const cmd = this.msg.data.cmd;
         const args = this.msg.data.args || [];
-        const option: any = this.msg.data.path ? { cwd: this.msg.data.path } : {};
-        const child = Process.spawn(cmd, args, option)
+        const option: any = { cwd: (this.msg.data.path || this.last_path || null)?.replace(/[\r\n]/g, "") }
+        const pwd_cmd = (this.isCd() ? " && pwd " : "");
+        const m_cmd = `${cmd} ${args.join(" ") + pwd_cmd}`
+        const child = Process.exec(m_cmd, option)
         this.childProcess = child;
         child.on("close", (code) => {/**结束*/
           this.result.close_code = code;
@@ -73,11 +77,13 @@ class ExecMessage {
       this.callBack && this.callBack(this, this.result)
     });
   }
+  isCd() {
+    return this.msg.data.cmd.trim().toLowerCase() == "cd";
+  }
   getCurrentPath() {
-    if (this.childProcess) {
-      const output = Process.spawnSync("pwd").output;
-      return output[1].toString();
-    }
+    if (this.result.exit_code == 0 && this.result.close_code == 0 && this.isCd()) return this.result.stdout.pop();
+    if (this.msg.data.path) return this.msg.data.path;
+    if (this.last_path) return this.last_path;
     return null;
   }
   clear() {
@@ -93,7 +99,7 @@ class ExecMessage {
 
 class ExecManager extends EventEmitter {
   root: String;
-  current: String;
+  current: string;
   cmdQueue: Array<ExecMessage> = new Array();
   execMsg: ExecMessage;
   constructor() {
@@ -103,8 +109,8 @@ class ExecManager extends EventEmitter {
   }
   _execResult(exec_msg: ExecMessage, result: ExexResult | null) {
     const curent_path = exec_msg.getCurrentPath();
-    if (curent_path){
-      this.current = curent_path
+    if (curent_path) {
+      this.current = curent_path as string;
       result.last_path = curent_path;
     };
     exec_msg.clear();
@@ -115,7 +121,7 @@ class ExecManager extends EventEmitter {
   }
   insert(cmd_msg: CMDMessage) {
     if (cmd_msg.data.type == CMDMessageType.CMD_EXEC) {
-      this.cmdQueue.push(new ExecMessage(cmd_msg, this._execResult.bind(this)));
+      this.cmdQueue.push(new ExecMessage(cmd_msg, this.current, this._execResult.bind(this)));
       this.exec();
     } else if (cmd_msg.data.type == CMDMessageType.CMD_CLEAR) {
       this.cmdQueue.length = 0;
@@ -152,4 +158,5 @@ export default class CMDCommandTask extends ListenTask {
   handle(msg: CMDMessage, res: ExexResult) {
     this.send(res, msg);
   }
-} 
+}
+
