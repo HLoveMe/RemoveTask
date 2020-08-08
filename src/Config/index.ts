@@ -1,3 +1,5 @@
+import { join } from "path";
+
 export declare interface ConfigType {
   version: string;
   ip: string;
@@ -14,8 +16,8 @@ export declare interface ConfigType {
     upload:string;
   }
 }
-
-const Config:ConfigType = require("./source.json");
+const route = join(__dirname,"..","..","Static","config.json")
+const Config:ConfigType = require(route);
 
 
 export function updateConfig(config: ConfigType) {

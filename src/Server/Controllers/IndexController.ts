@@ -1,6 +1,7 @@
 import { JsonController, Req, Res, Get } from "routing-controllers";
 import { join } from "path";
 import { readFileSync } from "fs";
+import PathConfig from "../../Util/PathRUL";
 
 @JsonController("/project")
 export class IndexController {
@@ -12,8 +13,8 @@ export class IndexController {
     }
     @Get("/config")
     config() {
-        const source = join(__dirname,"..","Source","Config","config.json");
-        const context = readFileSync(source,'utf-8').toString();
+        const source = join(PathConfig.static_dir, "next_config.json");
+        const context = readFileSync(source, 'utf-8').toString();
         return JSON.parse(context);
     }
     @Get("/check")

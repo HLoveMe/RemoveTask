@@ -1,8 +1,11 @@
 {
-  "version": "202008021325",
+  "version": "202008021325-11",
   "ip": "127.0.0.1",
   "websoket_id": 9090,
-  "files": { "error": "error.log" },
+  "server_ip": 9091,
+  "files": {
+    "error": "error.log"
+  },
   "source": {
     "config": "project/config",
     "check": "project/check",

@@ -6,14 +6,15 @@ const isWindow = os.type() == "Windows_NT";
 
 const transform = (url: string) =>
   isWindow ? url.split(path.sep).join("/") : url;
-const projet = path.join(__dirname, "../../");
+const projet = path.join(__dirname, "..", "..");
 const new_project = path.join(projet, "new_project")
 // 
-const root = path.join(__dirname, "../");
+const root = path.join(__dirname, "..");
+const Static = path.join(root, "..", "Static");
 
 const Storage = path.join(root, "Storage");
 
-const ConfigFile = path.join(root, "Config", "source.json")
+const ConfigFile = path.join(Static, "config.json")
 
 const Task = path.join(root, "Task");
 
@@ -22,6 +23,7 @@ const errorFile = path.join(Storage, Config.files.error);
 const PathConfig = {
   new_project_path: transform(new_project),
   root: transform(root), // dist 工程路径
+  static_dir: Static,
   config_file: transform(ConfigFile),
   storage_root: transform(Storage),
   task_root: transform(Task),
