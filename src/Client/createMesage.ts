@@ -32,6 +32,7 @@ var ws = new WebSocket("ws://127.0.0.1:9090");
 ws.onopen = function (evt) {
     console.log("Connection open ...");
     ws.send(JSON.stringify({id:7,key:7,date:1}));
+    ws.send(JSON.stringify({id:5,key:5,date:111,data:{uuid:"f0:18:98:0d:91:97"}}))
 };
 ws.onmessage = function (event) {
    console.log("Connection onmessage ...",JSON.parse(event.data));
