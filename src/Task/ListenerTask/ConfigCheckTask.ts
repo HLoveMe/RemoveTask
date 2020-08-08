@@ -25,9 +25,12 @@ export default class ConfigCheckTask extends ListenTask {
           path: PathConfig.config_file
         })
       }
+      return success;
     }
+    return false;
   }
   async listen(info: Message) {
-    await this.checkConfig();
+    const success = await this.checkConfig();
+    this.send({ check_config: success }, info);
   }
 }
