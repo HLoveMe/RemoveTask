@@ -5,8 +5,8 @@
     "main": "./dist/index.js",
     "scripts": {
         "tsc": "tsc",
-        "exec_client": "node ./dist/index.js",
-        "server": "nodemon ./dist/Server/index.js"
+        "exec_client": "node ./Test/static_copy.js  && node ./dist/index.js",
+        "server": " node ./Test/static_copy.js && nodemon ./dist/Server/index.js"
     },
     "keywords": [],
     "author": "",

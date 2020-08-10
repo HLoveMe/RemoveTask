@@ -5,8 +5,9 @@ var path = require("path");
 var os = require("os");
 const isWindow = os.type() == "Windows_NT";
 
-const transform = (url: string) =>
-  isWindow ? url.split(path.sep).join("/") : url;
+const transform = (url: string) =>url;
+
+
 const projet = path.join(__dirname, "..", "..");
 const new_project = path.join(projet, "new_project")
 // 
