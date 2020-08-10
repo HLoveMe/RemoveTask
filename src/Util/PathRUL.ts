@@ -18,6 +18,8 @@ const Storage = path.join(root, "Storage");
 
 const ConfigFile = path.join(Static, "config.json")
 
+const NextConfigFile = path.join(Static, "next_config.json")
+
 const Task = path.join(root, "Task");
 
 const errorFile = path.join(Storage, Config.files.error);
@@ -26,8 +28,9 @@ const PathConfig = {
   new_project_path: transform(new_project),
   root: transform(root), // dist 工程路径
   static_dir: transform(Static),
-  upload_dir:transform(Upload),
+  upload_dir: transform(Upload),
   config_file: transform(ConfigFile),
+  next_config_file: transform(NextConfigFile),
   storage_root: transform(Storage),
   task_root: transform(Task),
   error_file: transform(errorFile),

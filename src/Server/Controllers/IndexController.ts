@@ -28,7 +28,7 @@ export class IndexController {
     }
     @Get("/config")
     config() {
-        const source = join(PathConfig.static_dir, "next_config.json");
+        const source = PathConfig.next_config_file;//join(PathConfig.static_dir, "next_config.json");
         const context = readFileSync(source, 'utf-8').toString();
         return JSON.parse(context);
     }
