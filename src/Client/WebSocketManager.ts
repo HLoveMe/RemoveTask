@@ -1,7 +1,7 @@
 import PathConfig from "../Util/PathRUL";
 import Config from "../Config";
 import { RequestUuidMessage, LineMessage } from "../Util/MessageConstants";
-import { Message, MessageType, UuidMessage, PingInfoMessage, CMDMessage } from "../WebSocket/SocketMessage";
+import { Message, MessageType, UuidMessage, PingInfoMessage, CMDMessage, TaskInfoData, TaskInfoKeyMessage } from "../WebSocket/SocketMessage";
 import { MessageFac } from "../Util/SocketMessageFac";
 import { EventEmitter } from "events";
 import { setInterval } from "timers";
@@ -44,10 +44,12 @@ class _ClientSocketManager extends EventEmitter {
 
 
 class _InfoManager extends EventEmitter {
+  uuid: string;
   uuids: string[];
   compute: any;
   pwd: string;
-  taskMsg:Message[]
+  taskMsg: Message[]
+  infoData: TaskInfoData;
   webManager: _ClientSocketManager;
   constructor() {
     super();
@@ -58,7 +60,8 @@ class _InfoManager extends EventEmitter {
     this.webManager.on(ClientEvent.on_message, this.on_message.bind(this));
     this.webManager.on(ClientEvent.on_close, this.on_close.bind(this));
   }
-  lineServeForIp(uuid: string) {
+  connecrServeForIp(uuid: string) {
+    this.uuid = uuid;
     this.webManager.send(LineMessage(uuid));
   }
   on_open() {
@@ -76,6 +79,9 @@ class _InfoManager extends EventEmitter {
         break
       case MessageType.PING:
         this.compute = (msg as PingInfoMessage).data.compute;
+        break
+      case MessageType.INFO_KEY:
+        this.infoData = (msg as TaskInfoKeyMessage).data;
         break
       case MessageType.TASK:
         //回复

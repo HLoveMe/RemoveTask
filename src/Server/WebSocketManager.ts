@@ -12,7 +12,9 @@ import * as MessageConstants from "../Util/MessageConstants";
  *  <----Connect----
  *  -----Info---->uuid task types
  *  <---Link-----
- * 
+ *  -----Ping--->
+ *  -----Ping--->
+ *  -----Ping--->
  */
 class _TWebServeManager {
   serverSocket: any;
