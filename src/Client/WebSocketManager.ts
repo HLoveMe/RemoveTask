@@ -11,7 +11,8 @@ enum ClientEvent {
   on_message = "on_message",
   on_close = "on_close",
 }
-
+declare type FilePath = string;
+declare type DirPath = { [key: string]: DirPath }
 class _ClientSocketManager extends EventEmitter {
   url: string;
   webSocket: WebSocket;
@@ -41,7 +42,7 @@ class _ClientSocketManager extends EventEmitter {
 }
 
 
-class _InfoManager extends EventEmitter {
+class InfoManager extends EventEmitter {
   uuid: string;
   uuids: string[];
   compute: any;
@@ -98,7 +99,6 @@ class _InfoManager extends EventEmitter {
     this.compute = null;
   }
 }
-const InfoManager = new _InfoManager();
 
 export {
   InfoManager,

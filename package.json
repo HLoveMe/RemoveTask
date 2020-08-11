@@ -4,10 +4,10 @@
     "description": "",
     "main": "./dist/index.js",
     "scripts": {
-        "tsc": "tsc",
+        "tsc": "node ./Test/static_copy.js && tsc",
         "exec_client": "node ./Test/static_copy.js  && node ./dist/index.js",
         "server": " node ./Test/static_copy.js && nodemon ./dist/Server/index.js",
-        "client":"npx webpack"
+        "client_build":"npx webpack"
     },
     "keywords": [],
     "author": "",
