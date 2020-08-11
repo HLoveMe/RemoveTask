@@ -1,11 +1,9 @@
-import PathConfig from "../Util/PathRUL";
-import Config from "../Config";
 import { RequestUuidMessage, LineMessage } from "../Util/MessageConstants";
-import { Message, MessageType, UuidMessage, PingInfoMessage, CMDMessage, TaskInfoData, TaskInfoKeyMessage } from "../WebSocket/SocketMessage";
 import { MessageFac } from "../Util/SocketMessageFac";
-import { EventEmitter } from "events";
-import { setInterval } from "timers";
+import { Message, MessageType, UuidMessage, PingInfoMessage, CMDMessage, TaskInfoData, TaskInfoKeyMessage } from "../WebSocket/SocketMessage";
+import { EventEmitter } from "events"
 import { TaskMessage } from "./createMesage";
+const Config = require("../../Static/config.json")
 
 enum ClientEvent {
   on_uuids = "on_uuids",

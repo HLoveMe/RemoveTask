@@ -1,6 +1,6 @@
 import { MessageType, Message, PingInfoMessage } from "../WebSocket/SocketMessage"
 import { getComInfo } from "./Machine";
-const getmac = require("getmac").default
+const getmac = globalThis.navigator != null ? () => { } : require("getmac").default
 export const mac_id = getmac();
 
 //服务器 发送客服机表明Exec 连接中断

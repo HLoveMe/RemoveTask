@@ -1,5 +1,4 @@
-import { MessageType, CMDMessageType, Message, CMDData } from "../WebSocket/SocketMessage";
-import { RequestUuidMessage } from "../Util/MessageConstants";
+import { MessageType, Message } from "../WebSocket/SocketMessage";
 const uuidv4 = require('uuid/v4');
 enum TaskMessage {
   ConfigCheckTask = "ConfigCheckTask",
@@ -27,7 +26,7 @@ export {
 }
 
 /***
- * 
+ *
 var ws = new WebSocket("ws://127.0.0.1:9090");
 ws.onopen = function (evt) {
     console.log("Connection open ...");
@@ -37,7 +36,7 @@ ws.onopen = function (evt) {
 ws.onmessage = function (event) {
    console.log("Connection onmessage ...",JSON.parse(event.data));
 };
- 
+
 ws.onclose = function (evt) {
     console.log("Connection closed.");
 };
@@ -47,7 +46,7 @@ ws.onclose = function (evt) {
 //ws.send(JSON.stringify({id:5,key:5,date:111,data:{uuid:"f0:18:98:0d:91:97"}}))
 
 //ping
-//ws.send(JSON.stringify({ id: 1, key: 1,date:111, data: { ping: "ping"}})) 
+//ws.send(JSON.stringify({ id: 1, key: 1,date:111, data: { ping: "ping"}}))
 
 cmd
 JSON.stringify({id: 8888,key: 1000,date:0,name: "CMDCommandTask",data: {path: "",type: 201,id: 888,timeout: 2000,cmd: "ls",args: ["-a", "-l"]}})

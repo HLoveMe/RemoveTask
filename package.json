@@ -6,7 +6,8 @@
     "scripts": {
         "tsc": "tsc",
         "exec_client": "node ./Test/static_copy.js  && node ./dist/index.js",
-        "server": " node ./Test/static_copy.js && nodemon ./dist/Server/index.js"
+        "server": " node ./Test/static_copy.js && nodemon ./dist/Server/index.js",
+        "client":"npx webpack"
     },
     "keywords": [],
     "author": "",
@@ -21,10 +22,12 @@
         "typescript": "^3.5.3"
     },
     "dependencies": {
+        "@babel/core": "^7.11.1",
         "@types/node": "^14.0.9",
         "@types/ws": "^7.2.6",
         "abortcontroller-polyfill": "^1.5.0",
         "axios": "^0.19.2",
+        "babel-loader": "^8.1.0",
         "body-parser": "^1.19.0",
         "class-transformer": "^0.3.1",
         "class-validator": "^0.12.2",
@@ -34,6 +37,8 @@
         "node-fetch": "^2.6.0",
         "reflect-metadata": "^0.1.13",
         "routing-controllers": "^0.9.0-alpha.6",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12",
         "ws": "^7.3.1"
     },
     "peerDependencies": {}
