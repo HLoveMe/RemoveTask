@@ -11,8 +11,8 @@ enum ClientEvent {
   on_message = "on_message",
   on_close = "on_close",
 }
-declare type FilePath = string;
-declare type DirPath = { [key: string]: DirPath }
+declare type Path = Array<Set<String>>;
+
 class _ClientSocketManager extends EventEmitter {
   url: string;
   webSocket: WebSocket;
@@ -47,12 +47,13 @@ class InfoManager extends EventEmitter {
   uuids: string[];
   compute: any;
   pwd: string;
-  taskMsg: Message[]
+  msgList: Message[]
   infoData: TaskInfoData;
   webManager: _ClientSocketManager;
+  sysPath: Path = new Array();
   constructor() {
     super();
-    this.taskMsg = [];
+    this.msgList = [];
     this.webManager = new _ClientSocketManager();
     this.webManager.start();
     this.webManager.on(ClientEvent.on_open, this.on_open.bind(this));
@@ -67,7 +68,15 @@ class InfoManager extends EventEmitter {
     this.webManager.send(RequestUuidMessage);
     setInterval(() => { this.webManager.send(RequestUuidMessage); }, 10000)
   }
-
+  handlePathMsg(route: String, sep: string) {
+    const paths: string[] = [sep];
+    paths.push(...route.split(sep));
+    paths.forEach((_path, index) => {
+      const jh = this.sysPath[index] || new Set();
+      jh.add(_path);
+      this.sysPath[index] = jh;
+    })
+  }
   on_message(ev: MessageEvent) {
     let data = ev.data;
     const msg: Message = JSON.parse(data);
@@ -86,12 +95,12 @@ class InfoManager extends EventEmitter {
         //回复
         if (msg.name == TaskMessage.CMDCommandTask) {
           const _data = (msg as CMDMessage).data;
-          this.pwd = _data.path as string;
+          this.pwd = _data.result.last_path as string;
+          this.handlePathMsg(_data.result.last_path, _data.result.sep as string)
         }
-        this.taskMsg.push(msg);
         break
     }
-
+    this.msgList.push(msg);
     this.emit("update");
   }
   on_close() {

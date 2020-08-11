@@ -10,7 +10,7 @@ export enum MessageType {
   LINK = 5,//client - server 请求连接Exec
   TASK = 1000,//task message client  <-> server <-> exec
 }
-export enum CMDMessageType{
+export enum CMDMessageType {
   CMD_MSG = 200, //clinet->exec CDM消息
   CMD_EXEC = 201,//clinet->exec执行命令
   CMD_CLEAR = 202,//clinet->exec清空指令
@@ -21,7 +21,19 @@ export declare interface Message {
   date: number;
   data: any;
   name?: string;
-  socket_id?:number;
+  socket_id?: number;
+}
+export interface ExexResult {
+  id: String;
+  sep: String;
+  last_path: String;
+  close_code: number;
+  message: any;
+  exec_error: String;
+  exit_code: number;
+  stderr: any[];
+  stdout: any[];
+  error: String;
 }
 export declare interface BaseData {
   uuid: String;
@@ -49,6 +61,7 @@ export declare interface CMDData extends BaseData {
   cmd: String;
   args: String[];
   // single:boolean;
+  result?:ExexResult
 }
 
 export declare interface CMDMessage extends Message {

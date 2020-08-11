@@ -1,23 +1,14 @@
 import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
 var os = require("os");
+var path = require("path");
 const Process = require("child_process");
 import PathConfig from "../../Util/PathRUL";
-import { CMDMessage, MessageType, CMDMessageType } from "../../WebSocket/SocketMessage";
+import { CMDMessage, ExexResult, CMDMessageType } from "../../WebSocket/SocketMessage";
 import { EventEmitter } from "events";
 import { MessageFac } from "../../Util/SocketMessageFac";
 declare type ExecCallBack = (msg: ExecMessage, result: ExexResult) => void;
 
-interface ExexResult {
-  id: String;
-  last_path: String;
-  close_code: number;
-  message: any;
-  exec_error: String;
-  exit_code: number;
-  stderr: any[];
-  stdout: any[];
-  error: String;
-}
+
 class ExecMessage {
   msg: CMDMessage;
   // staus: number;
@@ -27,7 +18,7 @@ class ExecMessage {
   childProcess: any;
   constructor(msg: CMDMessage, last_path: string, call: ExecCallBack) {
     this.msg = msg;
-    this.result = { id: msg.data.id } as ExexResult;
+    this.result = { id: msg.data.id, sep: path.sep } as ExexResult;
     this.last_path = last_path;
     this.callBack = call;
   }
@@ -152,7 +143,7 @@ export default class CMDCommandTask extends ListenTask {
     this.manage.insert(info);
   }
   handle(msg: CMDMessage, res: ExexResult) {
-    this.send(res, msg);
+    this.send({ result: res }, msg);
   }
 }
 
