@@ -7,7 +7,12 @@ const FormData = require('form-data');
 import { getFileInfo, FileInfo, isFile } from "../../Util/FileUtil";
 
 /***
- * {id:1000,key:1000,date:10000,name:"UploadFileTask",data:{path:"/Users/swl/Desktop/My/Doc/Linux_Study/shell.md"}}
+ * {id:1000,key:1000,date:10000,name:"UploadFileTask",
+ *  data:{
+ *      path:"/Users/swl/Desktop/My/Doc/Linux_Study/shell.md",
+ *      name?:""
+ *  }
+ * }
  * 
  * client -- >server-- exec
  * exec --->WebServer
@@ -22,13 +27,13 @@ export default class UploadFileTask extends ListenTask {
     constructor(app: App) {
         super(app);
     }
-    async fileUpdate(path: string): Promise<any | Error | null> {
+    async fileUpdate(path:string,name:string): Promise<any | Error | null> {
         try {
             const url_path = PathConfig.source_url.fileupload;
             let fileStream = readFileSync(path);//读取文件
             const formdata = new FormData();
             formdata.append("up_file", fileStream, {
-                filename: basename(path),
+                filename: name || basename(path),
             });
             const result = await fetch(url_path, {
                 body: formdata,
@@ -45,7 +50,7 @@ export default class UploadFileTask extends ListenTask {
         if (existsSync(file_path) && isFile(file_path)) {
             // const name = basename(file_path);
             const file: FileInfo = getFileInfo(file_path);
-            const result = await this.fileUpdate(file_path);
+            const result = await this.fileUpdate(info.data.path as string,info.data.name as string);
             result instanceof Error && this.updateInfo(result, { desc: "UploadFileTask/listen", file })
             this.send({ ...file, result }, info)
         } else {

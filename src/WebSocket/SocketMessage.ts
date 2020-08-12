@@ -86,6 +86,7 @@ export declare interface PingInfoMessage extends Message {
 
 export declare interface UploadData extends BaseData {
   path: String;
+  name?:String;//指定名称
 }
 export declare interface FileUplodMessage extends Message {
   data: UploadData
