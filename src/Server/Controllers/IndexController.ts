@@ -1,6 +1,6 @@
-import { JsonController,Controller, Req, Res, Get, Post, UploadedFile, Param } from "routing-controllers";
+import { JsonController, Controller, Req, Res, Get, Post, UploadedFile, Param } from "routing-controllers";
 import { join } from "path";
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync,createReadStream } from "fs";
 import * as multer from "multer";
 import PathConfig from "../../Util/PathRUL";
 import { scanFiles, getFileInfo } from "../../Util/FileUtil";
@@ -57,19 +57,52 @@ export class IndexController {
             return info;
         });
     }
-    
+
 }
 
 @Controller("/file")
-export class FileController{
+export class FileController {
+    // @Get("/download")
+    // async download(@Res() response: any, @Req() req: any) {
+    //     const _path = join(PathConfig.upload_dir, req.query.name);
+    //     if (existsSync(_path)) {
+    //         try {
+    //             await new Promise((resolve, reject) => {
+    //                 response.sendFile(_path, (err: any) => {
+    //                     if (err) reject(err);
+    //                     resolve();
+    //                 });
+    //             });
+    //         } catch (error) {
+    //             console.log(error);
+    //             throw new Error(error);
+    //         }
+    //     }
+    // }
+
     @Get("/download")
     download(@Res() response: any, @Req() req: any) {
         const _path = join(PathConfig.upload_dir, req.query.name);
-        if(existsSync(_path)){
-            response.sendFile(_path);
-            return "";
-        } 
-        response.status(504);
-        return response.send("");
+        if (existsSync(_path)) {
+            response.writeHead(200, {
+                "Content-Type": "multipart/form-data",
+                "Content-disposition": `attachment;filename=${req.query.name}`,
+                "Content-Length": getFileInfo(_path).size
+            });
+            const srcReadStream = createReadStream(_path)
+            srcReadStream.pipe(response);
+    
+            srcReadStream.on('close', function () {
+                // It can go here after close event
+                srcReadStream.destroy();
+                // resolve();
+            });
+            
+            srcReadStream.on('error', function (err) {
+                srcReadStream.destroy();
+            })
+            return;
+        }
+        return
     }
 }

@@ -12,6 +12,6 @@
     "project": "project/source",
     "upload": "project/fileupload",
     "files":"project/files",
-    "download":"project/download"
+    "download":"file/download"
   }
 }

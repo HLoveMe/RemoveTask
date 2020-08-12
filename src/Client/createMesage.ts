@@ -59,5 +59,11 @@ JSON.stringify({id:1000,key:1000,date:10000,name:"UploadFileTask",data:{path:"/U
 
 remote Task
 JSON.stringify({id:1000,key:1000,date:10000,name:"RemoteListenTask",data:{name:"文件名称",context:"class=>base64"}})
+
+
+
+http://127.0.0.1:9091/project/files
+
+http://127.0.0.1:9091/file/download?name=1597223583998_zzh.jjj
  */
 
