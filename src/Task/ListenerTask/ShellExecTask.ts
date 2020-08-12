@@ -1,8 +1,7 @@
 import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
-import { RemoteMessage } from "../../WebSocket/SocketMessage";
-import { parseTask } from "../Util/loadClass";
+import { ShellMessage } from "../../WebSocket/SocketMessage";
 
-export default class RemoteListenTask extends ListenTask {
+export default class ShellExecTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;
   name: String = "ShellExecTask";
@@ -10,11 +9,7 @@ export default class RemoteListenTask extends ListenTask {
   constructor(app: App) {
     super(app);
   }
-  loadRemoteClass(routes: string[]) {
-    const remoteTasks = parseTask(routes);
-    this.app.addListenTask(remoteTasks);
-  }
-  async listen(info: RemoteMessage) {
+  async listen(info: ShellMessage) {
     
   }
 }

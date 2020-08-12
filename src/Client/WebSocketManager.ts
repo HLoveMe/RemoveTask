@@ -29,7 +29,7 @@ class _ClientSocketManager extends EventEmitter {
     this.emit(ClientEvent.on_open);
   }
   onMessage(msg: MessageEvent) {
-    this.emit(ClientEvent.on_close, msg);
+    this.emit(ClientEvent.on_message, msg);
   }
   onClose(ev: CloseEvent) {
     this.emit(ClientEvent.on_close, ev);
@@ -78,6 +78,7 @@ class InfoManager extends EventEmitter {
     })
   }
   on_message(ev: MessageEvent) {
+    console.log(1111,ev);
     let data = ev.data;
     const msg: Message = JSON.parse(data);
 

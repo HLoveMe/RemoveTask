@@ -102,3 +102,11 @@ export declare interface ErrorInfoData extends BaseData {
 export declare interface ErrorInfoMessage extends Message {
   data: ErrorInfoData
 }
+
+export declare interface ShellData{
+  bin?:string;
+  shell:string;
+}
+export declare interface ShellMessage extends Message{
+  data:ShellData;
+}

@@ -23,7 +23,7 @@ class _TWebServeManager {
   connectMap: Map<String, ConnectBox> = new Map();
   constructor() { }
   start() {
-    console.log("object1", { port: Config.websoket_id, host: Config.ip }, this.onConnection)
+    // console.log("object1", { port: Config.websoket_id, host: Config.ip }, this.onConnection)
     this.serverSocket = new ws.Server({ port: Config.websoket_id, host: Config.ip });
     this.serverSocket.on("connection", (ws) => this.onConnection(ws));
   }
