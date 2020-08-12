@@ -6,6 +6,18 @@ import { Message } from "../../WebSocket/SocketMessage";
 import { ValidationConfig } from "../../Util/ValidationMessage";
 import { saveFile } from "../../Util/SaveFile";
 
+/**
+ {
+    id: 1000,
+    key: 1000,
+    date: 10000,
+    name: "ConfigCheckTask",
+    data: {}
+  }
+  client->server->exec
+  exec --> webServer 请求最新 [Static/next_config.json 为最新的配置文件]
+ * 
+ */
 export default class ConfigCheckTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;

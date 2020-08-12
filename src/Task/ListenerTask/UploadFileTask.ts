@@ -1,11 +1,19 @@
 import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
 import { FileUplodMessage, MessageType, Message } from "../../WebSocket/SocketMessage";
 import PathConfig from "../../Util/PathRUL";
-import { existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { join, basename } from "path";
+const FormData = require('form-data');
 import { getFileInfo, FileInfo, isFile } from "../../Util/FileUtil";
 
-
+/***
+ * {id:1000,key:1000,date:10000,name:"UploadFileTask",data:{path:"/Users/swl/Desktop/My/Doc/Linux_Study/shell.md"}}
+ * 
+ * client -- >server-- exec
+ * exec --->WebServer
+ * 
+ * 让exec 上传文件到 server Upload文件夹下
+ */
 export default class UploadFileTask extends ListenTask {
     app: App;
     status: TaskStatus = TaskStatus.Prepare;
@@ -14,12 +22,23 @@ export default class UploadFileTask extends ListenTask {
     constructor(app: App) {
         super(app);
     }
-    fileUpdate(path: string): Promise<Error | any | null> {
-        return new Promise((resolve, reject) => {
-            fetch(PathConfig.source_url.fileupload)
-            //     .then(a => { })
-            //     .catch((error) => resolve(error))
-        })
+    async fileUpdate(path: string): Promise<any | Error | null> {
+        try {
+            const url_path = PathConfig.source_url.fileupload;
+            let fileStream = readFileSync(path);//读取文件
+            const formdata = new FormData();
+            formdata.append("up_file", fileStream, {
+                filename: basename(path),
+            });
+            const result = await fetch(url_path, {
+                body: formdata,
+                method: "POST",
+                headers: formdata.getHeaders()
+            }).then($1 => $1.json())
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
     async listen(info: FileUplodMessage) {
         const file_path = info.data.path as string;
@@ -28,7 +47,7 @@ export default class UploadFileTask extends ListenTask {
             const file: FileInfo = getFileInfo(file_path);
             const result = await this.fileUpdate(file_path);
             result instanceof Error && this.updateInfo(result, { desc: "UploadFileTask/listen", file })
-            this.send(file, info)
+            this.send({ ...file, result }, info)
         } else {
             this.send({ desc: "文件不存在 or 不是文件" }, info)
         }

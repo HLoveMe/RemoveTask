@@ -37,6 +37,7 @@ export interface ExexResult {
 }
 export declare interface BaseData {
   uuid: String;
+  result?:any;
 }
 export declare interface TaskInfoData extends BaseData {
   task_names: String[];

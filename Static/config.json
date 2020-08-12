@@ -10,6 +10,6 @@
     "config": "project/config",
     "check": "project/check",
     "project": "project/source",
-    "upload": "project/upload"
+    "upload": "project/fileupload"
   }
 }
