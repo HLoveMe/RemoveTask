@@ -1,9 +1,5 @@
 const path = require("path");
 const fs = require("fs");
-/**
- * 1:远程任务必须 使用 export.default
- * 2:远程任务文件保存位置位于TasK/Remote 下
- */
 const remove_task_root = path.join(__dirname, "Tasks");
 function scanFiles(entry) {
   if (!fs.existsSync(entry)) return [];
@@ -33,6 +29,9 @@ const results = paths.map($1 => {
     conetxt:base64
   }
 })
+/**
+ * 编译后的js 文件保存在Task文件夹下
+ */
 console.log(
   JSON.stringify({
     id: 1234,
