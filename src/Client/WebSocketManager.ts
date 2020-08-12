@@ -37,7 +37,7 @@ class _ClientSocketManager extends EventEmitter {
   onError() { }
 
   send(msg: Message) {
-    this.webSocket.send(MessageFac(msg));
+    this.webSocket.readyState ==1 && this.webSocket.send(MessageFac(msg));
   }
 }
 
