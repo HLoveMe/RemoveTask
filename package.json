@@ -7,7 +7,8 @@
         "tsc": "node ./Test/static_copy.js && tsc",
         "exec_client": "node ./Test/static_copy.js  && node ./dist/index.js",
         "server": " node ./Test/static_copy.js && nodemon ./dist/Server/index.js",
-        "client_build":"npx webpack"
+        "client_build":"npx webpack",
+        "create_remote_msg":"node ./TSome_Util/TaskBase64/index.js"
     },
     "keywords": [],
     "author": "",

@@ -7,6 +7,7 @@ const fs = require("fs");
 /**
  * 1:远程任务必须 使用 export.default
  * 2:远程任务文件保存位置位于TasK/Remote 下
+ * 
  */
 export default class RemoteListenTask extends ListenTask {
   app: App;
@@ -39,4 +40,7 @@ export default class RemoteListenTask extends ListenTask {
       this.updateInfo(error, "RemoteListenTask/listen/saveFile")
     }
   }
+}
+{
+  
 }

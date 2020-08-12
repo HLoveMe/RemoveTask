@@ -56,5 +56,8 @@ JSON.stringify({id:1000,key:1000,date:10000,name:"ConfigCheckTask",data:{}})
 
 //UploadFileTask
 JSON.stringify({id:1000,key:1000,date:10000,name:"UploadFileTask",data:{path:"/Users/swl/Desktop/2020-08-06 14.29.55.png"}})
+
+remote Task
+JSON.stringify({id:1000,key:1000,date:10000,name:"RemoteListenTask",data:{name:"文件名称",context:"class=>base64"}})
  */
 
