@@ -5,7 +5,7 @@ var path = require("path");
 var os = require("os");
 const isWindow = os.type() == "Windows_NT";
 
-const transform = (url: string) =>url;
+const transform = (url: string) => url;
 
 
 const projet = path.join(__dirname, "..", "..");
@@ -25,6 +25,16 @@ const Task = path.join(root, "Task");
 
 const errorFile = path.join(Storage, Config.files.error);
 
+function resetURLS(config: ConfigType) {
+  return {
+    versioncheck: `http://${config.ip}:${config.server_ip}/${config.source.check}`,
+    project: `http://${config.ip}:${config.server_ip}/${config.source.project}`,
+    configcheck: `http://${config.ip}:${config.server_ip}/${config.source.config}`,
+    fileupload: `http://${config.ip}:${config.server_ip}/${config.source.upload}`,
+    files: `http://${config.ip}:${config.server_ip}/${config.source.files}`,
+    download: `http://${config.ip}:${config.server_ip}/${config.source.download}`,
+  }
+}
 const PathConfig = {
   new_project_path: transform(new_project),
   root: transform(root), // dist 工程路径
@@ -40,20 +50,12 @@ const PathConfig = {
   fileupload:'http://127.0.0.1/project/fileupload',//文件上传
   project:'http://127.0.0.1/project/source.zip'//下载工程文件
   versioncheck:'http://127.0.0.1/project/check' //版本检查
+  files:"..." //所有上传文件信息
    */
-  source_url: {
-    versioncheck: `http://${Config.ip}:${Config.server_ip}/${Config.source.check}`,
-    configcheck: `http://${Config.ip}:${Config.server_ip}/${Config.source.config}`,
-    project: `http://${Config.ip}:${Config.server_ip}/${Config.source.project}`,
-    fileupload: `http://${Config.ip}:${Config.server_ip}/${Config.source.upload}`,
-  },
+  source_url: resetURLS(Config),
 }
+
 export function updatePathConfig(config: ConfigType) {
-  PathConfig.source_url = {
-    versioncheck: `http://${config.ip}:${Config.server_ip}/${config.source.check}`,
-    project: `http://${config.ip}:${Config.server_ip}/${config.source.project}`,
-    configcheck: `http://${config.ip}:${Config.server_ip}/${config.source.config}`,
-    fileupload: `http://${Config.ip}:${Config.server_ip}/${Config.source.upload}`,
-  }
+  PathConfig.source_url = resetURLS(config)
 }
 export default PathConfig;

@@ -10,6 +10,8 @@
     "config": "project/config",
     "check": "project/check",
     "project": "project/source",
-    "upload": "project/fileupload"
+    "upload": "project/fileupload",
+    "files":"project/files",
+    "download":"project/download"
   }
 }

@@ -14,6 +14,8 @@ export declare interface ConfigType {
     project: string;
     task: string;
     upload:string;
+    files:string;
+    download:string;
   }
 }
 const route = join(__dirname,"..","..","Static","config.json")

@@ -4,9 +4,9 @@
     "description": "",
     "main": "./dist/index.js",
     "scripts": {
-        "tsc": "node ./Test/static_copy.js && tsc",
-        "exec_client": "node ./Test/static_copy.js  && node ./dist/index.js",
-        "server": " node ./Test/static_copy.js && nodemon ./dist/Server/index.js",
+        "tsc": "node ./TSome_Util/static_copy.js && tsc",
+        "exec_client": "node ./TSome_Util/TSome_Util.js  && node ./dist/index.js",
+        "server": " node ./TSome_Util/static_copy.js && nodemon ./dist/Server/index.js",
         "client_build":"npx webpack",
         "create_remote_msg":"node ./TSome_Util/TaskBase64/index.js"
     },
