@@ -3,9 +3,9 @@ export enum MessageType {
   ERROR = -99, // Exec 发送过来的Error 日志信息 到服务器
   ExecCLOSE = -98, // server-client  表明 Exec关闭了
   Normal = 0,
-  PING = 1, //Exec -server 连续发送心跳信息 到服务器 | client -->server 请求Ping 
+  PING = 1, //Exec-->server 连续发送心跳信息 到服务器 | client -->server 请求Ping 
   UUID = 4, //Exec -server 发送uuid标识 到服务器 | 服务费 server-client
-  REQUEST_UUID = 7,// client-server 请求uuid信息
+  REQUEST_UUID = 7,// client-server 请求uuids信息
   INFO_KEY = 2, //Exec -server 发送Task name 到服务器 | 服务费 server-client
   LINK = 5,//client - server 请求连接Exec
   TASK = 1000,//task message client  <-> server <-> exec

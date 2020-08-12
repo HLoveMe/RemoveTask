@@ -8,8 +8,9 @@
   <script>
     var infoManager = new InfoManager();
     globalThis.infoManager =infoManager;
-    infoManager.run
-    debugger
+    function connect(){
+      infoManager.connecrServeForMac(infoManager.uuids[0]);
+    }
   </script>
 </head>
 <body>

@@ -1,4 +1,4 @@
-import { RequestUuidMessage, LineMessage } from "../Util/MessageConstants";
+import { RequestUuidMessage, LineMessage, PingMessage } from "../Util/MessageConstants";
 import { MessageFac } from "../Util/SocketMessageFac";
 import { Message, MessageType, UuidMessage, PingInfoMessage, CMDMessage, TaskInfoData, TaskInfoKeyMessage } from "../WebSocket/SocketMessage";
 import { EventEmitter } from "events"
@@ -60,17 +60,20 @@ class InfoManager extends EventEmitter {
     this.webManager.on(ClientEvent.on_message, this.on_message.bind(this));
     this.webManager.on(ClientEvent.on_close, this.on_close.bind(this));
   }
-  connecrServeForIp(uuid: string) {
+  connecrServeForMac(uuid: string) {
     this.uuid = uuid;
     this.webManager.send(LineMessage(uuid));
   }
   on_open() {
     this.webManager.send(RequestUuidMessage);
-    setInterval(() => { this.webManager.send(RequestUuidMessage); }, 10000)
+    setInterval(() => {
+      this.webManager.send(RequestUuidMessage);
+      this.webManager.send(PingMessage);
+    }, 10000)
   }
   handlePathMsg(route: String, sep: string) {
     const paths: string[] = [sep];
-    paths.push(...route.split(sep));
+    paths.push(...route.split(sep).filter($1 => $1.length >= 1));
     paths.forEach((_path, index) => {
       const jh = this.sysPath[index] || new Set();
       jh.add(_path);
@@ -78,10 +81,9 @@ class InfoManager extends EventEmitter {
     })
   }
   on_message(ev: MessageEvent) {
-    console.log(1111,ev);
     let data = ev.data;
     const msg: Message = JSON.parse(data);
-
+    console.log(1111, msg);
     switch (msg.key) {
       case MessageType.UUID:
         this.uuids = ((msg as UuidMessage).data.uuids || []) as string[];

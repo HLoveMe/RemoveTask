@@ -127,7 +127,10 @@ class ExecManager extends EventEmitter {
     }
   }
 }
-
+/**
+ * 
+ * {id: 8888,key: 1000,date:0,name: "CMDCommandTask",data: {path: "",type: 201,id: 888,timeout: 2000,cmd: "ls",args: ["-a", "-l"]}}
+ */
 export default class CMDCommandTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;

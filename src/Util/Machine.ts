@@ -11,6 +11,7 @@ function select<T>(params: { [key: string]: T }): T {
 }
 var _computer_info: any;
 function getComInfo() {
+    if(globalThis.navigator != null)return {};
     if (_computer_info) return _computer_info;
     _computer_info = {};
     var dealMem = (mem) => {
