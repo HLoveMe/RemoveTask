@@ -37,7 +37,11 @@ class _ClientSocketManager extends EventEmitter {
   onError() { }
 
   send(msg: Message) {
-    this.webSocket.readyState ==1 && this.webSocket.send(MessageFac(msg));
+    this.webSocket && this.webSocket.readyState == 1 && this.webSocket.send(MessageFac(msg));
+  }
+  clear() {
+    this.webSocket.close();
+    this.webSocket = null;
   }
 }
 
@@ -50,10 +54,24 @@ class InfoManager extends EventEmitter {
   msgList: Message[]
   infoData: TaskInfoData;
   webManager: _ClientSocketManager;
-  sysPath: Path = new Array();
+  sysPath: Path;
+  interval:any;
   constructor() {
     super();
+  }
+  init() {
     this.msgList = [];
+    this.uuids = null;
+    this.uuid = null;
+    this.compute = null;
+    this.pwd = null;
+    this.infoData = null;
+    this.interval = null;
+    this.sysPath = [];
+  }
+  connect() {
+    this.init();
+    this.webManager && this.webManager.clear();
     this.webManager = new _ClientSocketManager();
     this.webManager.start();
     this.webManager.on(ClientEvent.on_open, this.on_open.bind(this));
@@ -65,8 +83,9 @@ class InfoManager extends EventEmitter {
     this.webManager.send(LineMessage(uuid));
   }
   on_open() {
+    this.interval && clearInterval(this.interval);
     this.webManager.send(RequestUuidMessage);
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.webManager.send(RequestUuidMessage);
       this.webManager.send(PingMessage);
     }, 10000)
