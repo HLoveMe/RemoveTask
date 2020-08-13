@@ -6,7 +6,7 @@
     "scripts": {
         "tsc": "node ./TSome_Util/static_copy.js && tsc",
         "exec_client": "node ./TSome_Util/static_copy.js  && node ./dist/index.js",
-        "server": " node ./TSome_Util/static_copy.js && nodemon ./dist/Server/index.js",
+        "server": " node ./TSome_Util/static_copy.js && node ./dist/Server/index.js",
         "client_build":"tsc --watch false && node ./TSome_Util/static_copy.js && npx webpack",
         "create_remote_msg":"node ./TSome_Util/TaskBase64/index.js"
     },

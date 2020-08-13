@@ -24,7 +24,7 @@ class _TWebServeManager {
   constructor() { }
   start() {
     // console.log("object1", { port: Config.websoket_id, host: Config.ip }, this.onConnection)
-    this.serverSocket = new ws.Server({ port: Config.websoket_id, host: Config.ip });
+    this.serverSocket = new ws.Server({ port: Config.websoket_id, host: "127.0.0.1" });
     this.serverSocket.on("connection", (ws) => this.onConnection(ws));
   }
   onConnection(socket: WebSocket) {

@@ -45,6 +45,3 @@ export default class RemoteListenTask extends ListenTask {
     }
   }
 }
-{
-
-}
