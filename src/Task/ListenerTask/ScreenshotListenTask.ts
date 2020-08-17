@@ -51,6 +51,7 @@ export default class ScreenshotListenTask extends ListenTask {
         const bitmap = readFileSync(img);
         content = bitmap.toString('base64');
       }
+      if (existsSync(img)) unlinkSync(img);
       this.send({ content }, msg);
     })
   }
