@@ -7,8 +7,8 @@
         "tsc": "node ./TSome_Util/static_copy.js && tsc",
         "exec_client": "node ./TSome_Util/static_copy.js  && node ./dist/index.js",
         "server": " node ./TSome_Util/static_copy.js && node ./dist/Server/index.js",
-        "client_build":"tsc --watch false && node ./TSome_Util/static_copy.js && npx webpack",
-        "create_remote_msg":"node ./TSome_Util/TaskBase64/index.js"
+        "client_build": "tsc --watch false && node ./TSome_Util/static_copy.js && npx webpack",
+        "create_remote_msg": "node ./TSome_Util/TaskBase64/index.js"
     },
     "keywords": [],
     "author": "",
@@ -32,6 +32,7 @@
         "body-parser": "^1.19.0",
         "class-transformer": "^0.3.1",
         "class-validator": "^0.12.2",
+        "desktop-screenshot": "^0.1.1",
         "express": "^4.17.1",
         "getmac": "^5.14.0",
         "multer": "^1.4.2",

@@ -14,6 +14,7 @@ const new_project = path.join(projet, "new_project")
 const root = path.join(__dirname, "..");
 const Static = path.join(root, "..", "Static");
 const Upload = path.join(root, "..", "Upload");
+const Temp = path.join(root, "..", "Temp");
 
 const Storage = path.join(root, "Storage");
 
@@ -40,6 +41,7 @@ const PathConfig = {
   root: transform(root), // dist 工程路径
   static_dir: transform(Static),
   upload_dir: transform(Upload),
+  temp_dir: transform(Temp),
   config_file: transform(ConfigFile),
   next_config_file: transform(NextConfigFile),
   storage_root: transform(Storage),

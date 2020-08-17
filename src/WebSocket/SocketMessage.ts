@@ -37,7 +37,7 @@ export interface ExexResult {
 }
 export declare interface BaseData {
   uuid: String;
-  result?:any;
+  result?: any;
 }
 export declare interface TaskInfoData extends BaseData {
   task_names: String[];
@@ -62,7 +62,7 @@ export declare interface CMDData extends BaseData {
   cmd: String;
   args: String[];
   // single:boolean;
-  result?:ExexResult
+  result?: ExexResult
 }
 
 export declare interface CMDMessage extends Message {
@@ -86,7 +86,7 @@ export declare interface PingInfoMessage extends Message {
 
 export declare interface UploadData extends BaseData {
   path: String;
-  name?:String;//指定名称
+  name?: String;//指定名称
 }
 export declare interface FileUplodMessage extends Message {
   data: UploadData
@@ -103,10 +103,21 @@ export declare interface ErrorInfoMessage extends Message {
   data: ErrorInfoData
 }
 
-export declare interface ShellData{
-  bin?:string;
-  shell:string;
+export declare interface ShellData {
+  bin?: string;
+  shell: string;
 }
-export declare interface ShellMessage extends Message{
-  data:ShellData;
+export declare interface ShellMessage extends Message {
+  data: ShellData;
+}
+export declare interface ScreenshotData {
+  base64: String;
+}
+export enum ScreenshotCMD {
+  START,
+  END
+}
+export declare interface ScreenshotMessage extends Message {
+  data: ScreenshotData;
+  screenshotCmd: ScreenshotCMD
 }
