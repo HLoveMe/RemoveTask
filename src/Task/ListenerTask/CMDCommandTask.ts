@@ -111,10 +111,11 @@ class ExecManager extends EventEmitter {
       this.cmdQueue.push(new ExecMessage(cmd_msg, this.current, this._execResult.bind(this)));
       this.exec();
     } else if (cmd_msg.data.type == CMDMessageType.CMD_CLEAR) {
-      this.cmdQueue.length = 0;
-      this.execMsg.clear();
-      this.execMsg.callBack = null;
-      this.execMsg = null;
+      this.clear();
+      // this.cmdQueue.length = 0;
+      // this.execMsg.clear();
+      // this.execMsg.callBack = null;
+      // this.execMsg = null;
     } else {
       this.emit("message", cmd_msg, "CMD类型错误");
     }
@@ -125,6 +126,12 @@ class ExecManager extends EventEmitter {
       this.execMsg.exec();
       return;
     }
+  }
+  clear() {
+    this.cmdQueue.length = 0;
+    this.execMsg.clear();
+    this.execMsg.callBack = null;
+    this.execMsg = null;
   }
 }
 /**
@@ -148,5 +155,8 @@ export default class CMDCommandTask extends ListenTask {
   handle(msg: CMDMessage, res: ExexResult) {
     this.send({ result: res }, msg);
   }
+  clear() {
+    this.manage.clear();
+  };
 }
 

@@ -57,6 +57,7 @@ export class ListenTask extends TaskBase {
     super();
     this.app = app;
   }
+  clear(){};
   async listen(info: Message) { }
   send(data: Object, msg: Message, key: MessageType = MessageType.TASK) {
     WebManager.send({

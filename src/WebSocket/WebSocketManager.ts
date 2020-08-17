@@ -34,6 +34,10 @@ class WebSocketManager {
       err_info = { data: ev.data, errreasonor: "WebSocketManager/onMessage/格式不对" };
       return this._send(ErrorMsgFac({ id: data.id, key: MessageType.ERROR } as any, err_info))
     };
+    if (data.key == MessageType.CLEAR) {
+      this.subscriber.forEach(task => task.clear())
+      return;
+    }
     let task: ListenTask = this.subscriber.get(data.name);
     if (err_info == null && task == null) {
       err_info = { data: ev.data, reason: "WebSocketManager/onMessage/name不正确" };

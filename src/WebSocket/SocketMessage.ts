@@ -1,5 +1,6 @@
 
 export enum MessageType {
+  CLEAR = -100,//清除
   ERROR = -99, // Exec 发送过来的Error 日志信息 到服务器
   ExecCLOSE = -98, // server-client  表明 Exec关闭了
   Normal = 0,
@@ -110,14 +111,21 @@ export declare interface ShellData {
 export declare interface ShellMessage extends Message {
   data: ShellData;
 }
+
+export interface ImageInfo {
+  quality: number;
+  width: number;
+  height: number;
+}
 export declare interface ScreenshotData {
-  base64: String;
+  base64?: String;
+  screenshotCmd: ScreenshotCMD,
+  info?: ImageInfo
 }
 export enum ScreenshotCMD {
-  START,
-  END
+  START = 1000,
+  END = 990
 }
 export declare interface ScreenshotMessage extends Message {
   data: ScreenshotData;
-  screenshotCmd: ScreenshotCMD
 }

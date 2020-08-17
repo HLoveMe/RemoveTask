@@ -58,6 +58,7 @@ class InfoManager extends EventEmitter {
   interval:any;
   constructor() {
     super();
+    this.connect();
   }
   init() {
     this.msgList = [];

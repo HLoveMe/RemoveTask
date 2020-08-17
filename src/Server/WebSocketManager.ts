@@ -33,7 +33,7 @@ class _TWebServeManager {
     this.clientSocket.add(socket);
   }
   onMessage(socket: WebSocket, ev: MessageEvent) {
-    console.log("1111222", ev.data);
+    console.log("服务器接受到信息", ev.data);
     try {
       var msg: Message = JSON.parse(ev.data);
       if (ValidationMessage(msg)) {

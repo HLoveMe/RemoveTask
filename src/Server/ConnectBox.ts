@@ -1,4 +1,4 @@
-import { CloseMessage, TaskNameMessage, UuidMessage, PingMessage } from "../Util/MessageConstants";
+import { CloseMessage, TaskNameMessage, UuidMessage, PingMessage, ClearMessage } from "../Util/MessageConstants";
 import { EventEmitter } from "events";
 import { Message, MessageType, TaskInfoKeyMessage, PingInfoMessage } from "../WebSocket/SocketMessage";
 import { readFileSync } from "fs";
@@ -124,6 +124,9 @@ export class ConnectBox extends EventEmitter {
     } else {
       this.sourceClients = this.sourceClients.filter($1 => $1 != socket);
       socket.close();
+    }
+    if (this.sourceClients.length == 0) {
+      this.send(this.execClient, MessageFac(ClearMessage))
     }
   };
   onError(socket: WebSocket, ev: Event) {
