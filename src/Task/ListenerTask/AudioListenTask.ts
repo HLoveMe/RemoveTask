@@ -7,6 +7,10 @@
  * alias play="/Users/swl/Downloads/sox-14.4.2/play"
  * alias soxi="/Users/swl/Downloads/sox-14.4.2/soxi"
  * alias sox="/Users/swl/Downloads/sox-14.4.2/sox"
+ * 
+ * https://www.npmjs.com/package/node-audiorecorder
+ * 
+ * https://www.npmjs.com/package/node-recorder
  */
 
  /**
