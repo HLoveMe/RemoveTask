@@ -129,3 +129,11 @@ export enum ScreenshotCMD {
 export declare interface ScreenshotMessage extends Message {
   data: ScreenshotData;
 }
+
+export declare interface AudioData {
+  time:number;
+  file?:string;//result
+}
+export declare interface AudioTaskMessage extends Message{
+  data:AudioData
+}
