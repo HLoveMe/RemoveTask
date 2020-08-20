@@ -18,12 +18,17 @@ export default class NpmInstallTask extends ListenTask {
   async run_task(info: NpmInstallMessge) {
     const tasks = info.data.tasks;
     const results = [];
-    for (let index=0;index<tasks.length;index++) {
+    for (let index = 0; index < tasks.length; index++) {
       const task = tasks[index]
       const project = join(PathConfig.root, "..");
       const global = task.global;
-      const res = await ExecProcess(`cd ${project} && npm install ${task.name} ${global ? "-g" : ""}`);
-      results.push({ name:task.name, res });
+      const res = await Promise.race([
+        ExecProcess(`cd ${project} && npm install ${task.name} ${global ? "-g" : ""}`),
+        new Promise((resolve) => {
+          setTimeout(() => resolve({}), 25000)
+        })
+      ])
+      results.push({ name: task.name, res });
     }
     this.send({ results }, info);
     info.data.reload && this.app.reload();
