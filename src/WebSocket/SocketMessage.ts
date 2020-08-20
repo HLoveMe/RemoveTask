@@ -43,7 +43,7 @@ export declare interface BaseData {
 export declare interface TaskInfoData extends BaseData {
   task_names: String[];
   message_types: String[];
-  task_info:any[];
+  task_info: any[];
 }
 export declare interface TaskInfoKeyMessage extends Message {
   data: TaskInfoData
@@ -131,13 +131,24 @@ export declare interface ScreenshotMessage extends Message {
   data: ScreenshotData;
 }
 
-export declare interface AudioExexResult extends ExexResult{
-  file_name:string
+export declare interface AudioExexResult extends ExexResult {
+  file_name: string
 }
 export declare interface AudioData {
-  time:number;
-  result?:AudioExexResult;//result
+  time: number;
+  result?: AudioExexResult;//result
 }
-export declare interface AudioTaskMessage extends Message{
-  data:AudioData
+export declare interface AudioTaskMessage extends Message {
+  data: AudioData
+}
+export declare interface NpmTask{
+  name:string;
+  global: boolean
+}
+export declare interface NpmData {
+  tasks: NpmTask[];//url or name
+  reload:boolean;
+}
+export declare interface NpmInstallMessge extends Message {
+  data: NpmData
 }
