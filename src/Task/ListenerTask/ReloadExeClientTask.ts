@@ -17,6 +17,7 @@ export default class ReloadExeClient extends ListenTask {
   }
   toString() {
     return {
+      name:this.name,
       desc: "Exec 重启",
       dome:{id:1000,key:1000,date:10000,name:"ReloadExeClient",data:{}}
     }

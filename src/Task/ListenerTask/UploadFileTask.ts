@@ -59,6 +59,7 @@ export default class UploadFileTask extends ListenTask {
     }
     toString() {
         return {
+            name:this.name,
             desc: "Exec uploadfile",
             dome: {
                 id: 1000, key: 1000, date: 10000, name: "UploadFileTask",

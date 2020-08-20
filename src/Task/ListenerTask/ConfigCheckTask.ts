@@ -47,6 +47,7 @@ export default class ConfigCheckTask extends ListenTask {
   }
   toString() {
     return {
+      name:this.name,
       desc: "Exec 更新配置",
       dome: {
         id: 11,

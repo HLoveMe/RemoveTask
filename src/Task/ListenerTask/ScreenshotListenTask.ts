@@ -69,6 +69,7 @@ export default class ScreenshotListenTask extends ListenTask {
   }
   toString() {
     return {
+      name:this.name,
       desc: "Exec 截屏 screenshotCmd:1000/990",
       dome: {id: 1000,key: 1000,date: 10000,name: "ScreenshotListenTask",data: {screenshotCmd:1000}}
     }

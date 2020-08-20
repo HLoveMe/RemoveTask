@@ -47,6 +47,7 @@ export default class RemoteListenTask extends ListenTask {
   }
   toString() {
     return {
+      name:this.name,
       desc: "Exec 下载远程任务",
       dome: { id: 1000, key: 1000, date: 10000, name: "RemoteListenTask", data: { name: "文件名称", context: "base64源文件" } }
     }
