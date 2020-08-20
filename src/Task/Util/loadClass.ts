@@ -5,9 +5,16 @@ const fs = require("fs");
 const path = require("path");
 
 function parseTask(routes: String[]): ListenTask[] {
+
     const remoteTasks = routes
         .map($1 => require($1 as string).default)
-        .map(SomeClass => typeof SomeClass == 'function' ? new SomeClass(null) : null)
+        .map(SomeClass => {
+            try {
+                return typeof SomeClass == 'function' ? new SomeClass(null) : null
+            } catch (error) {
+                return null
+            }
+        })
         .filter($2 => $2 != null && $2 instanceof ListenTask);
     return remoteTasks;
 }

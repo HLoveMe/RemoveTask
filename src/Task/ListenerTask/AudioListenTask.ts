@@ -55,35 +55,6 @@ export default class AudioListenTask extends ListenTask {
   run_audio(info: AudioTaskMessage) {
     const file_name = join(PathConfig.temp_dir, `${new Date().getTime()}_audio_.wav`);
     return Promise.race([
-      // new Promise((resolve, reject) => {
-      //   const time = Math.min(info.data.time, 20);
-      //   const m_cmd = `python3 ${this.python_file} ${time} ${file_name}`
-      //   const child = Process.exec(m_cmd)
-
-      //   child.on("close", (code) => {/**结束*/
-      //     this.result.close_code = code;
-      //     resolve(this.result);
-      //   })
-      //   child.on("message", (message) => { this.result.message = message; })
-
-      //   child.on("error", (error) => {/**失败*/
-      //     this.result.exec_error = error.toString();
-      //   })
-
-      //   child.on("exit", (code) => {
-      //     this.result.exit_code = code;
-      //   });
-      //   this.result.stderr = [];
-      //   child.stderr.on("data", (chunk) => {
-      //     //输出错误日志
-      //     this.result.stderr.push(chunk.toString())
-      //   })
-      //   this.result.stdout = [];
-      //   child.stdout.on('data', (chunk) => {
-      //     this.result.stdout.push(chunk.toString());
-      //     //获得日志输出
-      //   });
-      // }),
       ExecProcess(`python3 ${this.python_file} ${Math.min(info.data.time, 20)} ${file_name}`).then(res => { (res as any).file_name = file_name; return res; }),
       new Promise((resolve) => {
         setTimeout(() => resolve({}), 25000)
