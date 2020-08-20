@@ -14,6 +14,8 @@ export class ConnectBox extends EventEmitter {
   uuid: String;
   //支持的任务Names
   task_names: String[];
+  //
+  task_info: any[];
   //消息类型
   msg_typs: String[];
   compute: any;
@@ -72,6 +74,7 @@ export class ConnectBox extends EventEmitter {
       case MessageType.INFO_KEY:
         const _msg = msg as TaskInfoKeyMessage;
         this.task_names = _msg.data.task_names;
+        this.task_info = _msg.data.task_info;
         this.msg_typs = _msg.data.message_types;
         break;
       case MessageType.TASK:
@@ -108,7 +111,7 @@ export class ConnectBox extends EventEmitter {
         this.task_names && this.send(socket, MessageFac(
           {
             ...TaskNameMessage,
-            data: { uuid: this.uuid, task_names: this.task_names, message_types: this.msg_typs }
+            data: { uuid: this.uuid, task_names: this.task_names, message_types: this.msg_typs, task_info: this.task_info }
           }
         ));
       })

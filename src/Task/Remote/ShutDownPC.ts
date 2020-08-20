@@ -22,4 +22,11 @@ export default class ShutDownPC extends ListenTask {
       :
       cmd.run('shutdown -s -t 0');
   }
+  toString(){
+    return {
+      name:this.name,
+      desc: "立刻关机",
+      dome: {id:1000,key:1000,date:10000,name:"ShutDownPC",data:{}}
+    }
+  }
 }
