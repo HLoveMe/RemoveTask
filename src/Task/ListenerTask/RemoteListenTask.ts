@@ -12,6 +12,7 @@ const fs = require("fs");
  * 2:复制到 TSome_Util/TaskBase64/Tasks 下
  * 3:npm run  create_remote_msg
  * 4:得到 RemoteListenTask 消息体
+ * 5:该远程Task 会被保存在 /Task/Remote 文件夹下
  */
 export default class RemoteListenTask extends ListenTask {
   app: App;
