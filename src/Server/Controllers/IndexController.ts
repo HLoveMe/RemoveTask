@@ -79,7 +79,7 @@ export class FileController {
     //         }
     //     }
     // }
-
+    // get http://1991919:8081/file/download?name=xx.txt
     @Get("/download")
     download(@Res() response: any, @Req() req: any) {
         const _path = join(PathConfig.upload_dir, req.query.name);

@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 
 /**
- * {id:1000,key:1000,date:10000,name:"RemoteListenTask",data:{name:"文件名称",context:"class=>base64"}}
+ * {id:1000,key:1000,date:10000,name:"RemoteListenTask",data:{name:"文件名称",context:"base64源文件"}}
  * 
  * 1:编写ListenTask子类 并编译为commonjs
  * 2:复制到 TSome_Util/TaskBase64/Tasks 下
