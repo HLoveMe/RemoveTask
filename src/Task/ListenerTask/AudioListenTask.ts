@@ -24,11 +24,13 @@
 
 
 import { TaskStatus, ListenTask, App } from "../Base/TaskBase";
-import { AudioTaskMessage } from "../../WebSocket/SocketMessage";
+import { AudioTaskMessage, AudioExexResult } from "../../WebSocket/SocketMessage";
 import PathConfig from "../../Util/PathRUL";
 const Process = require("child_process");
+var path = require("path");
 import { join } from "path";
 import { existsSync, unlinkSync, readFileSync } from "fs";
+import { scanFiles } from "../../Util/FileUtil";
 
 /**{id: 1000,key: 1000,date: 10000,name: "AudioListenTask",data: {}} */
 export default class AudioListenTask extends ListenTask {
@@ -38,37 +40,53 @@ export default class AudioListenTask extends ListenTask {
   date: Date = new Date();
   isRun: boolean = false;
   python_file: string = join(__dirname, "Audio.py")
+  result: AudioExexResult;
   constructor(app: App) {
     super(app);
+    this.result = { sep: path.sep } as AudioExexResult;
   }
-  clear() { }
+  clear() {
+    scanFiles(PathConfig.temp_dir).forEach($1 => {
+      if ($1.indexOf("_audio_.wav") >= 0) {
+        unlinkSync($1 as string);
+      }
+    })
+  }
   run_audio(info: AudioTaskMessage) {
     const file_name = join(PathConfig.temp_dir, `${new Date().getTime()}_audio_.wav`);
+    this.result.file_name = file_name;
     return Promise.race([
       new Promise((resolve, reject) => {
-        const time = Math.max(info.data.time, 20);
+        const time = Math.min(info.data.time, 20);
         const m_cmd = `python3 ${this.python_file} ${time} ${file_name}`
         const child = Process.exec(m_cmd)
 
         child.on("close", (code) => {/**结束*/
-          resolve(file_name)
+          this.result.close_code = code;
+          resolve(this.result);
         })
-        child.on("message", (message) => { })
+        child.on("message", (message) => { this.result.message = message; })
 
         child.on("error", (error) => {/**失败*/
-          resolve("")
+          this.result.exec_error = error.toString();
         })
 
-        child.on("exit", (code) => { });
-        // this.result.stderr = [];
+        child.on("exit", (code) => {
+          this.result.exit_code = code;
+        });
+        this.result.stderr = [];
         child.stderr.on("data", (chunk) => {
-          resolve("")
+          //输出错误日志
+          this.result.stderr.push(chunk.toString())
         })
-        // this.result.stdout = [];
-        child.stdout.on('data', (chunk) => { resolve("") });
+        this.result.stdout = [];
+        child.stdout.on('data', (chunk) => {
+          this.result.stdout.push(chunk.toString());
+          //获得日志输出
+        });
       }),
       new Promise((resolve) => {
-        setTimeout(() => resolve(""), 25000)
+        setTimeout(() => resolve({}), 25000)
       })
     ])
   }
@@ -76,10 +94,12 @@ export default class AudioListenTask extends ListenTask {
     if (this.isRun) return;
     this.isRun = true;
     this.run_audio(info)
-      .then(file => {
-        this.send({file},info)
+      .then(result => {
+        this.send({ result }, info)
       }).catch(() => {
-        this.send({file:null},info)
+        this.send({ result: {} }, info)
+      }).finally(() => {
+        this.isRun = false;
       });
   }
 }

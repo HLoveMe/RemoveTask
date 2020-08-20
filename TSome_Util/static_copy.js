@@ -6,6 +6,7 @@ const transform = (url) =>
   isWindow ? url.split("/").join(path.sep) : url;
 
 const copyfiles = [
+  "Task/ListenerTask/Audio.py",
   "Client/index.html"
 ];
 

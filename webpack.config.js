@@ -2,7 +2,7 @@ const path = require('path')
 module.exports = {
   mode: 'development',
   entry: {
-    "order-builder": path.resolve(__dirname, 'dist', "Client", "WebSocketManager.js"),
+    "index": path.resolve(__dirname, 'dist', "Client", "WebSocketManager.js"),
   },
   devtool: 'source-map',
   output: {

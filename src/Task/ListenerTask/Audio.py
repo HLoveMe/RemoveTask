@@ -8,7 +8,7 @@ import math
 def main(time,filePath):
     dir = os.path.dirname(filePath)
     if os.path.isdir(dir):
-      audio_input(time,filePath)
+      audio_input(int(time),filePath)
     
 def audio_input(ms,filename):
 

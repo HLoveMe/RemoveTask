@@ -130,9 +130,12 @@ export declare interface ScreenshotMessage extends Message {
   data: ScreenshotData;
 }
 
+export declare interface AudioExexResult extends ExexResult{
+  file_name:string
+}
 export declare interface AudioData {
   time:number;
-  file?:string;//result
+  result?:AudioExexResult;//result
 }
 export declare interface AudioTaskMessage extends Message{
   data:AudioData
