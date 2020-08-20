@@ -5,17 +5,15 @@ const fs = require("fs");
 const path = require("path");
 
 function parseTask(routes: String[]): ListenTask[] {
-
-    const remoteTasks = routes
-        .map($1 => require($1 as string).default)
-        .map(SomeClass => {
-            try {
-                return typeof SomeClass == 'function' ? new SomeClass(null) : null
-            } catch (error) {
-                return null
-            }
-        })
-        .filter($2 => $2 != null && $2 instanceof ListenTask);
+    const remoteTasks = [];
+    for (let index = 0; index < routes.length; index++) {
+        try {
+            const element = routes[index];
+            const SomeClass = require(element as string).default;
+            const target = typeof SomeClass == 'function' ? new SomeClass(null) : null
+            if (target != null && target instanceof ListenTask) remoteTasks.push(target)
+        } catch (error) { }
+    }
     return remoteTasks;
 }
 
