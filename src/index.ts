@@ -43,10 +43,6 @@ class App {
     const litener_path = path.join(PathConfig.task_root, "ListenerTask");
     const tasks = loadtaskClassForDir(litener_path);
     this.addListenTask([
-      // new CMDCommandTask(this),
-      // new ConfigCheckTask(this),
-      // new RemoteListenTask(this),
-      // new UploadFileTask(this),
       ...tasks,
       ...RemoteTasks
     ])

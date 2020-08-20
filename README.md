@@ -7,7 +7,8 @@
 * exec_client 启动执行端
 * 打开./dist/Client/index.html 连接远程
 
-
+* 全局安装pm2  pm2启动 Execlient
+* 设置开机自启动pm2
 
 * Serve
 
