@@ -8,7 +8,7 @@ const fs = require("fs");
 /**
  * {id:1000,key:1000,date:10000,name:"RemoteListenTask",data:{name:"文件名称",context:"base64源文件"}}
  * 
- * 1:编写ListenTask子类 并编译为commonjs
+ * 1:编写ListenTask子类 export default。 并编译为commonjs
  * 2:复制到 TSome_Util/TaskBase64/Tasks 下
  * 3:npm run  create_remote_msg
  * 4:得到 RemoteListenTask 消息体
