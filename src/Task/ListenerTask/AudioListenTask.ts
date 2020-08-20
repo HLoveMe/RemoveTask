@@ -13,8 +13,7 @@
 
   pip3 install --target=/usr/local/lib/python3.7/site-packages pyaudio
   
-  修改Auido.py pyaudio 安装文件夹
-
+  =======>>>>>>>>>必须 修改Auido.py pyaudio 安装文件夹
 
   python3 ./Audio.py 10 aa/b/file.wav
 

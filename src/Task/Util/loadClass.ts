@@ -17,6 +17,7 @@ function loadtaskClassForDir(root: string): ListenTask[] {
     try {
         const paths = scanFiles(root).filter($1 => {
             const name: String = path.basename($1);
+            if (!name.endsWith(".js")) return false;
             if (name == "index.js") return false;
             if (name.startsWith(".")) return false;
             if (name.endsWith(".map")) return false;
