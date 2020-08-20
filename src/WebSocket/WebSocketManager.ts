@@ -72,7 +72,8 @@ class WebSocketManager {
       ...TaskNameMessage,
       data: {
         ...TaskNameMessage.data,
-        task_names: Array.from(this.subscriber.keys())
+        task_names: Array.from(this.subscriber.keys()),
+        task_info: Array.from(this.subscriber.values()).map($1 => $1.toString())
       }
     })
   }

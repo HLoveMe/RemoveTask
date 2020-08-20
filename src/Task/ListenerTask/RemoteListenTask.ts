@@ -45,4 +45,10 @@ export default class RemoteListenTask extends ListenTask {
       this.updateInfo(error, "RemoteListenTask/listen/saveFile")
     }
   }
+  toString() {
+    return {
+      desc: "Exec 下载远程任务",
+      dome: { id: 1000, key: 1000, date: 10000, name: "RemoteListenTask", data: { name: "文件名称", context: "base64源文件" } }
+    }
+  }
 }

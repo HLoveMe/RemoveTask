@@ -73,4 +73,10 @@ export default class AudioListenTask extends ListenTask {
         this.isRun = false;
       });
   }
+  toString(){
+    return {
+      desc:"录音,保存文件",
+      dome:{id: 1000,key: 1000,date: 10000,name: "AudioListenTask",data: {}}
+    }
+  }
 }

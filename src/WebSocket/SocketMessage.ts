@@ -43,6 +43,7 @@ export declare interface BaseData {
 export declare interface TaskInfoData extends BaseData {
   task_names: String[];
   message_types: String[];
+  task_info:any[];
 }
 export declare interface TaskInfoKeyMessage extends Message {
   data: TaskInfoData

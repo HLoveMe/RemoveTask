@@ -14,7 +14,7 @@ export const UuidMessage = { id: MessageType.UUID, key: MessageType.UUID, data: 
 
 export const RequestUuidMessage = { id: MessageType.REQUEST_UUID, key: MessageType.REQUEST_UUID, get date() { return new Date().getTime() } } as Message;
 
-export const TaskNameMessage = { id: MessageType.INFO_KEY, key: MessageType.INFO_KEY, data: { task_names: null, message_types: Object.keys(MessageType), uuid: mac_id } } as Message;
+export const TaskNameMessage = { id: MessageType.INFO_KEY, key: MessageType.INFO_KEY, data: { task_info: null, task_names: null, message_types: Object.keys(MessageType), uuid: mac_id } } as Message;
 
 //客户端 请求连接Exec
 export const LineMessage = (uuid: String) => { return { id: MessageType.LINK, key: MessageType.LINK, data: { uuid: uuid } } as Message };

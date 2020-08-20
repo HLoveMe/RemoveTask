@@ -45,4 +45,16 @@ export default class ConfigCheckTask extends ListenTask {
     const success = await this.checkConfig();
     this.send({ check_config: success }, info);
   }
+  toString() {
+    return {
+      desc: "Exec 更新配置",
+      dome: {
+        id: 11,
+        key: 1000,
+        date: 10000,
+        name: "ConfigCheckTask",
+        data: {}
+      }
+    }
+  }
 }
