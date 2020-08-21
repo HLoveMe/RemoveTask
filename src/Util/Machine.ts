@@ -2,6 +2,7 @@ var os = require("os");
 const isWindow = os.type() == "Windows_NT";
 const isMac = !isWindow;
 
+const isNode = this === window ? false : true
 /**
  * select({mac:1,window:2})
  * @param params 
@@ -11,7 +12,7 @@ function select<T>(params: { [key: string]: T }): T {
 }
 var _computer_info: any;
 function getComInfo() {
-    if(globalThis.navigator != null)return {};
+    if(!isNode)return {};
     if (_computer_info) return _computer_info;
     _computer_info = {};
     var dealMem = (mem) => {
@@ -73,6 +74,7 @@ function getComInfo() {
 export {
     isWindow,
     isMac,
+    isNode,
     select,
     getComInfo
 }

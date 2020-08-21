@@ -53,7 +53,7 @@ var PathRUL_1 = require("./Util/PathRUL");
 var loadClass_1 = require("./Task/Util/loadClass");
 var path = require("path");
 var AbortController = require('abortcontroller-polyfill/dist/cjs-ponyfill').AbortController;
-globalThis.fetch = node_fetch_1.default;
+global.fetch = node_fetch_1.default;
 var App = /** @class */ (function () {
     function App() {
         this.reloadCount = 0;

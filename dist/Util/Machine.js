@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getComInfo = exports.select = exports.isMac = exports.isWindow = void 0;
+exports.getComInfo = exports.select = exports.isNode = exports.isMac = exports.isWindow = void 0;
 var os = require("os");
 var isWindow = os.type() == "Windows_NT";
 exports.isWindow = isWindow;
 var isMac = !isWindow;
 exports.isMac = isMac;
+var isNode = this === window ? false : true;
+exports.isNode = isNode;
 /**
  * select({mac:1,window:2})
  * @param params
@@ -16,7 +18,7 @@ function select(params) {
 exports.select = select;
 var _computer_info;
 function getComInfo() {
-    if (globalThis.navigator != null)
+    if (!isNode)
         return {};
     if (_computer_info)
         return _computer_info;

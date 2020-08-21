@@ -436,7 +436,7 @@ http://127.0.0.1:9091/file/download?name=1597223583998_zzh.jjj
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getComInfo = exports.select = exports.isMac = exports.isWindow = void 0;
+exports.getComInfo = exports.select = exports.isNode = exports.isMac = exports.isWindow = void 0;
 
 var os = __webpack_require__(/*! os */ "./node_modules/os-browserify/browser.js");
 
@@ -444,6 +444,8 @@ var isWindow = os.type() == "Windows_NT";
 exports.isWindow = isWindow;
 var isMac = !isWindow;
 exports.isMac = isMac;
+var isNode = this === window ? false : true;
+exports.isNode = isNode;
 /**
  * select({mac:1,window:2})
  * @param params
@@ -458,7 +460,7 @@ exports.select = select;
 var _computer_info;
 
 function getComInfo() {
-  if (globalThis.navigator != null) return {};
+  if (!isNode) return {};
   if (_computer_info) return _computer_info;
   _computer_info = {};
 
@@ -521,7 +523,7 @@ exports.getComInfo = getComInfo;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
+
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -532,7 +534,7 @@ var SocketMessage_1 = __webpack_require__(/*! ../WebSocket/SocketMessage */ "./d
 
 var Machine_1 = __webpack_require__(/*! ./Machine */ "./dist/Util/Machine.js");
 
-var getmac = (global || window || this).navigator != null ? function () {} : __webpack_require__(/*! getmac */ "./node_modules/getmac/edition-esnext/index.js").default;
+var getmac = !Machine_1.isNode ? function () {} : __webpack_require__(/*! getmac */ "./node_modules/getmac/edition-esnext/index.js").default;
 exports.mac_id = getmac(); //服务器 发送客服机表明Exec 连接中断
 
 exports.CloseMessage = function (info) {
@@ -598,7 +600,6 @@ exports.LineMessage = function (uuid) {
     }
   };
 };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -1442,37 +1443,6 @@ function v4(options, buf, offset) {
 }
 
 module.exports = v4;
-
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
 
 
 /***/ })

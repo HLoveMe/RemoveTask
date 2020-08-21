@@ -8,7 +8,7 @@ import PathConfig from "./Util/PathRUL";
 import { loadtaskClassForDir } from "./Task/Util/loadClass";
 const path = require("path");
 const { AbortController } = require('abortcontroller-polyfill/dist/cjs-ponyfill');
-globalThis.fetch = fetch;
+global.fetch = fetch;
 class App {
   reloadCount: number = 0;
   abortController = new AbortController();

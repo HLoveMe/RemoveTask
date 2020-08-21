@@ -7,7 +7,7 @@
   <script src="./index.main.js"></script>
   <script>
     var infoManager = new InfoManager();
-    globalThis.infoManager =infoManager;
+    global.infoManager =infoManager;
     function connect(){
       infoManager.connecrServeForMac(infoManager.uuids[0]);
     }

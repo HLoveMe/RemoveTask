@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LineMessage = exports.TaskNameMessage = exports.RequestUuidMessage = exports.UuidMessage = exports.PingMessage = exports.ClearMessage = exports.CloseMessage = exports.mac_id = void 0;
 var SocketMessage_1 = require("../WebSocket/SocketMessage");
 var Machine_1 = require("./Machine");
-var getmac = (global || window || this).navigator != null ? function () { } : require("getmac").default;
+var getmac = !Machine_1.isNode ? function () { } : require("getmac").default;
 exports.mac_id = getmac();
 //服务器 发送客服机表明Exec 连接中断
 exports.CloseMessage = function (info) { return { id: SocketMessage_1.MessageType.ExecCLOSE, date: new Date().getTime(), key: SocketMessage_1.MessageType.ExecCLOSE, data: { desc: "ExecClientClose", info: info, uuid: null } }; };
