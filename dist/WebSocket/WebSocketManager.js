@@ -56,7 +56,9 @@ var WebSocketManager = /** @class */ (function () {
         task.listen(data);
     };
     ;
-    WebSocketManager.prototype.onClose = function (ev) { this.app.reconnect(); };
+    WebSocketManager.prototype.onClose = function (ev) {
+        this.app.reconnect();
+    };
     ;
     WebSocketManager.prototype.onError = function (ev) { };
     ;

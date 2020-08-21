@@ -155,6 +155,10 @@ var ConnectBox = /** @class */ (function (_super) {
     ConnectBox.prototype.send = function (socket, data) {
         data && socket.readyState == 1 && socket.send(data);
     };
+    ConnectBox.prototype.clear = function () {
+        this.execClient.close();
+        this.sourceClients.forEach(function (V) { return V.close(); });
+    };
     return ConnectBox;
 }(events_1.EventEmitter));
 exports.ConnectBox = ConnectBox;

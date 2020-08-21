@@ -36,8 +36,7 @@ var _TWebServeManager = /** @class */ (function () {
     }
     _TWebServeManager.prototype.start = function () {
         var _this = this;
-        // console.log("object1", { port: Config.websoket_id, host: Config.ip }, this.onConnection)
-        this.serverSocket = new ws.Server({ port: Config_1.default.websoket_id, host: "127.0.0.1" });
+        this.serverSocket = new ws.Server({ port: Config_1.default.websoket_id, host: "0.0.0.0" });
         this.serverSocket.on("connection", function (ws) { return _this.onConnection(ws); });
     };
     _TWebServeManager.prototype.onConnection = function (socket) {
@@ -84,7 +83,7 @@ var _TWebServeManager = /** @class */ (function () {
     };
     _TWebServeManager.prototype.creteBox = function (uuid, socket) {
         var _this = this;
-        console.log(21212);
+        // console.log(21212);
         socket.onmessage = null;
         this.tastKey.add(uuid);
         this.clientSocket.delete(socket);
@@ -101,6 +100,12 @@ var _TWebServeManager = /** @class */ (function () {
         this.tastKey.delete(box.uuid);
         box.sourceClients.forEach(function ($1) { return _this.clientSocket.delete($1); });
         this.connectMap.delete(box.uuid);
+    };
+    _TWebServeManager.prototype.clearAll = function () {
+        this.connectMap.forEach(function (V) { return V.clear(); });
+        this.connectMap.clear();
+        this.tastKey.clear();
+        this.clientSocket.clear();
     };
     return _TWebServeManager;
 }());

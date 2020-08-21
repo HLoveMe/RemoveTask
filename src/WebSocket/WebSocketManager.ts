@@ -45,7 +45,9 @@ class WebSocketManager {
     }
     task.listen(data);
   };
-  onClose(ev: CloseEvent) { this.app.reconnect(); };
+  onClose(ev: CloseEvent) { 
+    this.app.reconnect(); 
+  };
   onError(ev: Event) { };
   clear() {
     if (this.webSocket) {

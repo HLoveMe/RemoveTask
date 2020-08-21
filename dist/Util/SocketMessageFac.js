@@ -34,7 +34,7 @@ exports.ErrorMsgFac = function (msg, info, uuid) {
         date: new Date().getTime(),
         data: {
             error: info,
-            uuid: uuid !== null && uuid !== void 0 ? uuid : MessageConstants_1.mac_id
+            uuid: uuid != null ? uuid : MessageConstants_1.mac_id
         }
     });
 };

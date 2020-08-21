@@ -93,7 +93,7 @@
 /*! exports provided: version, ip, websoket_id, server_ip, files, source, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"version\":\"202008021325-11\",\"ip\":\"127.0.0.1\",\"websoket_id\":9090,\"server_ip\":9091,\"files\":{\"error\":\"error.log\"},\"source\":{\"config\":\"project/config\",\"check\":\"project/check\",\"project\":\"project/source\",\"upload\":\"project/fileupload\",\"files\":\"project/files\",\"download\":\"file/download\"}}");
+module.exports = JSON.parse("{\"version\":\"202008021325-11\",\"ip\":\"119.29.16.140\",\"websoket_id\":9090,\"server_ip\":9091,\"files\":{\"error\":\"error.log\"},\"source\":{\"config\":\"project/config\",\"check\":\"project/check\",\"project\":\"project/source\",\"upload\":\"project/fileupload\",\"files\":\"project/files\",\"download\":\"file/download\"}}");
 
 /***/ }),
 
@@ -445,8 +445,8 @@ exports.isWindow = isWindow;
 var isMac = !isWindow;
 exports.isMac = isMac;
 var isNode = process && process.env && process.title != "browser" ? true : false;
-exports.isNode = isNode;
-console.log(111, process);
+exports.isNode = isNode; // console.log(111,process);
+
 /**
  * select({mac:1,window:2})
  * @param params
@@ -670,7 +670,7 @@ exports.ErrorMsgFac = function (msg, info, uuid) {
     date: new Date().getTime(),
     data: {
       error: info,
-      uuid: uuid !== null && uuid !== void 0 ? uuid : MessageConstants_1.mac_id
+      uuid: uuid != null ? uuid : MessageConstants_1.mac_id
     }
   });
 };

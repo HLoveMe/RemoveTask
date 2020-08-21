@@ -19,6 +19,7 @@ var fs_1 = require("fs");
 var multer = require("multer");
 var PathRUL_1 = require("../../Util/PathRUL");
 var FileUtil_1 = require("../../Util/FileUtil");
+var WebSocketManager_1 = require("../WebSocketManager");
 var fileUploadOptions = {
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
@@ -46,6 +47,9 @@ var IndexController = /** @class */ (function () {
     };
     IndexController.prototype.check = function () {
         return "check";
+    };
+    IndexController.prototype.clear_connect = function () {
+        WebSocketManager_1.default.clearAll();
     };
     IndexController.prototype.source = function () {
         return "source";
@@ -83,6 +87,12 @@ var IndexController = /** @class */ (function () {
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", void 0)
     ], IndexController.prototype, "check", null);
+    __decorate([
+        routing_controllers_1.Get("clear_connect"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], IndexController.prototype, "clear_connect", null);
     __decorate([
         routing_controllers_1.Get("/source"),
         __metadata("design:type", Function),
