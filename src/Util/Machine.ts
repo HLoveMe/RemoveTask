@@ -4,7 +4,7 @@ const isMac = !isWindow;
 
 
 const isNode = process && process.env && process.title != "browser" ? true : false;
-console.log(111,process);
+// console.log(111,process);
 /**
  * select({mac:1,window:2})
  * @param params 

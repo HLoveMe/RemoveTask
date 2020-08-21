@@ -23,7 +23,8 @@ export const ErrorMsgFac = (msg: ErrorInfoMessage, info: any = "", uuid: string 
     date: new Date().getTime(),
     data: {
       error: info,
-      uuid: uuid ?? mac_id
+      uuid: uuid != null ? uuid : mac_id
+
     }
   })
 }
