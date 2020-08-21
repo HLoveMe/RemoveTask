@@ -46,6 +46,8 @@ class WebSocketManager {
       }
       task.listen(data);
     } catch (error) {
+      err_info = { data: error.statck, reason: "WebSocketManager/onMessage/data解析错误" };
+      return this._send(ErrorMsgFac({ id: -1, key: MessageType.ERROR } as any, err_info))
     }
   };
   onClose(ev: CloseEvent) {

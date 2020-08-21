@@ -57,6 +57,8 @@ var WebSocketManager = /** @class */ (function () {
             task.listen(data);
         }
         catch (error) {
+            err_info = { data: error.statck, reason: "WebSocketManager/onMessage/data解析错误" };
+            return this._send(SocketMessageFac_1.ErrorMsgFac({ id: -1, key: SocketMessage_1.MessageType.ERROR }, err_info));
         }
     };
     ;
