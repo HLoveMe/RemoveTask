@@ -175,9 +175,11 @@ var ExecManager = /** @class */ (function (_super) {
     };
     ExecManager.prototype.clear = function () {
         this.cmdQueue.length = 0;
-        this.execMsg.clear();
-        this.execMsg.callBack = null;
-        this.execMsg = null;
+        if (this.execMsg) {
+            this.execMsg.clear();
+            this.execMsg.callBack = null;
+            this.execMsg = null;
+        }
     };
     return ExecManager;
 }(events_1.EventEmitter));

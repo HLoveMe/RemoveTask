@@ -29,31 +29,35 @@ var WebSocketManager = /** @class */ (function () {
         this.subscriber = new Map();
     }
     WebSocketManager.prototype.onMessage = function (ev) {
-        console.log("接收到消息", ev.data);
-        var data;
-        var err_info;
         try {
-            data = JSON.parse(ev.data);
+            console.log("接收到消息", ev.data);
+            var data;
+            var err_info;
+            try {
+                data = JSON.parse(ev.data);
+            }
+            catch (err) {
+                err_info = { data: ev.data, reason: "WebSocketManager/onMessage/data解析错误" };
+                return this._send(SocketMessageFac_1.ErrorMsgFac({ id: -1, key: SocketMessage_1.MessageType.ERROR }, err_info));
+            }
+            if (err_info == null && ValidationMessage_1.ValidationMessage(data) == false) {
+                err_info = { data: ev.data, errreasonor: "WebSocketManager/onMessage/格式不对" };
+                return this._send(SocketMessageFac_1.ErrorMsgFac({ id: data.id, key: SocketMessage_1.MessageType.ERROR }, err_info));
+            }
+            ;
+            if (data.key == SocketMessage_1.MessageType.CLEAR) {
+                this.subscriber.forEach(function (task) { return task.clear(); });
+                return;
+            }
+            var task = this.subscriber.get(data.name);
+            if (err_info == null && task == null) {
+                err_info = { data: ev.data, reason: "WebSocketManager/onMessage/name不正确" };
+                return this._send(SocketMessageFac_1.ErrorMsgFac({ id: data.id, key: SocketMessage_1.MessageType.ERROR }, err_info));
+            }
+            task.listen(data);
         }
-        catch (err) {
-            err_info = { data: ev.data, reason: "WebSocketManager/onMessage/data解析错误" };
-            return this._send(SocketMessageFac_1.ErrorMsgFac({ id: -1, key: SocketMessage_1.MessageType.ERROR }, err_info));
+        catch (error) {
         }
-        if (err_info == null && ValidationMessage_1.ValidationMessage(data) == false) {
-            err_info = { data: ev.data, errreasonor: "WebSocketManager/onMessage/格式不对" };
-            return this._send(SocketMessageFac_1.ErrorMsgFac({ id: data.id, key: SocketMessage_1.MessageType.ERROR }, err_info));
-        }
-        ;
-        if (data.key == SocketMessage_1.MessageType.CLEAR) {
-            this.subscriber.forEach(function (task) { return task.clear(); });
-            return;
-        }
-        var task = this.subscriber.get(data.name);
-        if (err_info == null && task == null) {
-            err_info = { data: ev.data, reason: "WebSocketManager/onMessage/name不正确" };
-            return this._send(SocketMessageFac_1.ErrorMsgFac({ id: data.id, key: SocketMessage_1.MessageType.ERROR }, err_info));
-        }
-        task.listen(data);
     };
     ;
     WebSocketManager.prototype.onClose = function (ev) {
