@@ -23,7 +23,6 @@ class _TWebServeManager {
   connectMap: Map<String, ConnectBox> = new Map();
   constructor() { }
   start() {
-    // console.log("object1", { port: Config.websoket_id, host: Config.ip }, this.onConnection)
     this.serverSocket = new ws.Server({ port: Config.websoket_id, host: "127.0.0.1" });
     this.serverSocket.on("connection", (ws) => this.onConnection(ws));
   }
@@ -69,7 +68,7 @@ class _TWebServeManager {
     socket.send(MessageFac(msg));
   }
   creteBox(uuid: String, socket: WebSocket) {
-    console.log(21212);
+    // console.log(21212);
     socket.onmessage = null;
     this.tastKey.add(uuid);
     this.clientSocket.delete(socket);
@@ -85,6 +84,12 @@ class _TWebServeManager {
     this.tastKey.delete(box.uuid);
     box.sourceClients.forEach($1 => this.clientSocket.delete($1));
     this.connectMap.delete(box.uuid);
+  }
+  clearAll(){
+    this.connectMap.forEach(V=>V.clear());
+    this.connectMap.clear();
+    this.tastKey.clear();
+    this.clientSocket.clear();
   }
 }
 

@@ -5,6 +5,7 @@
 // export declare interface ExecFileData extends FileInfo {
 //   status: Boolean;
 // }
+
 // export declare interface ExecFileUpMessage extends Message {
 //   data: ExecFileData
 // }

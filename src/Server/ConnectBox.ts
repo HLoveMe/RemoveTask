@@ -137,4 +137,8 @@ export class ConnectBox extends EventEmitter {
   send(socket: WebSocket, data: any) {
     data && socket.readyState == 1 && socket.send(data)
   }
+  clear(){
+    this.execClient.close();
+    this.sourceClients.forEach(V=>V.close());
+  }
 }

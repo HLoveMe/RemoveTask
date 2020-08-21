@@ -4,6 +4,7 @@ import { readFileSync, existsSync,createReadStream } from "fs";
 import * as multer from "multer";
 import PathConfig from "../../Util/PathRUL";
 import { scanFiles, getFileInfo } from "../../Util/FileUtil";
+import WebSocketManager from "../WebSocketManager";
 
 const fileUploadOptions = {
     storage: multer.diskStorage({
@@ -36,6 +37,10 @@ export class IndexController {
     @Get("/check")
     check() {
         return "check"
+    }
+    @Get("clear_connect")
+    clear_connect(){
+        WebSocketManager.clearAll()
     }
     @Get("/source")
     source() {

@@ -16,4 +16,5 @@
   * download  Client ===>Serve 下载文件  http://1991919:8081/file/download?name=xx.txt
   * files 查看所有可下载文件 http://1991919:8081/project/files
   * config  Client 指定 ExecClient 更新配置  ConfigCheckTask
+  * /project/clear_connect  清空所有连接
 
