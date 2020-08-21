@@ -11,6 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ErrorMsgFac = exports.MessageFac = void 0;
 var SocketMessage_1 = require("../WebSocket/SocketMessage");
 var MessageConstants_1 = require("./MessageConstants");
 exports.MessageFac = function (msg, noUpdate) {
@@ -33,7 +34,7 @@ exports.ErrorMsgFac = function (msg, info, uuid) {
         date: new Date().getTime(),
         data: {
             error: info,
-            uuid: (uuid !== null && uuid !== void 0 ? uuid : MessageConstants_1.mac_id)
+            uuid: uuid !== null && uuid !== void 0 ? uuid : MessageConstants_1.mac_id
         }
     });
 };

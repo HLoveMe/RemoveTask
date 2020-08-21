@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ValidationConfig = exports.ValidationMessage = void 0;
 var index_1 = require("../Config/index");
 exports.ValidationMessage = function (data) {
     if (data == null)

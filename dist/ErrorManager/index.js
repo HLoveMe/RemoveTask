@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.InfoUpdateManager = void 0;
 /**
  * 日志信息收集
  */

@@ -24,6 +24,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConnectBox = void 0;
 var MessageConstants_1 = require("../Util/MessageConstants");
 var events_1 = require("events");
 var SocketMessage_1 = require("../WebSocket/SocketMessage");

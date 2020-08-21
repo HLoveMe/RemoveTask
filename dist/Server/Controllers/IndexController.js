@@ -12,6 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FileController = exports.IndexController = void 0;
 var routing_controllers_1 = require("routing-controllers");
 var path_1 = require("path");
 var fs_1 = require("fs");

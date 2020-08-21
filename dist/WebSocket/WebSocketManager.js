@@ -11,6 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WebManager = void 0;
 var ws = require("ws");
 var Config_1 = require("../Config");
 var ValidationMessage_1 = require("../Util/ValidationMessage");
