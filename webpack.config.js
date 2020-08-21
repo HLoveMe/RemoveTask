@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist', "Client"),
     filename: './index.main.js',
-    libraryTarget: 'this'
+    libraryTarget: 'window'
   },
   plugins: [
   ],
