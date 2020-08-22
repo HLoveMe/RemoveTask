@@ -4,7 +4,7 @@ export declare interface ConfigType {
   version: string;
   ip: string;
   websoket_id: number;
-  server_ip:number;
+  server_ip: number;
   files: {
     error: string;
   },
@@ -13,13 +13,18 @@ export declare interface ConfigType {
     config: string;
     project: string;
     task: string;
-    upload:string;
-    files:string;
-    download:string;
+    upload: string;
+    files: string;
+    download: string;
+  },
+  bd_api: {
+    app_id: string;
+    api_key: string;
+    secret_key: string;
   }
 }
-const route = join(__dirname,"..","..","Static","config.json")
-const Config:ConfigType = require(route);
+const route = join(__dirname, "..", "..", "Static", "config.json")
+const Config: ConfigType = require(route);
 
 
 export function updateConfig(config: ConfigType) {
@@ -28,5 +33,6 @@ export function updateConfig(config: ConfigType) {
   Config.websoket_id = config.websoket_id;
   Config.files = config.files;
   Config.source = config.source;
+  Config.bd_api = config.bd_api;
 }
 export default Config;

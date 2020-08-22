@@ -10,6 +10,7 @@ function updateConfig(config) {
     Config.websoket_id = config.websoket_id;
     Config.files = config.files;
     Config.source = config.source;
+    Config.bd_api = config.bd_api;
 }
 exports.updateConfig = updateConfig;
 exports.default = Config;

@@ -11,5 +11,10 @@
     "check": "project/check",
     "project": "project/source",
     "upload": "project/upload"
+  },
+  "bd_api": {
+    "app_id": "22171731",
+    "api_key": "ljawDZeWtDGOHkWFHh5t3Ktn",
+    "secret_key": "RW9YLiIDMdXeL9MLus4nOpbtyIxSlmPe"
   }
 }

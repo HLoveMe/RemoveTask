@@ -19,6 +19,8 @@
 
   10s
   filePath 文件存放路径
+
+  https://console.bce.baidu.com/ai/#/ai/speech/app/detail~appId=1876716
   */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {

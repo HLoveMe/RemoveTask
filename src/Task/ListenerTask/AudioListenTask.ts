@@ -19,6 +19,8 @@
 
   10s
   filePath 文件存放路径
+
+  https://console.bce.baidu.com/ai/#/ai/speech/app/detail~appId=1876716
   */
 
 
