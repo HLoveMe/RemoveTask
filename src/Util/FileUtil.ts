@@ -1,6 +1,6 @@
 import { PathString } from "./Constants";
 import { basename } from "path";
-import { existsSync } from "fs";
+import { existsSync, PathLike } from "fs";
 const path = require("path");
 var fs = require("fs");
 enum FileType {
@@ -13,25 +13,29 @@ declare interface FileInfo {
     size: number;
     type: FileType
 }
-function isFile(route: PathString): boolean {
+declare interface DirDesc {
+    path: PathLike;
+    subs: Array<DirDesc | FileInfo>
+}
+function isFile(route: PathLike): boolean {
     if (existsSync(route)) {
         return fs.statSync(route).isFile();
     }
     return false;
 }
 
-function isDir(route: PathString): boolean {
+function isDir(route: PathLike): boolean {
     if (existsSync(route)) {
         return fs.statSync(route).isDirectory();
     }
     return false;
 }
 
-function getFileInfo(route: PathString): FileInfo | null {
+function getFileInfo(route: PathLike): FileInfo | null {
     if (existsSync(route)) {
         const stats = fs.statSync(route);
         return {
-            name: basename(route),
+            name: basename(route.toString()),
             path: route,
             size: stats.size,
             type: stats.isFile() ? FileType.file : FileType.dir
@@ -40,7 +44,7 @@ function getFileInfo(route: PathString): FileInfo | null {
     return null;
 }
 
-function scanFiles(entry: PathString): String[] {
+function scanFiles(entry: PathLike): String[] {
     if (!existsSync(entry)) return [];
     const res: String[] = [];
     const dirInfo = fs.readdirSync(entry);
@@ -51,10 +55,29 @@ function scanFiles(entry: PathString): String[] {
     return res;
 }
 
+function ScanDirs(dir: PathLike, depth: number = 10): DirDesc {
+    const scan = (dir: PathLike, depth: number = 10, current_info = { path: dir, subs: [] }): DirDesc => {
+        const dir_infos = scanFiles(dir);
+        dir_infos.forEach($1 => {
+            if (isFile($1 as string)) {
+                current_info.subs.push(getFileInfo($1 as string))
+            } else if (isDir($1 as string)) {
+                depth >= 0 && current_info.subs.push(scan($1 as string, --depth, { path: $1 as string, subs: [] }))
+            }
+        })
+        return current_info;
+    }
+    if (!isDir(dir)) {
+        return scan(dir, depth);
+    }
+    return { path: dir, subs: [] };
+}
+
 export {
     isFile,
     isDir,
     FileInfo,
     getFileInfo,
-    scanFiles
+    scanFiles,//得到当前文件下所有文件路径
+    ScanDirs,//得到当前文件下架下 depth 层级 所有文件
 }
