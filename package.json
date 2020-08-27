@@ -8,7 +8,9 @@
         "exec_client": "node ./TSome_Util/static_copy.js  && node ./dist/index.js",
         "server": " node ./TSome_Util/static_copy.js && node ./dist/Server/index.js",
         "client_build": "tsc --watch false && node ./TSome_Util/static_copy.js && npx webpack",
-        "create_remote_msg": "node ./TSome_Util/TaskBase64/index.js"
+        "create_remote_msg": "node ./TSome_Util/TaskBase64/index.js",
+        "run_mac_exec_client":"tsc --watch false && node ./TSome_Util/TaskBase64/index.js && sh ./shell/mac_run.sh",
+        "run_linux_server":"tsc --watch false && node ./TSome_Util/TaskBase64/index.js && sh ./shell/linux_serve_run.sh"
     },
     "keywords": [],
     "author": "",
