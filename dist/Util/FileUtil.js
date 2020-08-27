@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.scanFiles = exports.getFileInfo = exports.isDir = exports.isFile = void 0;
 var path_1 = require("path");
 var fs_1 = require("fs");
 var path = require("path");
@@ -28,7 +27,7 @@ function getFileInfo(route) {
     if (fs_1.existsSync(route)) {
         var stats = fs.statSync(route);
         return {
-            name: path_1.basename(route),
+            name: path_1.basename(route.toString()),
             path: route,
             size: stats.size,
             type: stats.isFile() ? FileType.file : FileType.dir
@@ -49,4 +48,26 @@ function scanFiles(entry) {
     return res;
 }
 exports.scanFiles = scanFiles;
+function ScanDirs(dir, depth) {
+    if (depth === void 0) { depth = 10; }
+    var scan = function (dir, depth, current_info) {
+        if (depth === void 0) { depth = 10; }
+        if (current_info === void 0) { current_info = { path: dir, subs: [] }; }
+        var dir_infos = scanFiles(dir);
+        dir_infos.forEach(function ($1) {
+            if (isFile($1)) {
+                current_info.subs.push(getFileInfo($1));
+            }
+            else if (isDir($1)) {
+                depth >= 0 && current_info.subs.push(scan($1, --depth, { path: $1, subs: [] }));
+            }
+        });
+        return current_info;
+    };
+    if (!isDir(dir)) {
+        return scan(dir, depth);
+    }
+    return { path: dir, subs: [] };
+}
+exports.ScanDirs = ScanDirs;
 //# sourceMappingURL=FileUtil.js.map

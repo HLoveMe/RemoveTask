@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateConfig = void 0;
 var path_1 = require("path");
 var route = path_1.join(__dirname, "..", "..", "Static", "config.json");
 var Config = require(route);

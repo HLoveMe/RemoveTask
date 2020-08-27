@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.goRequestJson = void 0;
 exports.goRequestJson = function (url) {
     return new Promise(function (resolve, reject) { return __awaiter(void 0, void 0, void 0, function () {
         var response, result, error_1;

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataManager = exports.LocalInfoData = void 0;
 var LocalInfoData = /** @class */ (function () {
     function LocalInfoData(msg) {
         this.date = new Date();

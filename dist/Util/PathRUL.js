@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePathConfig = void 0;
 var Config_1 = require("../Config");
 var path = require("path");
 var os = require("os");
