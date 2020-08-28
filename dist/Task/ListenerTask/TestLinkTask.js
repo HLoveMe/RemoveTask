@@ -50,91 +50,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var TaskBase_1 = require("../Base/TaskBase");
-var SocketMessage_1 = require("../../WebSocket/SocketMessage");
-var PathRUL_1 = require("../../Util/PathRUL");
-var path_1 = require("path");
-var fs_1 = require("fs");
-var screenshot = require('desktop-screenshot');
-var maxCount = 500;
-/**
- 
- {
-    id: 1000,
-    key: 1000,
-    date: 10000,
-    name: "ScreenshotListenTask",
-    data: {
-      screenshotCmd:1000 //启动
-      // context?:""
-      info?:{
-        width
-        height
-        quality
-      }
-    }
-  }
- 
-start :{id: 1000,key: 1000,date: 10000,name: "ScreenshotListenTask",data: {screenshotCmd:1000}}
- */
-var ScreenshotListenTask = /** @class */ (function (_super) {
-    __extends(ScreenshotListenTask, _super);
-    function ScreenshotListenTask(app) {
+// npm
+// {id:1000,key:1000,date:10000,name:"TestLinkTask",data:{}}
+var TestLinkTask = /** @class */ (function (_super) {
+    __extends(TestLinkTask, _super);
+    function TestLinkTask(app) {
         var _this = _super.call(this, app) || this;
         _this.status = TaskBase_1.TaskStatus.Prepare;
-        _this.name = "ScreenshotListenTask";
+        _this.name = "TestLinkTask";
         _this.date = new Date();
-        _this.currentCount = 0;
-        _this.intervalTime = 10000;
         return _this;
     }
-    ScreenshotListenTask.prototype.screenshot = function (msg) {
-        var _this = this;
-        var data = msg.data;
-        this.currentCount += 1;
-        if (this.currentCount >= maxCount) {
-            return this.clear();
-        }
-        var img = path_1.join(PathRUL_1.default.temp_dir, "screenshot.jpg");
-        if (fs_1.existsSync(img))
-            fs_1.unlinkSync(img);
-        screenshot(img, data.info || { width: 1920, height: 1080, quality: 50 }, function (error) {
-            var content = "";
-            if (error == null) {
-                var bitmap = fs_1.readFileSync(img);
-                content = bitmap.toString('base64');
-            }
-            if (fs_1.existsSync(img))
-                fs_1.unlinkSync(img);
-            _this.send({ content: content }, msg);
-        });
-    };
-    ScreenshotListenTask.prototype.clear = function () {
-        this.currentCount = 0;
-        this.interval && clearInterval(this.interval);
-    };
-    ScreenshotListenTask.prototype.listen = function (info) {
+    TestLinkTask.prototype.listen = function (info) {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
             return __generator(this, function (_a) {
-                this.clear();
-                if (info.data.screenshotCmd == SocketMessage_1.ScreenshotCMD.START) {
-                    this.screenshot(info);
-                    this.interval = setInterval(function () { return _this.screenshot(info); }, this.intervalTime);
-                }
-                else if (info.data.screenshotCmd == SocketMessage_1.ScreenshotCMD.END) {
-                }
+                this.send({ test: true }, info);
                 return [2 /*return*/];
             });
         });
     };
-    ScreenshotListenTask.prototype.toString = function () {
+    TestLinkTask.prototype.toString = function () {
         return {
             name: this.name,
-            desc: "Exec 截屏 screenshotCmd:1000/990",
-            dome: { id: 1000, key: 1000, date: 10000, name: "ScreenshotListenTask", data: { screenshotCmd: 1000 } }
+            desc: "测试连接Exec",
+            dome: { id: 1000, key: 1000, date: 10000, name: "TestLinkTask", data: {} }
         };
     };
-    return ScreenshotListenTask;
+    return TestLinkTask;
 }(TaskBase_1.ListenTask));
-exports.default = ScreenshotListenTask;
-//# sourceMappingURL=ScreenshotListenTask.js.map
+exports.default = TestLinkTask;
+//# sourceMappingURL=TestLinkTask.js.map

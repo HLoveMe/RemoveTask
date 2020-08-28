@@ -4,7 +4,7 @@ import PathConfig from "../../Util/PathRUL";
 import { join } from "path";
 import { existsSync, unlinkSync, readFileSync } from "fs";
 var screenshot = require('desktop-screenshot');
-const maxCount: number = 500;
+const maxCount: number = 50;
 
 /**
  
@@ -62,6 +62,7 @@ export default class ScreenshotListenTask extends ListenTask {
   async listen(info: ScreenshotMessage) {
     this.clear();
     if (info.data.screenshotCmd == ScreenshotCMD.START) {
+      this.screenshot(info);
       this.interval = setInterval(() => this.screenshot(info), this.intervalTime)
     } else if (info.data.screenshotCmd == ScreenshotCMD.END) {
 
