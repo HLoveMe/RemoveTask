@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ScanDirs = exports.scanFiles = exports.getFileInfo = exports.isDir = exports.isFile = void 0;
 var path_1 = require("path");
 var fs_1 = require("fs");
 var path = require("path");

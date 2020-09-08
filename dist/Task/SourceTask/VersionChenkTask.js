@@ -49,6 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.VersionChenkTask = void 0;
 var TaskBase_1 = require("../Base/TaskBase");
 var Config_1 = require("../../Config");
 var PathRUL_1 = require("../../Util/PathRUL");

@@ -3,8 +3,8 @@
 
 * 启动tsc 编译
 * client_build 编译客户端
-* server 启动服务器
-* exec_client 启动执行端
+* server 启动服务器 npm run run_linux_server
+* exec_client 启动执行端 npm run run_mac_exec_client
 * 打开./dist/Client/index.html 连接远程
 * mac执行端 编译 打包 运行命令 run_mac_exec_client
 * linux中转服务端 编译 打包 运行 run_linux_server

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.LineMessage = exports.TaskNameMessage = exports.RequestUuidMessage = exports.UuidMessage = exports.PingMessage = exports.ClearMessage = exports.CloseMessage = exports.mac_id = void 0;
 var SocketMessage_1 = require("../WebSocket/SocketMessage");
 var Machine_1 = require("./Machine");
 var getmac = !Machine_1.isNode ? function () { } : require("getmac").default;

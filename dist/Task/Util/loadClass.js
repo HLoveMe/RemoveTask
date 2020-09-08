@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.loadtaskClassForDir = exports.parseTask = void 0;
 var TaskBase_1 = require("../Base/TaskBase");
 var FileUtil_1 = require("../../Util/FileUtil");
 var ErrorManager_1 = require("../../ErrorManager");

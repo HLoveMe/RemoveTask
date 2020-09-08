@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getComInfo = exports.select = exports.isNode = exports.isMac = exports.isWindow = void 0;
 var os = require("os");
 var isWindow = os.type() == "Windows_NT";
 exports.isWindow = isWindow;

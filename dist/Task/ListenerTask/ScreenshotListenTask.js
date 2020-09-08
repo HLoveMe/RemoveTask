@@ -55,7 +55,7 @@ var PathRUL_1 = require("../../Util/PathRUL");
 var path_1 = require("path");
 var fs_1 = require("fs");
 var screenshot = require('desktop-screenshot');
-var maxCount = 500;
+var maxCount = 50;
 /**
  
  {

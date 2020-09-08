@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ExecProcess = void 0;
 var Process = require("child_process");
 function ExecProcess(cmd, args, path) {
     if (args === void 0) { args = []; }
