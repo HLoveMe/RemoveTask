@@ -1,27 +1,10 @@
 
 /***
  * 
-  python  PyAudio
-
-  安装 
-    https://www.jianshu.com/p/94df3132cd8f
-    https://www.cnblogs.com/dongxixi/p/10862759.html
-
-  实战
-    https://wqian.net/blog/2018/1128-python-pyaudio-index.html
-
-
-  pip3 install --target=/usr/local/lib/python3.7/site-packages pyaudio
+  pip3 install  opencv-python
   
-    1:修改Auido.py pyaudio 安装文件夹 第二行 指定pyaudio 安装路径 「能正常导入就不需要」
+    1:修改Photo.py pyaudio 安装文件夹 第二行 指定 opencv-python 安装路径 「能正常导入就不需要」
 
-  dome
-    python3 ./Audio.py 10 aa/b/file.wav
-
-    10s
-    filePath 文件存放路径
-
-  https://console.bce.baidu.com/ai/#/ai/speech/app/detail~appId=1876716
   */
 
 
@@ -35,14 +18,14 @@ import { scanFiles } from "../../Util/FileUtil";
 import { ExecProcess } from "../../Util/ExecProcess";
 
 
-/**{id: 1000,key: 1000,date: 10000,name: "AudioListenTask",data: {}} */
-export default class AudioListenTask extends ListenTask {
+/**{id: 1000,key: 1000,date: 10000,name: "PhotoTakeTask",data: {}} */
+export default class PhotoTakeTask extends ListenTask {
   app: App;
   status: TaskStatus = TaskStatus.Prepare;
-  name: String = "AudioListenTask";
+  name: String = "PhotoTakeTask";
   date: Date = new Date();
   isRun: boolean = false;
-  python_file: string = join(__dirname, "pys", "Audio.py")
+  python_file: string = join(__dirname, "pys", "Photo.py")
   // result: AudioExexResult;
   constructor(app: App) {
     super(app);
@@ -50,15 +33,22 @@ export default class AudioListenTask extends ListenTask {
   }
   clear() {
     scanFiles(PathConfig.temp_dir).forEach($1 => {
-      if ($1.indexOf("_audio_.wav") >= 0) {
+      if ($1.indexOf("_photo_.jpg") >= 0) {
         unlinkSync($1 as string);
       }
     })
   }
   run_audio(info: AudioTaskMessage) {
-    const file_name = join(PathConfig.temp_dir, `${new Date().getTime()}_audio_.wav`);
+    const file_name = join(PathConfig.temp_dir, `${new Date().getTime()}_photo_.jpg`);
     return Promise.race([
-      ExecProcess(`python3 ${this.python_file} ${Math.min(info.data.time, 20)} ${file_name}`).then(res => { (res as any).file_name = file_name; return res; }),
+      ExecProcess(`python3 ${this.python_file} ${file_name}`)
+        .then(res => {
+          (res as any).file_name = file_name;
+          const bitmap = readFileSync(file_name);
+          const content = bitmap.toString('base64');
+          (res as any).content = content;
+          return res;
+        }),
       new Promise((resolve) => {
         setTimeout(() => resolve({}), 25000)
       })
@@ -74,13 +64,14 @@ export default class AudioListenTask extends ListenTask {
         this.send({ result: {}, err }, info)
       }).finally(() => {
         this.isRun = false;
+        this.clear();
       });
   }
   toString() {
     return {
       name: this.name,
-      desc: "录音,保存文件",
-      dome: { id: 1000, key: 1000, date: 10000, name: "AudioListenTask", data: {} }
+      desc: "拍照,保存文件",
+      dome: { id: 1000, key: 1000, date: 10000, name: "PhotoTakeTask", data: {} }
     }
   }
 }

@@ -90,10 +90,10 @@
 /*!****************************!*\
   !*** ./Static/config.json ***!
   \****************************/
-/*! exports provided: version, ip, websoket_id, server_ip, files, source, default */
+/*! exports provided: version, ip, websoket_id, server_ip, files, source, bd_api, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"version\":\"202008021325-11\",\"ip\":\"119.29.16.140\",\"websoket_id\":9090,\"server_ip\":9091,\"files\":{\"error\":\"error.log\"},\"source\":{\"config\":\"project/config\",\"check\":\"project/check\",\"project\":\"project/source\",\"upload\":\"project/fileupload\",\"files\":\"project/files\",\"download\":\"file/download\"}}");
+module.exports = JSON.parse("{\"version\":\"202008021325-11\",\"ip\":\"119.29.16.140\",\"websoket_id\":9090,\"server_ip\":9091,\"files\":{\"error\":\"error.log\"},\"source\":{\"config\":\"project/config\",\"check\":\"project/check\",\"project\":\"project/source\",\"upload\":\"project/fileupload\",\"files\":\"project/files\",\"download\":\"file/download\"},\"bd_api\":{\"app_id\":\"22171731\",\"api_key\":\"ljawDZeWtDGOHkWFHh5t3Ktn\",\"secret_key\":\"RW9YLiIDMdXeL9MLus4nOpbtyIxSlmPe\"}}");
 
 /***/ }),
 

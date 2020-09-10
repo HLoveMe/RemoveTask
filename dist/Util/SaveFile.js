@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveFile = void 0;
 var fs = require("fs");
 function saveFile(data, path) {
     return new Promise(function (resolve, reject) {

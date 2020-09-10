@@ -13,7 +13,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClientEvent = exports.InfoManager = void 0;
 var MessageConstants_1 = require("../Util/MessageConstants");
 var SocketMessageFac_1 = require("../Util/SocketMessageFac");
 var SocketMessage_1 = require("../WebSocket/SocketMessage");

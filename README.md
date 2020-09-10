@@ -20,3 +20,6 @@
   * config  Client 指定 ExecClient 更新配置  ConfigCheckTask
   * /project/clear_connect  清空所有连接
 
+* 安装依赖
+  * nodejs python3 pm2
+  * py pyaudio 见 AudioListenTask.ts

@@ -1,27 +1,10 @@
 "use strict";
 /***
  *
-  python  PyAudio
-
-  安装
-    https://www.jianshu.com/p/94df3132cd8f
-    https://www.cnblogs.com/dongxixi/p/10862759.html
-
-  实战
-    https://wqian.net/blog/2018/1128-python-pyaudio-index.html
-
-
-  pip3 install --target=/usr/local/lib/python3.7/site-packages pyaudio
+  pip3 install  opencv-python
   
-    1:修改Auido.py pyaudio 安装文件夹 第二行 指定pyaudio 安装路径 「能正常导入就不需要」
+    1:修改Photo.py pyaudio 安装文件夹 第二行 指定 opencv-python 安装路径 「能正常导入就不需要」
 
-  dome
-    python3 ./Audio.py 10 aa/b/file.wav
-
-    10s
-    filePath 文件存放路径
-
-  https://console.bce.baidu.com/ai/#/ai/speech/app/detail~appId=1876716
   */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -80,37 +63,44 @@ var path_1 = require("path");
 var fs_1 = require("fs");
 var FileUtil_1 = require("../../Util/FileUtil");
 var ExecProcess_1 = require("../../Util/ExecProcess");
-/**{id: 1000,key: 1000,date: 10000,name: "AudioListenTask",data: {}} */
-var AudioListenTask = /** @class */ (function (_super) {
-    __extends(AudioListenTask, _super);
+/**{id: 1000,key: 1000,date: 10000,name: "PhotoTakeTask",data: {}} */
+var PhotoTakeTask = /** @class */ (function (_super) {
+    __extends(PhotoTakeTask, _super);
     // result: AudioExexResult;
-    function AudioListenTask(app) {
+    function PhotoTakeTask(app) {
         var _this = _super.call(this, app) || this;
         _this.status = TaskBase_1.TaskStatus.Prepare;
-        _this.name = "AudioListenTask";
+        _this.name = "PhotoTakeTask";
         _this.date = new Date();
         _this.isRun = false;
-        _this.python_file = path_1.join(__dirname, "pys", "Audio.py");
+        _this.python_file = path_1.join(__dirname, "pys", "Photo.py");
         return _this;
         // this.result = { sep: path.sep } as AudioExexResult;
     }
-    AudioListenTask.prototype.clear = function () {
+    PhotoTakeTask.prototype.clear = function () {
         FileUtil_1.scanFiles(PathRUL_1.default.temp_dir).forEach(function ($1) {
-            if ($1.indexOf("_audio_.wav") >= 0) {
+            if ($1.indexOf("_photo_.jpg") >= 0) {
                 fs_1.unlinkSync($1);
             }
         });
     };
-    AudioListenTask.prototype.run_audio = function (info) {
-        var file_name = path_1.join(PathRUL_1.default.temp_dir, new Date().getTime() + "_audio_.wav");
+    PhotoTakeTask.prototype.run_audio = function (info) {
+        var file_name = path_1.join(PathRUL_1.default.temp_dir, new Date().getTime() + "_photo_.jpg");
         return Promise.race([
-            ExecProcess_1.ExecProcess("python3 " + this.python_file + " " + Math.min(info.data.time, 20) + " " + file_name).then(function (res) { res.file_name = file_name; return res; }),
+            ExecProcess_1.ExecProcess("python3 " + this.python_file + " " + file_name)
+                .then(function (res) {
+                res.file_name = file_name;
+                var bitmap = fs_1.readFileSync(file_name);
+                var content = bitmap.toString('base64');
+                res.content = content;
+                return res;
+            }),
             new Promise(function (resolve) {
                 setTimeout(function () { return resolve({}); }, 25000);
             })
         ]);
     };
-    AudioListenTask.prototype.listen = function (info) {
+    PhotoTakeTask.prototype.listen = function (info) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
@@ -124,19 +114,20 @@ var AudioListenTask = /** @class */ (function (_super) {
                     _this.send({ result: {}, err: err }, info);
                 }).finally(function () {
                     _this.isRun = false;
+                    _this.clear();
                 });
                 return [2 /*return*/];
             });
         });
     };
-    AudioListenTask.prototype.toString = function () {
+    PhotoTakeTask.prototype.toString = function () {
         return {
             name: this.name,
-            desc: "录音,保存文件",
-            dome: { id: 1000, key: 1000, date: 10000, name: "AudioListenTask", data: {} }
+            desc: "拍照,保存文件",
+            dome: { id: 1000, key: 1000, date: 10000, name: "PhotoTakeTask", data: {} }
         };
     };
-    return AudioListenTask;
+    return PhotoTakeTask;
 }(TaskBase_1.ListenTask));
-exports.default = AudioListenTask;
-//# sourceMappingURL=AudioListenTask.js.map
+exports.default = PhotoTakeTask;
+//# sourceMappingURL=PhotoTakeTask.js.map
