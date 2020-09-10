@@ -8,7 +8,8 @@ const transform = (url) =>
 const copyfiles = [
   "Task/ListenerTask/pys/Audio.py",
   "Task/ListenerTask/pys/Photo.py",
-  "Client/index.html"
+  "Util/Py/takePhotoServer.py",
+  "Client/index.html",
 ];
 
 const src = path.join(__dirname, "..", "src");

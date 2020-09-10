@@ -3,7 +3,7 @@
  * 
   pip3 install  opencv-python
   
-    1:修改Photo.py pyaudio 安装文件夹 第二行 指定 opencv-python 安装路径 「能正常导入就不需要」
+    1:修改Photo.py  第二行 指定 opencv-python 安装路径 「能正常导入就不需要」
 
   */
 
@@ -41,17 +41,7 @@ export default class PhotoTakeTask extends ListenTask {
   run_photo(info: AudioTaskMessage) {
     const file_name = join(PathConfig.temp_dir, `${new Date().getTime()}_photo_.jpg`);
     return Promise.race([
-      ExecProcess(`python3 ${this.python_file} ${file_name}`)
-        .then(res => {
-          (res as any).file_name = file_name;
-          if (existsSync(file_name)) {
-            const bitmap = readFileSync(file_name);
-            const content = bitmap.toString('base64');
-            (res as any).content = content;
-          }
-
-          return res;
-        }),
+      Promise.resolve(),
       new Promise((resolve) => {
         setTimeout(() => resolve({}), 25000)
       })

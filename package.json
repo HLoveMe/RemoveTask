@@ -9,8 +9,8 @@
         "server": " node ./TSome_Util/static_copy.js && node ./dist/Server/index.js",
         "client_build": "tsc --watch false && node ./TSome_Util/static_copy.js && npx webpack",
         "create_remote_msg": "node ./TSome_Util/static_copy.js",
-        "run_mac_exec_client":"tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/mac_run.sh",
-        "run_linux_server":"tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/linux_serve_run.sh"
+        "run_mac_exec_client": "tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/mac_run.sh",
+        "run_linux_server": "tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/linux_serve_run.sh"
     },
     "keywords": [],
     "author": "",
@@ -40,6 +40,7 @@
         "multer": "^1.4.2",
         "node-cmd": "^3.0.0",
         "node-fetch": "^2.6.0",
+        "python-shell": "^2.0.1",
         "reflect-metadata": "^0.1.13",
         "routing-controllers": "^0.9.0-alpha.6",
         "webpack": "^4.44.1",
