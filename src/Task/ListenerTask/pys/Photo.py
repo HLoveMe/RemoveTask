@@ -8,6 +8,7 @@ filename = "temp.jpg"
 if len(sys.argv) >= 2:
     filename = sys.argv[1]
 
+
 cap = cv2.VideoCapture(0)  # 创建一个 VideoCapture 对象
 start = int(round(time.time() * 1000))
 flag = 1  # 设置一个标志，用来输出视频信息

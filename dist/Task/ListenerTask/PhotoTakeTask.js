@@ -84,15 +84,17 @@ var PhotoTakeTask = /** @class */ (function (_super) {
             }
         });
     };
-    PhotoTakeTask.prototype.run_audio = function (info) {
+    PhotoTakeTask.prototype.run_photo = function (info) {
         var file_name = path_1.join(PathRUL_1.default.temp_dir, new Date().getTime() + "_photo_.jpg");
         return Promise.race([
             ExecProcess_1.ExecProcess("python3 " + this.python_file + " " + file_name)
                 .then(function (res) {
                 res.file_name = file_name;
-                var bitmap = fs_1.readFileSync(file_name);
-                var content = bitmap.toString('base64');
-                res.content = content;
+                if (fs_1.existsSync(file_name)) {
+                    var bitmap = fs_1.readFileSync(file_name);
+                    var content = bitmap.toString('base64');
+                    res.content = content;
+                }
                 return res;
             }),
             new Promise(function (resolve) {
@@ -107,7 +109,7 @@ var PhotoTakeTask = /** @class */ (function (_super) {
                 if (this.isRun)
                     return [2 /*return*/];
                 this.isRun = true;
-                this.run_audio(info)
+                this.run_photo(info)
                     .then(function (result) {
                     _this.send({ result: result }, info);
                 }).catch(function (err) {

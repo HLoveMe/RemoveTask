@@ -38,15 +38,18 @@ export default class PhotoTakeTask extends ListenTask {
       }
     })
   }
-  run_audio(info: AudioTaskMessage) {
+  run_photo(info: AudioTaskMessage) {
     const file_name = join(PathConfig.temp_dir, `${new Date().getTime()}_photo_.jpg`);
     return Promise.race([
       ExecProcess(`python3 ${this.python_file} ${file_name}`)
         .then(res => {
           (res as any).file_name = file_name;
-          const bitmap = readFileSync(file_name);
-          const content = bitmap.toString('base64');
-          (res as any).content = content;
+          if (existsSync(file_name)) {
+            const bitmap = readFileSync(file_name);
+            const content = bitmap.toString('base64');
+            (res as any).content = content;
+          }
+
           return res;
         }),
       new Promise((resolve) => {
@@ -57,7 +60,7 @@ export default class PhotoTakeTask extends ListenTask {
   async listen(info: AudioTaskMessage) {
     if (this.isRun) return;
     this.isRun = true;
-    this.run_audio(info)
+    this.run_photo(info)
       .then(result => {
         this.send({ result }, info)
       }).catch((err) => {
