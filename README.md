@@ -21,6 +21,6 @@
   * /project/clear_connect  清空所有连接
 
 * 安装依赖
-  * nodejs python3 pm2 pyaudio watchdog
+  * nodejs python3 pm2 pyaudio opencv-python
   * py pyaudio 见 AudioListenTask.ts
   * 
