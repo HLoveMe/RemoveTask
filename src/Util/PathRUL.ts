@@ -24,6 +24,8 @@ const NextConfigFile = path.join(Static, "next_config.json")
 
 const Task = path.join(root, "Task");
 
+const PyUtil = path.join(root, "Util", "Py");
+
 const errorFile = path.join(Storage, Config.files.error);
 
 function resetURLS(config: ConfigType) {
@@ -47,6 +49,7 @@ const PathConfig = {
   storage_root: transform(Storage),
   task_root: transform(Task),
   error_file: transform(errorFile),
+  py_util: transform(PyUtil)
   /***
   configcheck:'http://127.0.0.1/project/config', //配置json
   fileupload:'http://127.0.0.1/project/fileupload',//文件上传
