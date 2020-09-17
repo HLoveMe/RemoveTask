@@ -23,4 +23,6 @@
 * 安装依赖
   * nodejs python3 pm2 pyaudio opencv-python
   * py pyaudio 见 AudioListenTask.ts
-  * 
+
+* 开机启动程序 
+ * window  https://www.cnblogs.com/rgcLOVEyaya/p/RGC_LOVE_YAYA_1075_days.html  【Exec 程序 和 photo serve程序】

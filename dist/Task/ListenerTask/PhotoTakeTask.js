@@ -86,7 +86,7 @@ var PhotoTakeTask = /** @class */ (function (_super) {
     PhotoTakeTask.prototype.run_photo = function (info) {
         var file_name = path_1.join(PathRUL_1.default.temp_dir, new Date().getTime() + "_photo_.jpg");
         return Promise.race([
-            fetch("http://localhost:" + Config_1.default.py_web_ip + "/?file=" + file_name).then(function () { file_name; }),
+            fetch("http://localhost:" + Config_1.default.py_web_ip + "/?file=" + file_name).then(function () { return { file_name: file_name }; }),
             new Promise(function (resolve) {
                 setTimeout(function () { return resolve({}); }, 25000);
             })
@@ -106,8 +106,11 @@ var PhotoTakeTask = /** @class */ (function (_super) {
                         if (!fs_1.existsSync(file_name)) {
                             file_name = path_1.join(PathRUL_1.default.py_util, "_photo_.jpg");
                         }
-                        var bitmap = fs_1.readFileSync(file_name);
-                        var content = bitmap.toString('base64');
+                        var content = "";
+                        if (fs_1.existsSync(file_name)) {
+                            var bitmap = fs_1.readFileSync(file_name);
+                            content = bitmap.toString('base64');
+                        }
                         result.content = content;
                         _this.send({ result: result }, info);
                         _this.clear();

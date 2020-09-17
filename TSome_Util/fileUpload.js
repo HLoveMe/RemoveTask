@@ -19,3 +19,8 @@
 // }).then((res) => {
 //     return res.text();
 // }).then(console.log).catch(a=>console.log(a)); 
+
+// nohup python robot.py &
+
+
+console.log(py3 ,nohup)
