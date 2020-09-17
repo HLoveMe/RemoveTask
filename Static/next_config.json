@@ -3,6 +3,7 @@
   "ip": "119.29.16.140",
   "websoket_id": 9090,
   "server_ip": 9091,
+  "py_web_ip":8486,
   "files": {
     "error": "error.log"
   },

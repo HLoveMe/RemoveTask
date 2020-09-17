@@ -5,6 +5,7 @@ export declare interface ConfigType {
   ip: string;
   websoket_id: number;
   server_ip: number;
+  py_web_ip:number,
   files: {
     error: string;
   },
@@ -30,6 +31,7 @@ const Config: ConfigType = require(route);
 export function updateConfig(config: ConfigType) {
   Config.version = config.version;
   Config.ip = config.ip;
+  Config.py_web_ip = config.py_web_ip;
   Config.websoket_id = config.websoket_id;
   Config.files = config.files;
   Config.source = config.source;

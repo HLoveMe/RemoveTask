@@ -3,7 +3,7 @@
  * 
   pip3 install  opencv-python
   
-    1:修改Photo.py  第二行 指定 opencv-python 安装路径 「能正常导入就不需要」
+    1:修改 takePhotoServer.py  第二行 指定 opencv-python 安装路径 「能正常导入就不需要」
 
   */
 
@@ -16,6 +16,8 @@ import { join } from "path";
 import { existsSync, unlinkSync, readFileSync } from "fs";
 import { scanFiles } from "../../Util/FileUtil";
 import { ExecProcess } from "../../Util/ExecProcess";
+import Config from "../../Config";
+import KillPort from "../../Util/KillPort";
 
 
 /**{id: 1000,key: 1000,date: 10000,name: "PhotoTakeTask",data: {}} */
@@ -29,7 +31,6 @@ export default class PhotoTakeTask extends ListenTask {
   // result: AudioExexResult;
   constructor(app: App) {
     super(app);
-    // this.result = { sep: path.sep } as AudioExexResult;
   }
   clear() {
     scanFiles(PathConfig.temp_dir).forEach($1 => {
@@ -41,7 +42,7 @@ export default class PhotoTakeTask extends ListenTask {
   run_photo(info: AudioTaskMessage) {
     const file_name = join(PathConfig.temp_dir, `${new Date().getTime()}_photo_.jpg`);
     return Promise.race([
-      fetch(`http://localhost:8486/?file=${file_name}`).then(() => { file_name }),
+      fetch(`http://localhost:${Config.py_web_ip}/?file=${file_name}`).then(() => { file_name }),
       new Promise((resolve) => {
         setTimeout(() => resolve({}), 25000)
       })

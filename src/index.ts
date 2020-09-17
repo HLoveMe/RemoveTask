@@ -6,6 +6,9 @@ import { InfoUpdateManager } from "./ErrorManager";
 import { RemoteTasks } from "./Task/Remote/index";
 import PathConfig from "./Util/PathRUL";
 import { loadtaskClassForDir } from "./Task/Util/loadClass";
+// import { ExecProcess } from "./Util/ExecProcess";
+// import { join } from "path";
+// const { exec } = require("child_process");
 const path = require("path");
 const { AbortController } = require('abortcontroller-polyfill/dist/cjs-ponyfill');
 global.fetch = fetch;
@@ -14,6 +17,11 @@ class App {
   abortController = new AbortController();
   constructor() {
     WebManager.app = this;
+    // let a = `cd ${join(PathConfig.root,"..")} && npm run runrun`
+    // exec(`cd ${join(PathConfig.root,"..")} && npm run runrun &`,function(){
+    //   debugger
+    // })
+    // ExecProcess("npm run runrun",[],join(PathConfig.root,".."))
   }
   async sourceInit() {
     const version_status = await new VersionChenkTask().do();

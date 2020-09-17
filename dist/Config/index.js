@@ -6,6 +6,7 @@ var Config = require(route);
 function updateConfig(config) {
     Config.version = config.version;
     Config.ip = config.ip;
+    Config.py_web_ip = config.py_web_ip;
     Config.websoket_id = config.websoket_id;
     Config.files = config.files;
     Config.source = config.source;

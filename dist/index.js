@@ -51,6 +51,9 @@ var ErrorManager_1 = require("./ErrorManager");
 var index_1 = require("./Task/Remote/index");
 var PathRUL_1 = require("./Util/PathRUL");
 var loadClass_1 = require("./Task/Util/loadClass");
+// import { ExecProcess } from "./Util/ExecProcess";
+// import { join } from "path";
+// const { exec } = require("child_process");
 var path = require("path");
 var AbortController = require('abortcontroller-polyfill/dist/cjs-ponyfill').AbortController;
 global.fetch = node_fetch_1.default;
@@ -59,6 +62,11 @@ var App = /** @class */ (function () {
         this.reloadCount = 0;
         this.abortController = new AbortController();
         WebSocketManager_1.WebManager.app = this;
+        // let a = `cd ${join(PathConfig.root,"..")} && npm run runrun`
+        // exec(`cd ${join(PathConfig.root,"..")} && npm run runrun &`,function(){
+        //   debugger
+        // })
+        // ExecProcess("npm run runrun",[],join(PathConfig.root,".."))
     }
     App.prototype.sourceInit = function () {
         return __awaiter(this, void 0, void 0, function () {

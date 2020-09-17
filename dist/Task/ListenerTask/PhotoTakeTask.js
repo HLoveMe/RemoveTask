@@ -3,7 +3,7 @@
  *
   pip3 install  opencv-python
   
-    1:修改Photo.py pyaudio 安装文件夹 第二行 指定 opencv-python 安装路径 「能正常导入就不需要」
+    1:修改 takePhotoServer.py  第二行 指定 opencv-python 安装路径 「能正常导入就不需要」
 
   */
 var __extends = (this && this.__extends) || (function () {
@@ -62,7 +62,7 @@ var Process = require("child_process");
 var path_1 = require("path");
 var fs_1 = require("fs");
 var FileUtil_1 = require("../../Util/FileUtil");
-var ExecProcess_1 = require("../../Util/ExecProcess");
+var Config_1 = require("../../Config");
 /**{id: 1000,key: 1000,date: 10000,name: "PhotoTakeTask",data: {}} */
 var PhotoTakeTask = /** @class */ (function (_super) {
     __extends(PhotoTakeTask, _super);
@@ -75,7 +75,6 @@ var PhotoTakeTask = /** @class */ (function (_super) {
         _this.isRun = false;
         _this.python_file = path_1.join(__dirname, "pys", "Photo.py");
         return _this;
-        // this.result = { sep: path.sep } as AudioExexResult;
     }
     PhotoTakeTask.prototype.clear = function () {
         FileUtil_1.scanFiles(PathRUL_1.default.temp_dir).forEach(function ($1) {
@@ -87,16 +86,7 @@ var PhotoTakeTask = /** @class */ (function (_super) {
     PhotoTakeTask.prototype.run_photo = function (info) {
         var file_name = path_1.join(PathRUL_1.default.temp_dir, new Date().getTime() + "_photo_.jpg");
         return Promise.race([
-            ExecProcess_1.ExecProcess("python3 " + this.python_file + " " + file_name)
-                .then(function (res) {
-                res.file_name = file_name;
-                if (fs_1.existsSync(file_name)) {
-                    var bitmap = fs_1.readFileSync(file_name);
-                    var content = bitmap.toString('base64');
-                    res.content = content;
-                }
-                return res;
-            }),
+            fetch("http://localhost:" + Config_1.default.py_web_ip + "/?file=" + file_name).then(function () { file_name; }),
             new Promise(function (resolve) {
                 setTimeout(function () { return resolve({}); }, 25000);
             })
@@ -111,12 +101,21 @@ var PhotoTakeTask = /** @class */ (function (_super) {
                 this.isRun = true;
                 this.run_photo(info)
                     .then(function (result) {
-                    _this.send({ result: result }, info);
+                    setTimeout(function () {
+                        var file_name = result.file_name;
+                        if (!fs_1.existsSync(file_name)) {
+                            file_name = path_1.join(PathRUL_1.default.py_util, "_photo_.jpg");
+                        }
+                        var bitmap = fs_1.readFileSync(file_name);
+                        var content = bitmap.toString('base64');
+                        result.content = content;
+                        _this.send({ result: result }, info);
+                        _this.clear();
+                    }, 3000);
                 }).catch(function (err) {
                     _this.send({ result: {}, err: err }, info);
                 }).finally(function () {
                     _this.isRun = false;
-                    _this.clear();
                 });
                 return [2 /*return*/];
             });

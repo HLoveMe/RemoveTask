@@ -3,7 +3,7 @@ import Config, { ConfigType } from "../Config";
 import { UploadedFile } from "routing-controllers";
 var path = require("path");
 var os = require("os");
-const isWindow = os.type() == "Windows_NT";
+// const isWindow = os.type() == "Windows_NT";
 
 const transform = (url: string) => url;
 
@@ -49,7 +49,7 @@ const PathConfig = {
   storage_root: transform(Storage),
   task_root: transform(Task),
   error_file: transform(errorFile),
-  py_util: transform(PyUtil)
+  py_util: transform(PyUtil),
   /***
   configcheck:'http://127.0.0.1/project/config', //配置json
   fileupload:'http://127.0.0.1/project/fileupload',//文件上传

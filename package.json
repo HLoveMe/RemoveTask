@@ -6,11 +6,11 @@
     "scripts": {
         "tsc": "node ./TSome_Util/static_copy.js && tsc",
         "exec_client": "node ./TSome_Util/static_copy.js  && node ./dist/index.js",
-        "server": " node ./TSome_Util/static_copy.js && node ./dist/Server/index.js",
         "client_build": "tsc --watch false && node ./TSome_Util/static_copy.js && npx webpack",
         "create_remote_msg": "node ./TSome_Util/static_copy.js",
         "run_mac_exec_client": "tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/mac_run.sh",
-        "run_linux_server": "tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/linux_serve_run.sh"
+        "run_linux_server": "tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/linux_serve_run.sh",
+        "test_run":"/usr/local/bin/python3 /Users/swl/Desktop/TTTSProject/dist/Util/Py/takePhotoServer.py"
     },
     "keywords": [],
     "author": "",

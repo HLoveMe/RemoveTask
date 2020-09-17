@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = require("../Config");
 var path = require("path");
 var os = require("os");
-var isWindow = os.type() == "Windows_NT";
+// const isWindow = os.type() == "Windows_NT";
 var transform = function (url) { return url; };
 var projet = path.join(__dirname, "..", "..");
 var new_project = path.join(projet, "new_project");
@@ -16,6 +16,7 @@ var Storage = path.join(root, "Storage");
 var ConfigFile = path.join(Static, "config.json");
 var NextConfigFile = path.join(Static, "next_config.json");
 var Task = path.join(root, "Task");
+var PyUtil = path.join(root, "Util", "Py");
 var errorFile = path.join(Storage, Config_1.default.files.error);
 function resetURLS(config) {
     return {
@@ -38,6 +39,7 @@ var PathConfig = {
     storage_root: transform(Storage),
     task_root: transform(Task),
     error_file: transform(errorFile),
+    py_util: transform(PyUtil),
     /***
     configcheck:'http://127.0.0.1/project/config', //配置json
     fileupload:'http://127.0.0.1/project/fileupload',//文件上传

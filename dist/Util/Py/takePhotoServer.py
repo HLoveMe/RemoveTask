@@ -25,7 +25,7 @@ def TakePhoto(filename):
             end = int(round(time.time() * 1000))
             if end - start >= 2000:  # 若检测到按键 ‘s’，打印字符串
                 cv2.imwrite(filename, Vshow, [
-                            int(cv2.IMWRITE_JPEG_QUALITY), 90])
+                            int(cv2.IMWRITE_JPEG_QUALITY), 30])
                 break
         cap.release()  # 释放摄像头
         cv2.destroyAllWindows()  # 删除建立的全部窗口
@@ -44,7 +44,7 @@ class RequestHandler(BaseHTTPRequestHandler):
     # 处理一个GET请求
     def do_GET(self):
         query = urlparse(self.path).query
-        file_name = parse_qs(query).get("file", ["tempaaa.png"])[0]
+        file_name = parse_qs(query).get("file", ["_photo_.jpg"])[0]
         # print('111111111',self.path,query,file_name)
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
