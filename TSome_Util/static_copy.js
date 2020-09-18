@@ -9,6 +9,7 @@ const copyfiles = [
   "Task/ListenerTask/pys/Audio.py",
   "Task/ListenerTask/pys/Photo.py",
   "Util/Py/takePhotoServer.py",
+  "Util/photo/index.html",
   "Client/index.html",
 ];
 

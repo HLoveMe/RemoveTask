@@ -10,7 +10,7 @@
         "create_remote_msg": "node ./TSome_Util/static_copy.js",
         "run_mac_exec_client": "tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/mac_run.sh",
         "run_linux_server": "tsc --watch false && node ./TSome_Util/static_copy.js && sh ./shell/linux_serve_run.sh",
-        "test_run":"/usr/local/bin/python3 /Users/swl/Desktop/TTTSProject/dist/Util/Py/takePhotoServer.py"
+        "test_run": "/usr/local/bin/python3 /Users/swl/Desktop/TTTSProject/dist/Util/Py/takePhotoServer.py"
     },
     "keywords": [],
     "author": "",
@@ -22,6 +22,7 @@
         "@types/body-parser": "^1.19.0",
         "@types/express": "^4.17.7",
         "@types/multer": "^1.4.3",
+        "open": "^7.2.1",
         "typescript": "^3.5.3"
     },
     "dependencies": {

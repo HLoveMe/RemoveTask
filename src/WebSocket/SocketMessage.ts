@@ -1,4 +1,6 @@
 
+
+var open = require('open');
 export enum MessageType {
   CLEAR = -100,//清除
   ERROR = -99, // Exec 发送过来的Error 日志信息 到服务器
@@ -141,14 +143,29 @@ export declare interface AudioData {
 export declare interface AudioTaskMessage extends Message {
   data: AudioData
 }
-export declare interface NpmTask{
-  name:string;
+export declare interface NpmTask {
+  name: string;
   global: boolean
 }
 export declare interface NpmData {
   tasks: NpmTask[];//url or name
-  reload:boolean;
+  reload: boolean;
 }
 export declare interface NpmInstallMessge extends Message {
   data: NpmData
+}
+
+export declare interface WebData extends BaseData {
+  url: string;
+  option?: { //var open = require('open');
+    wait?: boolean;
+    background?: boolean;
+    app?: string | readonly string[];
+    url?: boolean;
+    allowNonzeroExitCode?: boolean;
+  }
+}
+
+export declare interface OpenMessage extends Message {
+  data: WebData;
 }
