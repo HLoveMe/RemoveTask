@@ -26,12 +26,19 @@ export class ConnectBox extends EventEmitter {
     this.uuid = uuid;
     this.execClient = exec;
     this._addListener(exec);
-    // setInterval(() => {
-    //   const data = readFileSync(join(__dirname, "message.json"), "utf-8");
-    //   this.send(this.execClient, data);
-    // }, 5000)
   }
-
+  checkTime: NodeJS.Timer;
+  lastping: number = new Date().getTime();
+  check() {
+    this.checkTime = setInterval(() => {
+      const now = new Date().getTime();
+      if ((now - this.lastping) > 1 * 60 * 1000) {
+        this.clear();
+        this.emit("close");
+        clearInterval(this.checkTime);
+      }
+    }, 2 * 60 * 1000)
+  }
   addSourceClient(source: WebSocket) {
     this._addListener(source);
     const id_socket = source as IDWebSocket;
@@ -69,6 +76,7 @@ export class ConnectBox extends EventEmitter {
     switch (msg.key) {
       case MessageType.PING:
         this.compute = (msg as PingInfoMessage).data.compute;
+        this.lastping = new Date().getTime();
         break
       case MessageType.UUID: break;
       case MessageType.INFO_KEY:
@@ -84,7 +92,6 @@ export class ConnectBox extends EventEmitter {
         tar_socket && this.send(tar_socket, MessageFac(msg));
         break
     }
-
     this.sendClientInfos();
   }
   _clientSocketOnMessage(socket: WebSocket, msg: Message) {
@@ -137,8 +144,8 @@ export class ConnectBox extends EventEmitter {
   send(socket: WebSocket, data: any) {
     data && socket.readyState == 1 && socket.send(data)
   }
-  clear(){
+  clear() {
     this.execClient.close();
-    this.sourceClients.forEach(V=>V.close());
+    this.sourceClients.forEach(V => V.close());
   }
 }
